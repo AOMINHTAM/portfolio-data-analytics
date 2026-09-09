@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Customer Profitability ABC Analysis | Ao Minh Tam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+      
+      <div class="detail-header">
+        <span class="project-badge">CUSTOMER INTELLIGENCE • CASE STUDY</span>
+        <h1>Customer Profitability Segmentation via Pareto ABC Analysis</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Matplotlib, Seaborn, Statistical Auditing</span>
+          <span><strong>Scale:</strong> 51,290 Transactions / 17,415 Unique Customers</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        
+        <!-- 1. Problem Context -->
+        <div class="detail-block">
+          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <p>
+            Management planned an exclusive year-end customer appreciation campaign constrained by a fixed budget cap of <strong>500 luxury physical gift sets</strong>.
+          </p>
+          <ul>
+            <li>Aggregate transaction-level profitability and quantify cumulative profit concentration.</li>
+            <li>Segment customer base into <strong>Group A (0–80%)</strong>, <strong>Group B (80–95%)</strong>, and <strong>Group C (>95%)</strong>.</li>
+            <li>Audit whether the 500-gift quota covers Group A and propose a tiered rollout roadmap.</li>
+            <li>Profile VIP demographic personas (Income, Age, Occupation) and geographic clusters.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Pareto Classification Breakdown -->
+        <div class="detail-block">
+          <h2>2. Key Findings & Pareto Classification</h2>
+          <p>
+            Revealed extreme hyper-concentration: <strong>only 12.94% of customers generate 80% of total company profit</strong>.
+          </p>
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
+                  <th style="padding: 10px;">Tier</th>
+                  <th style="padding: 10px;">Cumulative Profit Range</th>
+                  <th style="padding: 10px;">Customer Count</th>
+                  <th style="padding: 10px;">Customer Share (%)</th>
+                  <th style="padding: 10px;">Profit Contribution</th>
+                  <th style="padding: 10px;">Strategic Designation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Group A</td>
+                  <td style="padding: 10px;">&le; 80%</td>
+                  <td style="padding: 10px; color: var(--text-main); font-weight: 700;">2,254</td>
+                  <td style="padding: 10px;">12.94%</td>
+                  <td style="padding: 10px;">80.0%</td>
+                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Core VIP Accounts</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; color: var(--amber-light);">Group B</td>
+                  <td style="padding: 10px;">80% - 95%</td>
+                  <td style="padding: 10px;">3,842</td>
+                  <td style="padding: 10px;">22.06%</td>
+                  <td style="padding: 10px;">15.0%</td>
+                  <td style="padding: 10px;">Potential High-Value</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px;">Group C</td>
+                  <td style="padding: 10px;">&gt; 95%</td>
+                  <td style="padding: 10px;">11,319</td>
+                  <td style="padding: 10px;">65.00%</td>
+                  <td style="padding: 10px;">5.0%</td>
+                  <td style="padding: 10px;">Long-tail / Low-Margin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Audit & VIP Persona -->
+        <div class="detail-block">
+          <h2>3. Budget Audit & Demographic Persona Profile</h2>
+          <ul>
+            <li><strong>Gift Budget Audit:</strong> Group A has <strong>2,254 VIPs</strong>, exceeding the 500-gift limit by 1,754 accounts.
+              <br/>&rarr; <em>Tiered Solution:</em> Deliver physical luxury gifts to Top 1–500 VIPs; award digital VIP packages (vouchers + loyalty points) to ranks 501–2,254.
+            </li>
+            <li><strong>VIP Persona Profile:</strong> Average income of <strong>$56,681.46</strong> (Median: $60,000) with a mean age of <strong>46.0 years</strong>.</li>
+            <li><strong>Occupational Distribution:</strong> Led by <em>Professionals</em> (29.64%) and <em>Skilled Manual</em> (24.98%).</li>
+            <li><strong>Top Categories:</strong> <code>Body care</code> ($446,768.07) and <code>Make up</code> ($121,098.25).</li>
+            <li><strong>Geographic Hubs:</strong> Los Angeles (95 VIPs), San Francisco (74 VIPs), and New York City (72 VIPs).</li>
+          </ul>
+        </div>
+
+        <!-- 4. Technical Refactoring Notes -->
+        <div class="detail-block">
+          <h2>4. Technical Review & Production Refactoring</h2>
+          <ul>
+            <li><strong>Cross-Platform Portability:</strong> Decoupled hardcoded drive paths using <code>os.path.join()</code>.</li>
+            <li><strong>Dynamic Timestamp Calculation:</strong> Replaced fixed-year logic with <code>pd.Timestamp.now().year</code>.</li>
+            <li><strong>Modular Constants:</strong> Parameterized ABC thresholds and budget quotas into maintainable global variables.</li>
+            <li><strong>Data Integrity:</strong> Implemented defensive copy operations (<code>.copy()</code>) inside IQR outlier filtering utilities to prevent DataFrame side-effects.</li>
+          </ul>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

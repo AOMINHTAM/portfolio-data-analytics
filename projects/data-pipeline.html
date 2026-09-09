@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Data Pipeline | Ao Minh Tam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#certifications">CERTIFICATIONS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+      
+      <div class="detail-header">
+        <span class="project-badge">ANALYTICS ENGINEERING • CASE STUDY</span>
+        <h1>Automated End-to-End Data Pipeline & Modeling</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Analytics Engineer / Data Analyst</span>
+          <span><strong>Stack:</strong> dbt, Snowflake, Apache Airflow, Docker, SQL</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        
+        <!-- Problem Statement -->
+        <div class="detail-block">
+          <h2>1. Problem Statement & Objectives</h2>
+          <p>
+            In production environments, disparate source data often suffers from schema fragmentation, redundant records, and lack of unified data standards. This leads to inconsistent reporting metrics and excessive time spent on manual querying.
+          </p>
+          <p>
+            The objective of this project was to establish a fully automated, scalable data ecosystem from raw ingestion to dimensional modeling, delivering verified, high-trust Data Marts ready for downstream business intelligence.
+          </p>
+        </div>
+
+        <!-- System Architecture -->
+        <div class="detail-block">
+          <h2>2. System Architecture & Workflow</h2>
+          <p>
+            Built following the modern ELT paradigm (Extract - Load - Transform), leveraging cloud data warehouse computing power:
+          </p>
+          <ul>
+            <li><strong>Storage (Snowflake):</strong> Serves as the central data warehouse, isolating the raw landing zone from clean analytical marts.</li>
+            <li><strong>Transformation (dbt):</strong> Implements dimensional modeling (Star Schema) via modular SQL, separating business logic into staging, intermediate, and fact/dimension layers.</li>
+            <li><strong>Orchestration (Apache Airflow):</strong> Automates execution schedules through DAGs, triggering <code>dbt run</code> and <code>dbt test</code> sequentially.</li>
+            <li><strong>Environment (Docker / GitHub Codespaces):</strong> Ensures reproducibility and identical runtime dependencies across development and deployment.</li>
+          </ul>
+        </div>
+
+        <!-- Data Quality Testing -->
+        <div class="detail-block">
+          <h2>3. Data Quality Assurance & Testing</h2>
+          <p>
+            To guarantee the principle of <em>"Trustworthy data before reporting"</em>, continuous automated testing was integrated into the pipeline:
+          </p>
+          <ul>
+            <li>Enforced Primary Key integrity (Uniqueness and Not-Null constraints).</li>
+            <li>Validated Referential Integrity relationships between Fact and Dimension entities.</li>
+            <li>Automated alerts and task halting upon detecting anomalous schema changes or ingestion discrepancies.</li>
+          </ul>
+        </div>
+
+        <!-- Key Outcomes -->
+        <div class="detail-block">
+          <h2>4. Key Outcomes & Future Scope</h2>
+          <p>
+            The pipeline reduced query latency for analytics queries, eliminated 100% of repetitive daily manual script executions, and established an extensible foundation pluggable into Power BI or Tableau.
+          </p>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

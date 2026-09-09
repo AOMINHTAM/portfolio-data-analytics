@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Market Basket Analysis | Ao Minh Tam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+      
+      <div class="detail-header">
+        <span class="project-badge">ASSOCIATION RULES • CASE STUDY</span>
+        <h1>Market Basket Analysis & Product Bundling Strategy</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Stack:</strong> Python 3.x, mlxtend (Apriori), Pandas, NumPy, Seaborn</span>
+          <span><strong>Focus:</strong> Association Rules Mining, Support/Confidence/Lift Optimization</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        
+        <!-- 1. Context -->
+        <div class="detail-block">
+          <h2>1. Business Context & Strategic Objectives</h2>
+          <p>
+            The e-commerce platform sought to increase Average Order Value (AOV) by replacing generic cross-selling prompts with algorithmic association rules mining.
+          </p>
+          <ul>
+            <li>Perform Exploratory Data Analysis (EDA) on basket size distributions and top-moving categories.</li>
+            <li>Apply the <strong>Apriori Algorithm</strong> to compute Support, Confidence, and Lift for co-occurring product combinations.</li>
+            <li>Identify cohesive "Shopping Ecosystems" to engineer high-margin product bundles (e.g., <em>Weekend Reset Kit</em>).</li>
+          </ul>
+        </div>
+
+        <!-- 2. Key Findings -->
+        <div class="detail-block">
+          <h2>2. Key Findings & Behavioral Affinity Rules</h2>
+          <ul>
+            <li><strong>Highest Lift Linkage:</strong>
+              <br /><code>[Candles, Room Sprays, Face Masks] &rarr; [Nail Care, Bath Oils/Bombs]</code>
+              <ul>
+                <li><strong>Lift: 4.25</strong> (Customers purchasing the antecedent are 4.25x more likely to buy the consequent compared to random baseline).</li>
+                <li><strong>Confidence: 45%</strong> of buyers adding Candles and Masks actively add Nail Care or Bath Oils to finalize their cart.</li>
+              </ul>
+            </li>
+            <li><strong>Shopping Ecosystem A ("Home Spa"):</strong> A self-care basket containing <em>Candles + Face Masks + Bath Oils + Nail Care</em> purchased to simulate an at-home spa experience.</li>
+            <li><strong>Shopping Ecosystem B ("Beauty from Within"):</strong> A wellness-driven basket combining <em>Vitamins/Supplements + Hand Creams + Face Care</em>, representing a disciplined health-conscious demographic.</li>
+          </ul>
+        </div>
+
+        <!-- 3. Technical Debt & Fixes -->
+        <div class="detail-block">
+          <h2>3. Technical Debt Audited & Bug Fixes</h2>
+          <ul>
+            <li><strong>Out-of-Memory (OOM) Prevention via Support Tuning:</strong> Initial `min_support` of `0.001` (0.1%) generated millions of combinatorial itemsets, crashing kernel RAM. Recalibrated threshold to `0.005` (0.5%) to maintain compute stability without losing high-lift rules.</li>
+            <li><strong>In-Basket Deduplication:</strong> Refactored raw item aggregation using <code>.unique()</code>, eliminating repeated subcategories within a single `OrderID` prior to `TransactionEncoder` processing.</li>
+            <li><strong>Pre-Algorithmic EDA Pipeline:</strong> Engineered exploratory subplots visualizing top-10 category velocity and basket-size distributions before model execution.</li>
+          </ul>
+        </div>
+
+        <!-- 4. Recommendations -->
+        <div class="detail-block">
+          <h2>4. Actionable Commercial Recommendations</h2>
+          <ul>
+            <li><strong>Launch the "Weekend Reset Kit":</strong> Package Ecosystem A items together with a 10% bundle discount, increasing Average Order Value.</li>
+            <li><strong>Dynamic Checkout Cross-Selling:</strong> When a user adds <em>Candles</em> to cart, trigger a dynamic prompt suggesting <em>Bath Bombs</em> instead of competing candle brands.</li>
+            <li><strong>Targeted Content Marketing:</strong> Direct the creative team to produce short-form video content titled <em>"The 4-Step Post-Deadline Self-Care Routine"</em> featuring the Ecosystem A product combination.</li>
+          </ul>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/market-basket-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

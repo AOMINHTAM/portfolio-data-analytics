@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: User Journey & Sankey Analysis | Ao Minh Tam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+      
+      <div class="detail-header">
+        <span class="project-badge">NETWORK VISUALIZATION • CASE STUDY</span>
+        <h1>User Journey & Traffic Flow Analysis via Plotly Sankey</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Plotly (graph_objects.Sankey)</span>
+          <span><strong>Architecture:</strong> Acquisition & Retention Directed Acyclic Graphs (DAGs)</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        
+        <!-- 1. Context & Objectives -->
+        <div class="detail-block">
+          <h2>1. Business Context & Strategic Objectives</h2>
+          <p>
+            Marketing and product leadership struggled to visualize how users navigated across multi-touch browsing sessions. Static aggregate bar charts failed to depict the sequential transition of traffic sources filtering into landing pages or the specific product sequences adopted by repeat buyers.
+          </p>
+          <ul>
+            <li>Build an <strong>Acquisition Sankey Flow:</strong> <code>UTM Source &rarr; Device &rarr; Landing Page &rarr; Conversion / Drop-off</code>.</li>
+            <li>Build a <strong>Retention Sankey Flow:</strong> <code>1st Purchase &rarr; 2nd Purchase &rarr; 3rd Purchase</code>.</li>
+            <li>Apply visual data storytelling via selective opacity to emphasize "happy paths" (Conversions & Repurchases) while muting terminal drop-offs.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Key Findings -->
+        <div class="detail-block">
+          <h2>2. Key Findings & Behavioral Flow Insights</h2>
+          <ul>
+            <li><strong>The "Engaged Leaver" Discovery:</strong> Filtering out 1-pageview bouncers exposed that even among actively engaged visitors, the mid-funnel drop-off node remains massive, signaling catalog or checkout friction rather than low-quality ad traffic.</li>
+            <li><strong>Device Conversion Discrepancy:</strong> Desktop sessions flow smoothly into the <code>Converted</code> node, whereas Mobile traffic disproportionately terminates at the <code>Drop-off</code> node.</li>
+            <li><strong>The Gateway & Cross-Pollination Journey:</strong>
+              <ul>
+                <li><em>The Original Mr. Fuzzy</em> serves as the primary top-of-funnel gateway item, dominating Node 1.</li>
+                <li>Repeat-purchase paths consistently transition from <em>Mr. Fuzzy (Purchase 1)</em> &rarr; <em>Love Bear (Purchase 2)</em>. Customers rarely purchase the exact same plush toy twice, favoring cross-catalog exploration.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 3. Technical QA & Engineering Refactoring -->
+        <div class="detail-block">
+          <h2>3. Technical Debt Audited & Production Bug Fixes</h2>
+          <ul>
+            <li><strong>Preventing Circular Link Kernel Crashes:</strong> Plotly Sankey diagrams fail when target nodes loop back into identical source nodes. Resolved by prefixing chronological order rankings (`1 - Product A` &rarr; `2 - Product A`), ensuring every node in the directed acyclic graph (DAG) remains strictly unique.</li>
+            <li><strong>Memory Optimization on 1M+ Row Joins:</strong> Resolved severe RAM bloat by specifying <code>usecols</code> during <code>pd.read_csv()</code> and aggregating standalone tables via <code>.groupby().first()</code> before performing final joins.</li>
+            <li><strong>Visual De-Noising via Dynamic Link Alpha:</strong> Engineered an automated link-coloring loop: assigned terminal paths (Drop-off/End) a muted gray <code>rgba(200, 200, 200, 0.4)</code> while highlighting converted progression paths in vivid amber/emerald.</li>
+            <li><strong>Standardized Acquisition Imputation:</strong> Cleaned fragmented <code>NaN</code> and arbitrary <code>unknown</code> UTM source strings into a unified, business-readable <code>Direct Traffic</code> node.</li>
+          </ul>
+        </div>
+
+        <!-- 4. Recommendations -->
+        <div class="detail-block">
+          <h2>4. Actionable Strategic Recommendations</h2>
+          <ul>
+            <li><strong>Mobile UX/UI Overhaul:</strong> Implement sticky "Add to Cart" CTAs and optimize mobile asset delivery to mitigate the high mobile drop-off rate.</li>
+            <li><strong>Lifecycle Email Automation:</strong> Suppress <em>Mr. Fuzzy</em> promotions to existing <em>Mr. Fuzzy</em> owners; trigger automated <em>Love Bear</em> campaigns 14 days post-purchase to leverage the natural transition path revealed by the Sankey flow.</li>
+          </ul>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

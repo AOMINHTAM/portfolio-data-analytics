@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: Product Conversion Funnel Analysis | Ao Minh Tam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+      
+      <div class="detail-header">
+        <span class="project-badge">E-COMMERCE DIAGNOSTICS • CASE STUDY</span>
+        <h1>Product Performance & Conversion Funnel Analysis</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Plotly (Funnel), Seaborn, Matplotlib</span>
+          <span><strong>Scope:</strong> Session-Based Clickstream Funnels & Product Net Revenue Auditing</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        
+        <!-- 1. Context & Objectives -->
+        <div class="detail-block">
+          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <p>
+            The business was experiencing a significant drop-off between top-of-funnel traffic and completed sales. The analytics team conducted an audit of product-level conversion steps to identify leakages within the browsing-to-purchase journey.
+          </p>
+          <ul>
+            <li>Calculate GAAP-aligned Net Revenue after factoring in product refunds across all catalog items.</li>
+            <li>Construct session-based conversion funnels tracking users across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart</code> &rarr; <code>Checkout (/thank-you)</code>.</li>
+            <li>Compare conversion performance between flagship SKUs: <em>The Original Mr. Fuzzy</em> vs. <em>The Forever Love Bear</em>.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Funnel Diagnostics & Key Findings -->
+        <div class="detail-block">
+          <h2>2. Key Findings & The "Love Bear" Paradox</h2>
+          <ul>
+            <li><strong>The "Love Bear" Paradox:</strong>
+              <ul>
+                <li><em>Top-of-Funnel (Catalog &rarr; PDP):</em> <em>Mr. Fuzzy</em> captures a massive <strong>62.2%</strong> of all catalog traffic, while <em>Love Bear</em> captures only <strong>10.0%</strong> due to poor placement.</li>
+                <li><em>Mid-Funnel (PDP &rarr; Cart):</em> Once a user views <em>Love Bear</em>, it generates a significantly higher Cart-Add conversion rate (<strong>55.6%</strong>) compared to <em>Mr. Fuzzy</em> (<strong>43.0%</strong>). The product is persuasive but under-exposed.</li>
+              </ul>
+            </li>
+            <li><strong>Severe Checkout Bottleneck:</strong> Across all product lines, the step from Cart to Completed Order experiences a <strong>66% abandonment rate</strong>.</li>
+            <li><strong>Quality Control Red Flag:</strong> While <em>Mr. Fuzzy</em> is the primary net revenue driver, <em>The Birthday Sugar Panda</em> exhibits the highest refund rate in the catalog, requiring immediate supplier reviews.</li>
+          </ul>
+        </div>
+
+        <!-- 3. Technical Refactoring & Improvements -->
+        <div class="detail-block">
+          <h2>3. Technical QA & Engineering Refactoring</h2>
+          <ul>
+            <li><strong>Interactive Funnel Architecture:</strong> Migrated legacy Matplotlib horizontal bar plots to <code>plotly.graph_objects.Funnel</code>, enabling interactive hover states and step-to-step drop-off ratios.</li>
+            <li><strong>Typecasting Optimization:</strong> Replaced repeated datetime casting with a unified ingestion loop utilizing <code>pd.to_datetime()</code>.</li>
+            <li><strong>Dependency Deprecation Fixes:</strong> Modernized Seaborn plotting parameters (<code>hue='product_name'</code>, <code>legend=False</code>) to eliminate deprecation warnings and ensure compatibility with future releases.</li>
+          </ul>
+        </div>
+
+        <!-- 4. Strategic Recommendations -->
+        <div class="detail-block">
+          <h2>4. Actionable Strategic Recommendations</h2>
+          <ul>
+            <li><strong>Traffic Injection via Cross-Selling:</strong> Inject <em>Love Bear</em> as a "Frequently Bought Together" widget directly onto <em>Mr. Fuzzy's</em> high-traffic product page.</li>
+            <li><strong>Checkout UX Overhaul:</strong> Audit hidden shipping fees and eliminate mandatory account creation to address the 66% cart abandonment drop-off.</li>
+            <li><strong>Automated Abandoned Cart Flows:</strong> Trigger automated email and SMS recovery sequences at 1 hour and 24 hours post-abandonment.</li>
+          </ul>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

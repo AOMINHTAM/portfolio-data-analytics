@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ao Minh Tam | Data Analyst & Analytics Engineer</title>
+  <!-- Plus Jakarta Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 1. NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#about" class="active">ABOUT ME</a></li>
+        <li><a href="#experience">EXPERIENCE</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+        <li><a href="#architecture">ARCHITECTURE & STACK</a></li>
+        <li><a href="#certifications">CERTIFICATIONS</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. HERO SECTION -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <!-- Left Column: Bio & Actions -->
+      <div class="hero-left">
+        <div class="status-badge">
+          <span class="pulse-dot"></span>
+          <span>Available for DA / AE Roles</span>
+        </div>
+
+        <div class="sub-headline">DATA ANALYST & ANALYTICS ENGINEER</div>
+
+        <h1 class="hero-title">
+          Hi there, I’m <br />
+          <span class="accent-text">Ao Minh Tam</span>
+        </h1>
+
+        <p class="hero-desc">
+          Specializing in standardized Star Schema data modeling, automated dbt & Airflow pipelines, user journey Sankey network flows, conversion funnels, market basket association rules, and customer lifecycle economics (RFM, Cohort, Pareto). Bridging raw data to executive strategic decisions.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-amber">EXPLORE WORK &rarr;</a>
+          <button class="btn btn-outline" onclick="copyEmail()">📋 Copy Email</button>
+        </div>
+
+        <!-- Social Buttons -->
+        <div class="social-row">
+          <a href="https://github.com/AOMINHTAM" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/ao-minh-t%C3%A2m-bb0a6b337/" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+
+        <div class="location-tag">
+          📍 Ho Chi Minh City, Vietnam
+        </div>
+      </div>
+
+      <!-- Right Column: Minimalist Avatar Frame -->
+      <div class="hero-right">
+        <div class="avatar-frame">
+          <div class="avatar-inner">
+            <div class="avatar-circle">
+              <span class="avatar-text">AT</span>
+            </div>
+            <div class="avatar-caption">DATA & ANALYTICS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. ABOUT ME -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">ABOUT ME</h2>
+      <div class="card card-body">
+        <p>
+          I am an Information Technology student at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE). My career path is dedicated to bridging the gap between <strong>Data Analysis (DA)</strong> and <strong>Analytics Engineering (AE)</strong>.
+        </p>
+        <p>
+          I emphasize precision, data integrity, and architectural scalability: transforming raw unstructured data into clean, business-ready Data Marts via Star Schema models, automating data quality testing protocols, and deriving high-impact business insights through network graph visualizations, clickstream funnel diagnostics, and algorithmic data mining.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. EXPERIENCE & EDUCATION -->
+  <section id="experience" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">EXPERIENCE & EDUCATION</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-date">2024 - PRESENT</span>
+          <h3>Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE)</h3>
+          <p class="timeline-role">Bachelor of Information Technology</p>
+          <p class="timeline-desc">Focused on Database Management Systems, Analytics Engineering, Modern Data Architecture, and Process Automation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FEATURED PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">FEATURED PROJECTS</h2>
+      
+      <!-- Project 1: Pipeline & AE -->
+      <div class="card project-card">
+        <div class="project-badge">FEATURED PIPELINE • ANALYTICS ENGINEERING</div>
+        <h3>Automated End-to-End Data Pipeline & Modeling</h3>
+        <p class="project-desc">
+          A fully automated ELT data ecosystem: Transforming and modeling analytical datasets using <strong>dbt</strong>, hosted on <strong>Snowflake</strong> Data Cloud, with end-to-end orchestration and scheduling managed by <strong>Apache Airflow</strong> in containerized Docker environments.
+        </p>
+        <div class="tech-tags">
+          <span>dbt</span>
+          <span>Snowflake</span>
+          <span>Apache Airflow</span>
+          <span>Docker</span>
+          <span>SQL</span>
+          <span>Python</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/data-pipeline.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 2: User Journey & Sankey Analysis (NEW) -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">NETWORK VISUALIZATION • FLOW DIAGNOSTICS</div>
+        <h3>User Journey & Traffic Flow Analysis via Plotly Sankey</h3>
+        <p class="project-desc">
+          Interactive network flow modeling tracking multi-touch customer behavior across Acquisition (UTM &rarr; Device &rarr; Landing Page &rarr; Conversion) and Retention (1st &rarr; 2nd &rarr; 3rd Purchase). Solved circular link DAG crashes via chronological prefixing, optimized 1M+ row joins, and highlighted cross-pollination patterns between flagship SKUs.
+        </p>
+        <div class="tech-tags">
+          <span>Python</span>
+          <span>Pandas</span>
+          <span>Plotly (Sankey DAG)</span>
+          <span>Network Graphs</span>
+          <span>Clickstream Diagnostics</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/user-journey-sankey.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 3: Product Conversion Funnel Analysis -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">E-COMMERCE DIAGNOSTICS • FUNNEL OPTIMIZATION</div>
+        <h3>Product Performance & Conversion Funnel Analysis</h3>
+        <p class="project-desc">
+          Session-level clickstream funnel diagnostics tracking user progression from Catalog to Purchase. Uncovered the "Love Bear Paradox" (low 10% catalog visibility vs. superior 55.6% cart-add rate), audited a 66% checkout abandonment drop-off, and engineered interactive Plotly funnels.
+        </p>
+        <div class="tech-tags">
+          <span>Python</span>
+          <span>Pandas</span>
+          <span>Plotly (Funnel)</span>
+          <span>Clickstream Analytics</span>
+          <span>UX Diagnostics</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/product-funnel.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 4: Market Basket Analysis & Product Bundling -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">ALGORITHMIC MINING • COMMERCE STRATEGY</div>
+        <h3>Market Basket Analysis & Product Bundling Strategy</h3>
+        <p class="project-desc">
+          Algorithmic transactional analytics using the Apriori algorithm and Association Rules mining. Extracted high-conversion cross-sell combinations (Lift 4.25, 45% confidence), engineered OOM prevention protocols via support tuning, and created themed product bundles to drive Average Order Value (AOV).
+        </p>
+        <div class="tech-tags">
+          <span>Python</span>
+          <span>mlxtend (Apriori)</span>
+          <span>Association Rules</span>
+          <span>TransactionEncoder</span>
+          <span>Basket Analytics</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/market-basket.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/market-basket-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 5: Customer 360 & RFM Segmentation -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">CUSTOMER INTELLIGENCE • LIFECYCLE ANALYTICS</div>
+        <h3>Customer 360 & RFM Segmentation Analysis</h3>
+        <p class="project-desc">
+          End-to-end customer analytics covering 51,290 transactions across 17,415 accounts. Built dynamic quantile RFM scoring, hierarchical Treemap revenue decomposition, and demographic Customer 360 profiling to eliminate marketing CAC waste on churned accounts while preserving core Champions ($2.1M+ revenue).
+        </p>
+        <div class="tech-tags">
+          <span>Python (Pandas, NumPy)</span>
+          <span>RFM Modeling</span>
+          <span>Squarify (Treemap)</span>
+          <span>Matplotlib / Seaborn</span>
+          <span>Lifecycle Marketing</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/rfm-segmentation.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 6: Cohort & Retention Dynamics -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">BEHAVIORAL ANALYTICS • RETENTION MODELING</div>
+        <h3>Cohort Analysis & Customer Retention Dynamics</h3>
+        <p class="project-desc">
+          Time-based cohort retention modeling auditing a severe Month-1 drop-off (1%–3% baseline). Resolved left-truncation bias in acquisition dates, paired dual-panel acquisition bar charts with heatmap matrices, and uncovered the Income Profitability Paradox between B2B restock cycles and B2C churn.
+        </p>
+        <div class="tech-tags">
+          <span>Python (Pandas)</span>
+          <span>Cohort Analysis</span>
+          <span>Retention Heatmaps</span>
+          <span>Left-Truncation Auditing</span>
+          <span>Churn Economics</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/cohort-retention.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/cohort-retention-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 7: Customer Profitability ABC Analysis -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">COMMERCIAL ANALYTICS • BUDGET OPTIMIZATION</div>
+        <h3>Customer Profitability Segmentation via Pareto ABC Analysis</h3>
+        <p class="project-desc">
+          Customer profitability tiering across 51,290 transactions and 17,415 accounts. Proved hyper-concentration (12.94% VIPs generating 80% total profit), audited a 500 physical luxury gift constraint, profiled demographic personas, and designed a tiered digital/physical VIP retention strategy.
+        </p>
+        <div class="tech-tags">
+          <span>Python (Pandas, NumPy)</span>
+          <span>Pareto ABC Classification</span>
+          <span>IQR Outlier Auditing</span>
+          <span>Matplotlib / Seaborn</span>
+          <span>Budget Optimization</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/abc-inventory.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- Project 8: TeddyWorld Pareto Revenue Analysis -->
+      <div class="card project-card" style="margin-top: 24px;">
+        <div class="project-badge">E-COMMERCE • REVENUE DRIVERS</div>
+        <h3>TeddyWorld — Revenue Contribution Analysis via Pareto (80/20)</h3>
+        <p class="project-desc">
+          Product revenue concentration modeling on 32,000+ e-commerce orders. Calculated Net Revenue post-refunds, identified that 3 core SKUs generate ~82% of top-line revenue, exposed portfolio cash-flow vulnerability from a single 45%+ SKU, and formulated dynamic safety-stock policies.
+        </p>
+        <div class="tech-tags">
+          <span>Python (Pandas)</span>
+          <span>Dual-Axis Pareto Curve</span>
+          <span>SKU Rationalization</span>
+          <span>Inventory Strategy</span>
+        </div>
+        <div class="project-links">
+          <a href="projects/pareto-revenue.html" class="btn btn-amber">Read Case Study &rarr;</a>
+          <a href="https://github.com/AOMINHTAM/pareto-revenue-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. ARCHITECTURE & STACK -->
+  <section id="architecture" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">ARCHITECTURE & TECH STACK</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Analytics Engineering</h4>
+          <p class="card-sub">Data modeling & testing</p>
+          <div class="tech-tags">
+            <span>dbt</span>
+            <span>Snowflake</span>
+            <span>Star Schema</span>
+            <span>Data Quality Testing</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Data Analysis & BI</h4>
+          <p class="card-sub">Querying & Visualization</p>
+          <div class="tech-tags">
+            <span>Advanced SQL</span>
+            <span>Python (Pandas, NumPy)</span>
+            <span>Plotly (Sankey / Funnel)</span>
+            <span>mlxtend (Apriori)</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Core & Automation</h4>
+          <p class="card-sub">Languages & Containers</p>
+          <div class="tech-tags">
+            <span>Python</span>
+            <span>Apache Airflow</span>
+            <span>Docker</span>
+            <span>Google Apps Script</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CERTIFICATIONS -->
+  <section id="certifications" class="section">
+    <div class="container">
+      <h2 class="section-title">CERTIFICATIONS</h2>
+      <div class="cert-grid">
+        <div class="card cert-card">
+          <div class="cert-header">
+            <div class="cert-issuer-badge">dbt Labs</div>
+            <span class="cert-status">Verified Badge</span>
+          </div>
+          <h3 class="cert-title">dbt Fundamentals</h3>
+          <p class="cert-issuer">Issued by dbt Labs (Badge ID: daf3523f)</p>
+          <p class="cert-desc">
+            Demonstrates core competency in building, testing, and documenting scalable data transformation pipelines and dimensional models using dbt Core & Cloud.
+          </p>
+          <div class="tech-tags">
+            <span>Data Modeling</span>
+            <span>dbt Tests</span>
+            <span>Jinja & Macros</span>
+            <span>Documentation</span>
+            <span>Lineage Graph</span>
+          </div>
+          <div class="cert-action">
+            <a href="https://credentials.getdbt.com/daf3523f-38ca-48fe-9b95-548d6ca7da8d" target="_blank" rel="noopener noreferrer" class="btn btn-amber btn-sm">
+              Verify Credential ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CONTACT -->
+  <section id="contact" class="section section-alt">
+    <div class="container text-center">
+      <h2 class="section-title">GET IN TOUCH</h2>
+      <p class="contact-sub">Open to Data Analyst & Analytics Engineer internship and junior roles, as well as data architecture discussions.</p>
+      <div class="cta-row justify-center">
+        <a href="mailto:aominhtam@gmail.com" class="btn btn-amber">Send Email</a>
+        <button class="btn btn-outline" onclick="copyEmail()">📋 Copy Email</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
