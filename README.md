@@ -2,7 +2,7 @@
 
 An interactive, responsive portfolio website showcasing technical projects, data pipelines, and analytical case studies across the Modern Data Stack (dbt, Snowflake, Airflow, Python, SQL).
 
-🔗 **Live Website:** [portfolio-data-analytics.vercel.app](https://portfolio-data-analytics.vercel.app) *(or your Vercel deployment link)*
+🔗 **Live Website:** https://portfolio-data-analytics-rust.vercel.app/
 
 ---
 
