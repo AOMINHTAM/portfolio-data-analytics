@@ -17,6 +17,46 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Structured Data: Person Schema (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ao Minh Tâm",
+    "alternateName": "Ao Minh Tam",
+    "url": "https://portfolio-data-analytics-rust.vercel.app/",
+    "email": "mailto:aominhtam@gmail.com",
+    "jobTitle": "Data Analyst & Analytics Engineer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Ho Chi Minh City University of Natural Resources and Environment"
+    },
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Ho Chi Minh City University of Natural Resources and Environment"
+    },
+    "sameAs": [
+      "https://github.com/AOMINHTAM",
+      "https://www.linkedin.com/in/ao-minh-t%C3%A2m-bb0a6b337/",
+      "https://credentials.getdbt.com/daf3523f-38ca-48fe-9b95-548d6ca7da8d"
+    ],
+    "knowsAbout": [
+      "Modern Data Stack",
+      "Analytics Engineering",
+      "dbt",
+      "Snowflake Data Cloud",
+      "Apache Airflow",
+      "Docker",
+      "Advanced SQL",
+      "Python Data Analysis",
+      "Kimball Star Schema",
+      "RFM Customer Segmentation",
+      "Cohort Retention Analysis",
+      "Market Basket Analysis"
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -102,10 +142,10 @@
       <h2 class="section-title">ABOUT ME</h2>
       <div class="card card-body">
         <p>
-          I am an Information Technology student at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE). My career path is dedicated to bridging the gap between <strong>Data Analysis (DA)</strong> and <strong>Analytics Engineering (AE)</strong>.
+          I am an Information Technology student at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE). My career path is dedicated to bridging the gap between <strong>Data Analysis (DA)</strong> and <strong>Analytics Engineering (AE)</strong>[cite: 1].
         </p>
         <p>
-          I emphasize precision, data integrity, and architectural scalability: transforming raw unstructured data into clean, business-ready Data Marts via Star Schema models, automating data quality testing protocols, and deriving high-impact business insights through network graph visualizations, clickstream funnel diagnostics, and algorithmic data mining.
+          I emphasize precision, data integrity, and architectural scalability: transforming raw unstructured data into clean, business-ready Data Marts via Star Schema models, automating data quality testing protocols, and deriving high-impact business insights through network graph visualizations, clickstream funnel diagnostics, and algorithmic data mining[cite: 1].
         </p>
       </div>
     </div>
@@ -120,7 +160,7 @@
           <span class="timeline-date">2024 - PRESENT</span>
           <h3>Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE)</h3>
           <p class="timeline-role">Bachelor of Information Technology</p>
-          <p class="timeline-desc">Focused on Database Management Systems, Analytics Engineering, Modern Data Architecture, and Process Automation.</p>
+          <p class="timeline-desc">Focused on Database Management Systems, Analytics Engineering, Modern Data Architecture, and Process Automation[cite: 1].</p>
         </div>
       </div>
     </div>
@@ -131,12 +171,12 @@
     <div class="container">
       <h2 class="section-title">FEATURED PROJECTS</h2>
       
-      <!-- Project 1: Pipeline & AE (ĐÃ SỬA LINK REPO) -->
+      <!-- Project 1: Pipeline & AE -->
       <div class="card project-card">
         <div class="project-badge">FEATURED PIPELINE • ANALYTICS ENGINEERING</div>
         <h3>Automated End-to-End Data Pipeline & Modeling</h3>
         <p class="project-desc">
-          A fully automated ELT data ecosystem: Transforming and modeling analytical datasets using <strong>dbt</strong>, hosted on <strong>Snowflake</strong> Data Cloud, with end-to-end orchestration and scheduling managed by <strong>Apache Airflow</strong> in containerized Docker environments.
+          A fully automated ELT data ecosystem: Transforming and modeling analytical datasets using <strong>dbt</strong>, hosted on <strong>Snowflake</strong> Data Cloud, with end-to-end orchestration and scheduling managed by <strong>Apache Airflow</strong> in containerized Docker environments[cite: 1].
         </p>
         <div class="tech-tags">
           <span>dbt</span>
@@ -157,7 +197,7 @@
         <div class="project-badge">NETWORK VISUALIZATION • FLOW DIAGNOSTICS</div>
         <h3>User Journey & Traffic Flow Analysis via Plotly Sankey</h3>
         <p class="project-desc">
-          Interactive network flow modeling tracking multi-touch customer behavior across Acquisition (UTM &rarr; Device &rarr; Landing Page &rarr; Conversion) and Retention (1st &rarr; 2nd &rarr; 3rd Purchase). Solved circular link DAG crashes via chronological prefixing, optimized 1M+ row joins, and highlighted cross-pollination patterns between flagship SKUs.
+          Interactive network flow modeling tracking multi-touch customer behavior across Acquisition (UTM &rarr; Device &rarr; Landing Page &rarr; Conversion) and Retention (1st &rarr; 2nd &rarr; 3rd Purchase)[cite: 1]. Solved circular link DAG crashes via chronological prefixing, optimized 1M+ row joins, and highlighted cross-pollination patterns between flagship SKUs[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python</span>
@@ -177,7 +217,7 @@
         <div class="project-badge">E-COMMERCE DIAGNOSTICS • FUNNEL OPTIMIZATION</div>
         <h3>Product Performance & Conversion Funnel Analysis</h3>
         <p class="project-desc">
-          Session-level clickstream funnel diagnostics tracking user progression from Catalog to Purchase. Uncovered the "Love Bear Paradox" (low 10% catalog visibility vs. superior 55.6% cart-add rate), audited a 66% checkout abandonment drop-off, and engineered interactive Plotly funnels.
+          Session-level clickstream funnel diagnostics tracking user progression from Catalog to Purchase[cite: 1]. Uncovered the "Love Bear Paradox" (low 10% catalog visibility vs. superior 55.6% cart-add rate), audited a 66% checkout abandonment drop-off, and engineered interactive Plotly funnels[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python</span>
@@ -197,7 +237,7 @@
         <div class="project-badge">ALGORITHMIC MINING • COMMERCE STRATEGY</div>
         <h3>Market Basket Analysis & Product Bundling Strategy</h3>
         <p class="project-desc">
-          Algorithmic transactional analytics using the Apriori algorithm and Association Rules mining. Extracted high-conversion cross-sell combinations (Lift 4.25, 45% confidence), engineered OOM prevention protocols via support tuning, and created themed product bundles to drive Average Order Value (AOV).
+          Algorithmic transactional analytics using the Apriori algorithm and Association Rules mining[cite: 1]. Extracted high-conversion cross-sell combinations (Lift 4.25, 45% confidence), engineered OOM prevention protocols via support tuning, and created themed product bundles to drive Average Order Value (AOV)[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python</span>
@@ -217,7 +257,7 @@
         <div class="project-badge">CUSTOMER INTELLIGENCE • LIFECYCLE ANALYTICS</div>
         <h3>Customer 360 & RFM Segmentation Analysis</h3>
         <p class="project-desc">
-          End-to-end customer analytics covering 51,290 transactions across 17,415 accounts. Built dynamic quantile RFM scoring, hierarchical Treemap revenue decomposition, and demographic Customer 360 profiling to eliminate marketing CAC waste on churned accounts while preserving core Champions ($2.1M+ revenue).
+          End-to-end customer analytics covering 51,290 transactions across 17,415 accounts[cite: 1]. Built dynamic quantile RFM scoring, hierarchical Treemap revenue decomposition, and demographic Customer 360 profiling to eliminate marketing CAC waste on churned accounts while preserving core Champions ($2.1M+ revenue)[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python (Pandas, NumPy)</span>
@@ -237,7 +277,7 @@
         <div class="project-badge">BEHAVIORAL ANALYTICS • RETENTION MODELING</div>
         <h3>Cohort Analysis & Customer Retention Dynamics</h3>
         <p class="project-desc">
-          Time-based cohort retention modeling auditing a severe Month-1 drop-off (1%–3% baseline). Resolved left-truncation bias in acquisition dates, paired dual-panel acquisition bar charts with heatmap matrices, and uncovered the Income Profitability Paradox between B2B restock cycles and B2C churn.
+          Time-based cohort retention modeling auditing a severe Month-1 drop-off (1%–3% baseline)[cite: 1]. Resolved left-truncation bias in acquisition dates, paired dual-panel acquisition bar charts with heatmap matrices, and uncovered the Income Profitability Paradox between B2B restock cycles and B2C churn[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python (Pandas)</span>
@@ -257,7 +297,7 @@
         <div class="project-badge">COMMERCIAL ANALYTICS • BUDGET OPTIMIZATION</div>
         <h3>Customer Profitability Segmentation via Pareto ABC Analysis</h3>
         <p class="project-desc">
-          Customer profitability tiering across 51,290 transactions and 17,415 accounts. Proved hyper-concentration (12.94% VIPs generating 80% total profit), audited a 500 physical luxury gift constraint, profiled demographic personas, and designed a tiered digital/physical VIP retention strategy.
+          Customer profitability tiering across 51,290 transactions and 17,415 accounts[cite: 1]. Proved hyper-concentration (12.94% VIPs generating 80% total profit), audited a 500 physical luxury gift constraint, profiled demographic personas, and designed a tiered digital/physical VIP retention strategy[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python (Pandas, NumPy)</span>
@@ -277,7 +317,7 @@
         <div class="project-badge">E-COMMERCE • REVENUE DRIVERS</div>
         <h3>TeddyWorld — Revenue Contribution Analysis via Pareto (80/20)</h3>
         <p class="project-desc">
-          Product revenue concentration modeling on 32,000+ e-commerce orders. Calculated Net Revenue post-refunds, identified that 3 core SKUs generate ~82% of top-line revenue, exposed portfolio cash-flow vulnerability from a single 45%+ SKU, and formulated dynamic safety-stock policies.
+          Product revenue concentration modeling on 32,000+ e-commerce orders[cite: 1]. Calculated Net Revenue post-refunds, identified that 3 core SKUs generate ~82% of top-line revenue, exposed portfolio cash-flow vulnerability from a single 45%+ SKU, and formulated dynamic safety-stock policies[cite: 1].
         </p>
         <div class="tech-tags">
           <span>Python (Pandas)</span>
@@ -344,9 +384,9 @@
             <span class="cert-status">Verified Badge</span>
           </div>
           <h3 class="cert-title">dbt Fundamentals</h3>
-          <p class="cert-issuer">Issued by dbt Labs (Badge ID: daf3523f)</p>
+          <p class="cert-issuer">Issued by dbt Labs (Badge ID: daf3523f)[cite: 1]</p>
           <p class="cert-desc">
-            Demonstrates core competency in building, testing, and documenting scalable data transformation pipelines and dimensional models using dbt Core & Cloud.
+            Demonstrates core competency in building, testing, and documenting scalable data transformation pipelines and dimensional models using dbt Core & Cloud[cite: 1].
           </p>
           <div class="tech-tags">
             <span>Data Modeling</span>
@@ -369,7 +409,7 @@
   <section id="contact" class="section section-alt">
     <div class="container text-center">
       <h2 class="section-title">GET IN TOUCH</h2>
-      <p class="contact-sub">Open to Data Analyst & Analytics Engineer internship and junior roles, as well as data architecture discussions.</p>
+      <p class="contact-sub">Open to Data Analyst & Analytics Engineer internship and junior roles, as well as data architecture discussions[cite: 1].</p>
       <div class="cta-row justify-center">
         <a href="mailto:aominhtam@gmail.com" class="btn btn-amber">Send Email</a>
         <button class="btn btn-outline" onclick="copyEmail()">📋 Copy Email</button>
