@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRB4RENV7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VRB4RENV7J');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Study: TeddyWorld Pareto Revenue Analysis | Ao Minh Tam</title>
+  <title>Case Study: Pareto Revenue Analysis | Ao Minh Tam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
@@ -34,117 +42,51 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
       
       <div class="detail-header">
-        <span class="project-badge">E-COMMERCE ANALYTICS • CASE STUDY</span>
+        <span class="project-badge">E-COMMERCE • REVENUE DRIVERS</span>
         <h1>TeddyWorld — Revenue Contribution Analysis via Pareto (80/20)</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Matplotlib, Seaborn, Jupyter</span>
-          <span><strong>Dataset:</strong> 32,000+ E-commerce Orders</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, Matplotlib, Seaborn, Dual-Axis Visualizations</span>
+          <span><strong>Scale:</strong> 32,000+ E-Commerce Orders / Multi-SKU Portfolio</span>
         </div>
       </div>
 
       <div class="detail-card">
-        
-        <!-- 1. Business Context -->
+        <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Context & Objectives</h2>
+          <h2>1. Business Scenario & Net Revenue Concentration</h2>
           <p>
-            TeddyWorld retails a wide catalog of plush toys and gift accessories. Management needed to assess portfolio revenue concentration to optimize marketing budget allocation and warehouse stock policies.
+            Applied the Pareto Principle (80/20 Rule) to quantify revenue concentration post-refund deductions, identifying core revenue drivers and supply chain risks across TeddyWorld's product catalog.
           </p>
+        </div>
+
+        <!-- 2. Findings -->
+        <div class="detail-block">
+          <h2>2. Key Findings & Pareto Classification</h2>
           <ul>
-            <li>Calculate accurate Net Revenue post-refunds (<code>Net Revenue = Gross Revenue - Refunds</code>).</li>
-            <li>Determine cumulative revenue contribution per SKU using descending running sums.</li>
-            <li>Segment products into Pareto thresholds: <strong>Top 80% Core</strong> vs. <strong>Bottom 20% Tail</strong>.</li>
-            <li>Deliver actionable strategic recommendations for inventory management and digital ad spend.</li>
+            <li><strong>Hyper-Concentration:</strong> Only 3 core SKUs generate ~82% of top-line company net revenue.</li>
+            <li><strong>Single-Point-of-Failure Risk:</strong> A single product (<em>The Original Mr. Fuzzy</em>) accounts for &gt;45% of gross cash flow, exposing the business to inventory stockout shocks.</li>
           </ul>
         </div>
 
-        <!-- 2. Findings & Breakdown -->
+        <!-- 3. Strategy -->
         <div class="detail-block">
-          <h2>2. Key Findings & Cumulative Contribution</h2>
-          <p>
-            The Pareto Principle (80/20 Rule) was fully validated: just <strong>3 core SKUs</strong> account for <strong>~81.9% of total net revenue</strong>.
-          </p>
-          <div style="overflow-x: auto; margin-bottom: 20px;">
-            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
-              <thead>
-                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
-                  <th style="padding: 10px;">Rank</th>
-                  <th style="padding: 10px;">Product Name</th>
-                  <th style="padding: 10px;">Units Sold</th>
-                  <th style="padding: 10px;">Net Revenue</th>
-                  <th style="padding: 10px;">Share (%)</th>
-                  <th style="padding: 10px;">Cumulative (%)</th>
-                  <th style="padding: 10px;">Pareto Segment</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">1</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Original Mr. Fuzzy</td>
-                  <td style="padding: 10px;">15,200</td>
-                  <td style="padding: 10px;">$485,000</td>
-                  <td style="padding: 10px;">45.2%</td>
-                  <td style="padding: 10px;">45.2%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">2</td>
-                  <td style="padding: 10px; color: var(--text-main);">Forever Bear</td>
-                  <td style="padding: 10px;">8,400</td>
-                  <td style="padding: 10px;">$268,800</td>
-                  <td style="padding: 10px;">25.1%</td>
-                  <td style="padding: 10px;">70.3%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">3</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Birthday Sugar Panda</td>
-                  <td style="padding: 10px;">3,900</td>
-                  <td style="padding: 10px;">$124,800</td>
-                  <td style="padding: 10px;">11.6%</td>
-                  <td style="padding: 10px;">81.9%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">4</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Hudson River Mini bear</td>
-                  <td style="padding: 10px;">3,100</td>
-                  <td style="padding: 10px;">$99,200</td>
-                  <td style="padding: 10px;">9.3%</td>
-                  <td style="padding: 10px;">91.2%</td>
-                  <td style="padding: 10px; color: var(--text-muted);">Bottom 20% (Tail)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- 3. Engineering & Business Insights -->
-        <div class="detail-block">
-          <h2>3. Business Insights & Engineering Notes</h2>
+          <h2>3. Actionable Supply Chain Recommendations</h2>
           <ul>
-            <li><strong>Single SKU Vulnerability:</strong> Over 45% of net revenue depends entirely on <em>The Original Mr. Fuzzy</em>. Any supply chain bottleneck on this SKU directly disrupts cash flow.</li>
-            <li><strong>Underperforming Long Tail:</strong> Low-velocity accessories consume valuable warehouse space while offering negligible contribution margins.</li>
-            <li><strong>Technical Guardrail:</strong> Refund records must be subtracted prior to grouping to avoid gross revenue inflation. Strict descending sorting (`sort_values(ascending=False)`) is mandated before `.cumsum()`.</li>
+            <li><strong>Dynamic Safety Stock:</strong> Established dynamic safety stock quotas prioritizing the top 3 SKUs to avoid cash flow bottlenecks.</li>
+            <li><strong>Long-Tail Rationalization:</strong> Optimized inventory holdings on low-margin products contributing &lt;5% of cumulative sales.</li>
           </ul>
         </div>
 
-        <!-- 4. Strategic Recommendations -->
+        <!-- 4. Repo Actions -->
         <div class="detail-block">
-          <h2>4. Actionable Strategic Recommendations</h2>
-          <ul>
-            <li><strong>Prioritized Inventory Buffer:</strong> Enforce strict safety stocks and lead-time tracking for the Top 3 SKUs to avoid peak-season stockouts.</li>
-            <li><strong>Product Bundling:</strong> Pair slow-moving accessories with top-performing plush toys to liquidate stagnant inventory.</li>
-            <li><strong>Digital Marketing Reallocation:</strong> Channel 70–80% of acquisition ad budgets into the Top 3 conversion champions to maximize ROAS.</li>
-          </ul>
-          <div class="project-actions" style="margin-top: 24px;">
+          <h2>4. Technical Artifacts</h2>
+          <div class="project-links" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/pareto-revenue-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </main>

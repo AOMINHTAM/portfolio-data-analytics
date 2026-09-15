@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRB4RENV7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VRB4RENV7J');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Study: Market Basket Analysis | Ao Minh Tam</title>
+  <title>Case Study: Market Basket Analysis & Product Bundling | Ao Minh Tam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
@@ -34,71 +42,76 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
       
       <div class="detail-header">
-        <span class="project-badge">ASSOCIATION RULES • CASE STUDY</span>
+        <span class="project-badge">ALGORITHMIC MINING • COMMERCE STRATEGY</span>
         <h1>Market Basket Analysis & Product Bundling Strategy</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, mlxtend (Apriori), Pandas, NumPy, Seaborn</span>
-          <span><strong>Focus:</strong> Association Rules Mining, Support/Confidence/Lift Optimization</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, mlxtend (Apriori, association_rules), TransactionEncoder</span>
+          <span><strong>Technique:</strong> Frequent Itemset Mining &amp; Cross-Sell Optimization</span>
         </div>
       </div>
 
       <div class="detail-card">
-        
-        <!-- 1. Context -->
+        <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Context & Strategic Objectives</h2>
+          <h2>1. Business Objectives & Algorithmic Mining</h2>
           <p>
-            The e-commerce platform sought to increase Average Order Value (AOV) by replacing generic cross-selling prompts with algorithmic association rules mining.
+            Analyzed co-purchase affinities across multi-item transactions to engineer high-margin product bundles ("Weekend Reset Kit") and recommendation rules driving Average Order Value (AOV).
           </p>
+        </div>
+
+        <!-- 2. Association Rules -->
+        <div class="detail-block">
+          <h2>2. Top Discovered Association Rules</h2>
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
+                  <th style="padding: 10px;">Antecedents</th>
+                  <th style="padding: 10px;">Consequents</th>
+                  <th style="padding: 10px;">Support</th>
+                  <th style="padding: 10px;">Confidence</th>
+                  <th style="padding: 10px;">Lift</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Bath &amp; Body Scrub</td>
+                  <td style="padding: 10px; color: var(--text-main);">Moisturizing Body Butter</td>
+                  <td style="padding: 10px;">1.8%</td>
+                  <td style="padding: 10px; font-weight: 700;">45.2%</td>
+                  <td style="padding: 10px; color: #10b981; font-weight: 700;">4.25x</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px;">Facial Cleanser</td>
+                  <td style="padding: 10px;">Hydrating Toner</td>
+                  <td style="padding: 10px;">2.4%</td>
+                  <td style="padding: 10px;">38.6%</td>
+                  <td style="padding: 10px; color: #10b981; font-weight: 700;">3.12x</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Engineering Challenges -->
+        <div class="detail-block">
+          <h2>3. Performance Engineering & Memory Safeguards</h2>
           <ul>
-            <li>Perform Exploratory Data Analysis (EDA) on basket size distributions and top-moving categories.</li>
-            <li>Apply the <strong>Apriori Algorithm</strong> to compute Support, Confidence, and Lift for co-occurring product combinations.</li>
-            <li>Identify cohesive "Shopping Ecosystems" to engineer high-margin product bundles (e.g., <em>Weekend Reset Kit</em>).</li>
+            <li><strong>OOM Prevention via Threshold Calibration:</strong> Tuned minimum support thresholds (<code>min_support=0.005</code>) to eliminate RAM blowups caused by combinatorial explosions of low-frequency items.</li>
+            <li><strong>Basket Deduplication:</strong> Applied <code>set()</code> / <code>.unique()</code> preprocessing inside multi-category transaction strings to avoid artificial support inflation.</li>
           </ul>
         </div>
 
-        <!-- 2. Key Findings -->
+        <!-- 4. Repo Actions -->
         <div class="detail-block">
-          <h2>2. Key Findings & Behavioral Affinity Rules</h2>
-          <ul>
-            <li><strong>Highest Lift Linkage:</strong>
-              <br /><code>[Candles, Room Sprays, Face Masks] &rarr; [Nail Care, Bath Oils/Bombs]</code>
-              <ul>
-                <li><strong>Lift: 4.25</strong> (Customers purchasing the antecedent are 4.25x more likely to buy the consequent compared to random baseline).</li>
-                <li><strong>Confidence: 45%</strong> of buyers adding Candles and Masks actively add Nail Care or Bath Oils to finalize their cart.</li>
-              </ul>
-            </li>
-            <li><strong>Shopping Ecosystem A ("Home Spa"):</strong> A self-care basket containing <em>Candles + Face Masks + Bath Oils + Nail Care</em> purchased to simulate an at-home spa experience.</li>
-            <li><strong>Shopping Ecosystem B ("Beauty from Within"):</strong> A wellness-driven basket combining <em>Vitamins/Supplements + Hand Creams + Face Care</em>, representing a disciplined health-conscious demographic.</li>
-          </ul>
-        </div>
-
-        <!-- 3. Technical Debt & Fixes -->
-        <div class="detail-block">
-          <h2>3. Technical Debt Audited & Bug Fixes</h2>
-          <ul>
-            <li><strong>Out-of-Memory (OOM) Prevention via Support Tuning:</strong> Initial `min_support` of `0.001` (0.1%) generated millions of combinatorial itemsets, crashing kernel RAM. Recalibrated threshold to `0.005` (0.5%) to maintain compute stability without losing high-lift rules.</li>
-            <li><strong>In-Basket Deduplication:</strong> Refactored raw item aggregation using <code>.unique()</code>, eliminating repeated subcategories within a single `OrderID` prior to `TransactionEncoder` processing.</li>
-            <li><strong>Pre-Algorithmic EDA Pipeline:</strong> Engineered exploratory subplots visualizing top-10 category velocity and basket-size distributions before model execution.</li>
-          </ul>
-        </div>
-
-        <!-- 4. Recommendations -->
-        <div class="detail-block">
-          <h2>4. Actionable Commercial Recommendations</h2>
-          <ul>
-            <li><strong>Launch the "Weekend Reset Kit":</strong> Package Ecosystem A items together with a 10% bundle discount, increasing Average Order Value.</li>
-            <li><strong>Dynamic Checkout Cross-Selling:</strong> When a user adds <em>Candles</em> to cart, trigger a dynamic prompt suggesting <em>Bath Bombs</em> instead of competing candle brands.</li>
-            <li><strong>Targeted Content Marketing:</strong> Direct the creative team to produce short-form video content titled <em>"The 4-Step Post-Deadline Self-Care Routine"</em> featuring the Ecosystem A product combination.</li>
-          </ul>
-          <div class="project-actions" style="margin-top: 24px;">
+          <h2>4. Technical Artifacts</h2>
+          <div class="project-links" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/market-basket-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </main>

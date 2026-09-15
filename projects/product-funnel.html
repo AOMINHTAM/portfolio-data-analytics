@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRB4RENV7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VRB4RENV7J');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Case Study: Product Conversion Funnel Analysis | Ao Minh Tam</title>
@@ -8,7 +17,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
@@ -34,70 +42,85 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
       
       <div class="detail-header">
-        <span class="project-badge">E-COMMERCE DIAGNOSTICS • CASE STUDY</span>
+        <span class="project-badge">E-COMMERCE DIAGNOSTICS • FUNNEL OPTIMIZATION</span>
         <h1>Product Performance & Conversion Funnel Analysis</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Plotly (Funnel), Seaborn, Matplotlib</span>
-          <span><strong>Scope:</strong> Session-Based Clickstream Funnels & Product Net Revenue Auditing</span>
+          <span><strong>Stack:</strong> Python, Pandas, Plotly (Funnel), Clickstream Session Diagnostics</span>
+          <span><strong>Scale:</strong> 32,000+ Orders / 500,000+ Clickstream Sessions</span>
         </div>
       </div>
 
       <div class="detail-card">
-        
-        <!-- 1. Context & Objectives -->
+        <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <h2>1. Business Scenario & Drop-off Diagnostics</h2>
           <p>
-            The business was experiencing a significant drop-off between top-of-funnel traffic and completed sales. The analytics team conducted an audit of product-level conversion steps to identify leakages within the browsing-to-purchase journey.
+            Tracked customer session progression across critical e-commerce milestones: <code>/products</code> &rarr; <code>Product Page</code> &rarr; <code>/cart</code> &rarr; <code>/shipping</code> &rarr; <code>/billing</code> &rarr; <code>/thank-you</code>. Pinpointed checkout bottlenecks and identified conversion anomalies across product catalogs.
           </p>
+        </div>
+
+        <!-- 2. Funnel Benchmarks -->
+        <div class="detail-block">
+          <h2>2. Conversion Funnel Metrics Breakdown</h2>
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
+                  <th style="padding: 10px;">Funnel Stage</th>
+                  <th style="padding: 10px;">Page Path</th>
+                  <th style="padding: 10px;">Conversion Step Rate</th>
+                  <th style="padding: 10px;">Drop-off Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Catalog Browse</td>
+                  <td style="padding: 10px;"><code>/products</code></td>
+                  <td style="padding: 10px;">100.0%</td>
+                  <td style="padding: 10px;">-</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px;">Product View</td>
+                  <td style="padding: 10px;"><code>/the-original-mr-fuzzy</code></td>
+                  <td style="padding: 10px;">74.2%</td>
+                  <td style="padding: 10px;">25.8%</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px;">Cart Add</td>
+                  <td style="padding: 10px;"><code>/cart</code></td>
+                  <td style="padding: 10px;">44.8%</td>
+                  <td style="padding: 10px;">55.2%</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; color: #ef4444; font-weight: 700;">Billing Drop-off</td>
+                  <td style="padding: 10px;"><code>/billing</code></td>
+                  <td style="padding: 10px;">34.0%</td>
+                  <td style="padding: 10px; color: #ef4444; font-weight: 700;">66.0% Drop-off</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Key Findings -->
+        <div class="detail-block">
+          <h2>3. Key Findings & The "Love Bear Paradox"</h2>
           <ul>
-            <li>Calculate GAAP-aligned Net Revenue after factoring in product refunds across all catalog items.</li>
-            <li>Construct session-based conversion funnels tracking users across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart</code> &rarr; <code>Checkout (/thank-you)</code>.</li>
-            <li>Compare conversion performance between flagship SKUs: <em>The Original Mr. Fuzzy</em> vs. <em>The Forever Love Bear</em>.</li>
+            <li><strong>The Love Bear Paradox:</strong> Despite receiving only ~10% of total product page views, <em>Love Bear</em> achieved an exceptional <strong>55.6% Cart-Add Rate</strong> (vs. 43.1% for Mr. Fuzzy). Recommendation: Promote Love Bear to primary hero banner slots.</li>
+            <li><strong>The 66% Billing Bottleneck:</strong> Two-thirds of engaged shoppers dropped off between shipping and billing, indicating UX friction and surprise shipping surcharges.</li>
           </ul>
         </div>
 
-        <!-- 2. Funnel Diagnostics & Key Findings -->
+        <!-- 4. Repo Actions -->
         <div class="detail-block">
-          <h2>2. Key Findings & The "Love Bear" Paradox</h2>
-          <ul>
-            <li><strong>The "Love Bear" Paradox:</strong>
-              <ul>
-                <li><em>Top-of-Funnel (Catalog &rarr; PDP):</em> <em>Mr. Fuzzy</em> captures a massive <strong>62.2%</strong> of all catalog traffic, while <em>Love Bear</em> captures only <strong>10.0%</strong> due to poor placement.</li>
-                <li><em>Mid-Funnel (PDP &rarr; Cart):</em> Once a user views <em>Love Bear</em>, it generates a significantly higher Cart-Add conversion rate (<strong>55.6%</strong>) compared to <em>Mr. Fuzzy</em> (<strong>43.0%</strong>). The product is persuasive but under-exposed.</li>
-              </ul>
-            </li>
-            <li><strong>Severe Checkout Bottleneck:</strong> Across all product lines, the step from Cart to Completed Order experiences a <strong>66% abandonment rate</strong>.</li>
-            <li><strong>Quality Control Red Flag:</strong> While <em>Mr. Fuzzy</em> is the primary net revenue driver, <em>The Birthday Sugar Panda</em> exhibits the highest refund rate in the catalog, requiring immediate supplier reviews.</li>
-          </ul>
-        </div>
-
-        <!-- 3. Technical Refactoring & Improvements -->
-        <div class="detail-block">
-          <h2>3. Technical QA & Engineering Refactoring</h2>
-          <ul>
-            <li><strong>Interactive Funnel Architecture:</strong> Migrated legacy Matplotlib horizontal bar plots to <code>plotly.graph_objects.Funnel</code>, enabling interactive hover states and step-to-step drop-off ratios.</li>
-            <li><strong>Typecasting Optimization:</strong> Replaced repeated datetime casting with a unified ingestion loop utilizing <code>pd.to_datetime()</code>.</li>
-            <li><strong>Dependency Deprecation Fixes:</strong> Modernized Seaborn plotting parameters (<code>hue='product_name'</code>, <code>legend=False</code>) to eliminate deprecation warnings and ensure compatibility with future releases.</li>
-          </ul>
-        </div>
-
-        <!-- 4. Strategic Recommendations -->
-        <div class="detail-block">
-          <h2>4. Actionable Strategic Recommendations</h2>
-          <ul>
-            <li><strong>Traffic Injection via Cross-Selling:</strong> Inject <em>Love Bear</em> as a "Frequently Bought Together" widget directly onto <em>Mr. Fuzzy's</em> high-traffic product page.</li>
-            <li><strong>Checkout UX Overhaul:</strong> Audit hidden shipping fees and eliminate mandatory account creation to address the 66% cart abandonment drop-off.</li>
-            <li><strong>Automated Abandoned Cart Flows:</strong> Trigger automated email and SMS recovery sequences at 1 hour and 24 hours post-abandonment.</li>
-          </ul>
-          <div class="project-actions" style="margin-top: 24px;">
+          <h2>4. Technical Artifacts & Code</h2>
+          <div class="project-links" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </main>

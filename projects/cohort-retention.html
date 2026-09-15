@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRB4RENV7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VRB4RENV7J');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Study: Cohort Analysis & Retention Dynamics | Ao Minh Tam</title>
+  <title>Case Study: Cohort Retention Dynamics | Ao Minh Tam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
@@ -34,72 +42,51 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
       
       <div class="detail-header">
-        <span class="project-badge">BEHAVIORAL ANALYTICS • CASE STUDY</span>
+        <span class="project-badge">BEHAVIORAL ANALYTICS • RETENTION MODELING</span>
         <h1>Cohort Analysis & Customer Retention Dynamics</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Matplotlib, Seaborn</span>
-          <span><strong>Focus:</strong> Time-Based Cohorts, Churn Auditing, B2B/B2C Segmentation</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, Matplotlib, Seaborn, Statistical Auditing</span>
+          <span><strong>Methodology:</strong> Time-Based Cohort Matrix &amp; Acquisition Weighting</span>
         </div>
       </div>
 
       <div class="detail-card">
-        
-        <!-- 1. Context -->
+        <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Scenario & The "Leaky Bucket" Problem</h2>
+          <h2>1. Business Scenario & The Month-1 Retention Cliff</h2>
           <p>
-            Despite steady top-of-funnel acquisition, the business suffered unpredictable top-line revenue fluctuations. The analytics team set out to investigate a severe "leaky bucket" phenomenon where newly acquired customers churned prematurely before returning positive ROI.
+            Tracked customer lifecycle retention matrices across acquisition months to audit a steep drop-off between Month 0 and Month 1 (baseline retention of 1.5%–3%).
           </p>
+        </div>
+
+        <!-- 2. Technical Troubleshooting -->
+        <div class="detail-block">
+          <h2>2. Auditing Left-Truncation Bias (Technical Review)</h2>
           <ul>
-            <li>Build a granular Time-Based Cohort model (Acquisition Month vs. Elapsed Months).</li>
-            <li>Segment retention performance to identify structural differences between Corporate (B2B) and Consumer (B2C) units.</li>
-            <li>Evaluate the Scale vs. Efficiency trade-off across customer income brackets.</li>
-            <li>Audit and resolve data engineering traps including left-truncation bias in cohort tracking.</li>
+            <li><strong>Left-Truncation Bias Rectified:</strong> Resolved a critical flaw where first-purchase dates were calculated <em>after</em> filtering for year 2022, erroneously misclassifying 2020–2021 repeat buyers as new 2022 acquisitions.</li>
+            <li><strong>Dual-Panel Layout:</strong> Paired acquisition volume bar charts directly with heatmap matrices to prevent over-interpreting percentages from small sample sizes.</li>
           </ul>
         </div>
 
-        <!-- 2. Key Findings -->
+        <!-- 3. Strategic Findings -->
         <div class="detail-block">
-          <h2>2. Key Findings & Behavioral Discoveries</h2>
+          <h2>3. Commercial Findings & Restock Cycles</h2>
           <ul>
-            <li><strong>The Month-1 Churn Crisis:</strong> While Q1 acquisition volume was high, Month-1 retention collapsed to a dismal <strong>1% to 3% baseline</strong> across all cohorts, proving a complete lack of post-purchase onboarding engagement.</li>
-            <li><strong>Corporate (B2B) Restock Cyclicality:</strong> Unlike erratic B2C buying, B2B corporate buyers exhibited clear retention spikes (+5% to 6%) at <strong>Month 5</strong> and <strong>Month 8</strong>, reflecting structural inventory restock rhythms.</li>
-            <li><strong>The Income Profitability Paradox:</strong>
-              <ul>
-                <li><em>Low-Income Cohort (The Cash Cow):</em> Generated lowest AOV per transaction, but their high volume and consistency produced the largest cumulative profit pool.</li>
-                <li><em>High-Income Cohort (The Cash Grab):</em> Highest profit margin per single order, but had the worst repurchase retention rates.</li>
-              </ul>
-            </li>
+            <li><strong>Cyclical B2B Reorders:</strong> Discovered repurchase surges (+5%–6%) occurring systematically at Month 5 and Month 8, reflecting seasonal B2B bulk restocking cycles.</li>
+            <li><strong>Retention Intervention Window:</strong> Pinpointed Day 14–21 post-first purchase as the critical window for automated email win-backs.</li>
           </ul>
         </div>
 
-        <!-- 3. Technical Debt & Auditing -->
+        <!-- 4. Repo Actions -->
         <div class="detail-block">
-          <h2>3. Technical Debt Audited & Production Bug Fixes</h2>
-          <ul>
-            <li><strong>Eliminated Left-Truncation Bias:</strong> Identified that computing <code>FirstPurchaseDate</code> *after* subsetting 2022 data falsely misclassified returning 2020–2021 buyers as Month-0 acquisitions. Fixed by anchoring first-purchase dates globally across the unpartitioned master table.</li>
-            <li><strong>Cohort Size Weighting Layout:</strong> Paired absolute acquisition volume bar charts side-by-side with retention heatmaps using <code>gridspec_kw={'width_ratios': [1, 4]}</code> to ensure small cohorts were not over-interpreted.</li>
-            <li><strong>Execution Scope Consolidation:</strong> Merged disparate plotting cells into a single Object-Oriented pipeline, resolving broken Matplotlib axes across subplots.</li>
-            <li><strong>Consolidated Master Ingestion:</strong> Refactored repeated relational joins into an upstream unified <code>df_master</code> table to optimize memory overhead.</li>
-          </ul>
-        </div>
-
-        <!-- 4. Strategic Recommendations -->
-        <div class="detail-block">
-          <h2>4. Strategic Retention Recommendations</h2>
-          <ul>
-            <li><strong>Automated Post-Purchase Nurture:</strong> Launch an automated email re-engagement or "Subscribe & Save" discount sequence triggering at Day 20–25 to stem the Month-1 cliff.</li>
-            <li><strong>B2B Restock CRM Alerts:</strong> Schedule automated outreach prompts for sales representatives at Month 4 and Month 7 to capture B2B cyclical reorders.</li>
-            <li><strong>First-Session Cart Upsells:</strong> Target High-Income visitors with aggressive first-order cross-sells to maximize revenue capture before churn.</li>
-          </ul>
-          <div class="project-actions" style="margin-top: 24px;">
+          <h2>4. Technical Artifacts</h2>
+          <div class="project-links" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/cohort-retention-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </main>

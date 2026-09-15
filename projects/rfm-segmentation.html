@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRB4RENV7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VRB4RENV7J');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Case Study: Customer 360 & RFM Segmentation | Ao Minh Tam</title>
@@ -8,7 +17,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
@@ -34,144 +42,79 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
       
       <div class="detail-header">
-        <span class="project-badge">CUSTOMER ANALYTICS • CASE STUDY</span>
-        <h1>Customer 360 & RFM Segmentation Analysis</h1>
+        <span class="project-badge">CUSTOMER INTELLIGENCE • LIFECYCLE ANALYTICS</span>
+        <h1>Customer 360 & Dynamic RFM Segmentation Analysis</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Squarify, Seaborn, Matplotlib</span>
-          <span><strong>Scope:</strong> 51,290 Orders across 17,415 Unique Customers</span>
+          <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Squarify (Treemap), Seaborn</span>
+          <span><strong>Scale:</strong> 51,290 Transactions / 17,415 Unique Accounts</span>
         </div>
       </div>
 
       <div class="detail-card">
-        
-        <!-- 1. Context -->
+        <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <h2>1. Business Scenario & Strategic Problem</h2>
           <p>
-            Marketing leadership at cosmetic retailer <em>CosmeticWorld</em> needed to restructure their annual promotional budget for the <strong>New Year Rejuvenation Campaign</strong>, shifting from broad-spectrum discounting toward high-ROI customer lifecycle campaigns.
+            CosmeticWorld suffered from significant marketing budget dilution due to blast campaigns sent to non-responsive accounts. Built quantile-based Recency, Frequency, and Monetary (RFM) segmentation to allocate CRM budgets effectively.
           </p>
-          <ul>
-            <li>Quantify customer behavior across <strong>Recency</strong>, <strong>Frequency</strong>, and <strong>Monetary</strong> dimensions using quantile scoring (`pd.qcut`).</li>
-            <li>Classify the customer base into actionable operational cohorts (<code>Champions</code>, <code>Loyal Customers</code>, <code>Cant Lose Them</code>, <code>Hibernating</code>, <code>Lost</code>).</li>
-            <li>Construct a <strong>Customer 360 Profile</strong> analyzing demographic, geographic, and basket affinities.</li>
-            <li>Suppress unprofitable marketing spend on churned accounts to fund high-touch VIP retention programs.</li>
-          </ul>
         </div>
 
-        <!-- 2. RFM Matrix -->
+        <!-- 2. Segment Breakdown -->
         <div class="detail-block">
-          <h2>2. RFM Segment Performance Matrix</h2>
-          <p>
-            The analysis revealed extreme revenue concentration: <strong>Champions & Loyal Customers account for under 29% of the customer base but generate over 53% of company revenue ($3.45M+)</strong>.
-          </p>
+          <h2>2. Segment Revenue & Volume Decomposition</h2>
           <div style="overflow-x: auto; margin-bottom: 20px;">
             <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
               <thead>
                 <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
-                  <th style="padding: 10px;">RFM Segment</th>
-                  <th style="padding: 10px;">Customer Count</th>
-                  <th style="padding: 10px;">Customer Share (%)</th>
-                  <th style="padding: 10px;">Total Revenue ($)</th>
-                  <th style="padding: 10px;">Revenue Share (%)</th>
-                  <th style="padding: 10px;">Strategic Designation</th>
+                  <th style="padding: 10px;">Segment</th>
+                  <th style="padding: 10px;">Customer Share</th>
+                  <th style="padding: 10px;">Revenue Contribution</th>
+                  <th style="padding: 10px;">Strategic Roadmap</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Champions</td>
-                  <td style="padding: 10px; font-weight: 700; color: var(--text-main);">2,361</td>
-                  <td style="padding: 10px;">13.56%</td>
-                  <td style="padding: 10px; color: var(--amber-light); font-weight: 700;">$2,138,211</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">32.8%</td>
-                  <td style="padding: 10px;">Core Brand Advocates</td>
+                  <td style="padding: 10px;">13.5% (2,361 accounts)</td>
+                  <td style="padding: 10px; color: #10b981; font-weight: 700;">$2.13M (32.8%)</td>
+                  <td style="padding: 10px;">VIP loyalty perks &amp; early access</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Loyal Customers</td>
-                  <td style="padding: 10px;">2,616</td>
-                  <td style="padding: 10px;">15.02%</td>
-                  <td style="padding: 10px;">$1,319,383</td>
-                  <td style="padding: 10px;">20.2%</td>
-                  <td style="padding: 10px;">Consistent Multi-Repurchasers</td>
+                  <td style="padding: 10px; color: #ef4444; font-weight: 700;">Can't Lose Them</td>
+                  <td style="padding: 10px;">4.8% (833 accounts)</td>
+                  <td style="padding: 10px; font-weight: 700;">$653,354 (10.0%)</td>
+                  <td style="padding: 10px; color: #ef4444;">High-incentive win-back campaigns</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Big Spenders</td>
-                  <td style="padding: 10px;">1,979</td>
-                  <td style="padding: 10px;">11.36%</td>
-                  <td style="padding: 10px;">$1,354,794</td>
-                  <td style="padding: 10px;">20.8%</td>
-                  <td style="padding: 10px;">High Basket Value / Low Freq</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: #ef4444; font-weight: 700;">Cant Lose Them</td>
-                  <td style="padding: 10px; font-weight: 700; color: #ef4444;">833</td>
-                  <td style="padding: 10px;">4.78%</td>
-                  <td style="padding: 10px;">$653,354</td>
-                  <td style="padding: 10px;">10.0%</td>
-                  <td style="padding: 10px;">Critical High-Value Churn Risk</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Hibernating</td>
-                  <td style="padding: 10px;">4,701</td>
-                  <td style="padding: 10px;">26.99%</td>
-                  <td style="padding: 10px;">$715,415</td>
-                  <td style="padding: 10px;">11.0%</td>
-                  <td style="padding: 10px;">Inactive / Low Engagement</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Need Attention</td>
-                  <td style="padding: 10px;">3,274</td>
-                  <td style="padding: 10px;">18.80%</td>
-                  <td style="padding: 10px;">$263,137</td>
-                  <td style="padding: 10px;">4.0%</td>
-                  <td style="padding: 10px;">Borderline Engagement</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">New / Promising</td>
-                  <td style="padding: 10px;">1,171</td>
-                  <td style="padding: 10px;">6.72%</td>
-                  <td style="padding: 10px;">$61,198</td>
-                  <td style="padding: 10px;">0.9%</td>
-                  <td style="padding: 10px;">Recent First-Time Buyers</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Lost</td>
-                  <td style="padding: 10px;">480</td>
-                  <td style="padding: 10px;">2.76%</td>
-                  <td style="padding: 10px;">$12,182</td>
-                  <td style="padding: 10px;">0.2%</td>
-                  <td style="padding: 10px;">Dormant Accounts</td>
+                  <td style="padding: 10px;">Lost / Hibernating</td>
+                  <td style="padding: 10px;">31.2% (5,430+ accounts)</td>
+                  <td style="padding: 10px;">8.2%</td>
+                  <td style="padding: 10px;">Suppress paid touchpoints (Save CAC)</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- 3. Customer 360 Insights -->
+        <!-- 3. Strategic Recommendations -->
         <div class="detail-block">
-          <h2>3. Customer 360 View: Demographic & Basket Affinities</h2>
+          <h2>3. Demographic Profiling & Budget Reallocation</h2>
           <ul>
-            <li><strong>Core Demographics:</strong> Peak gross sales (>60%) are driven by ages <strong>25 to 49</strong>. High correlation between degree holders (Bachelor’s/Graduate) averaging $60k–$80k income and top Average Order Value (AOV).</li>
-            <li><strong>Geographic Hubs:</strong> <strong>Asia Pacific</strong> and <strong>Europe</strong> serve as the primary profit engines, outpacing USCA and LATAM markets.</li>
-            <li><strong>Basket Preferences:</strong> Champions heavily prioritize premium self-care lines: <code>Nail Care</code>, <code>Hand Creams</code>, and <code>Body Moisturizers</code>.</li>
+            <li><strong>70% Budget Concentration:</strong> Directed 70% of lifecycle retention budgets exclusively toward <em>Champions</em> and <em>Can't Lose Them</em> tiers.</li>
+            <li><strong>Demographic Personas:</strong> Professionals aged 25–49 with undergraduate degrees generated over 60% of gross margin.</li>
           </ul>
         </div>
 
-        <!-- 4. Recommendations -->
+        <!-- 4. Repo Actions -->
         <div class="detail-block">
-          <h2>4. Actionable Campaign Execution</h2>
-          <ul>
-            <li><strong>70/30 Budget Reallocation:</strong> Allocate 70% of campaign funds exclusively to <strong>Champions</strong> (concierge gifting) and <strong>Cant Lose Them</strong> (tailored win-back reactivation vouchers).</li>
-            <li><strong>Direct Mail Suppression:</strong> Immediately halt expensive SMS and catalog marketing to <strong>Lost</strong> and <strong>Hibernating</strong> cohorts (>5,100 accounts), reducing unnecessary CAC.</li>
-            <li><strong>Cross-Selling Bridge:</strong> Package high-performing items (Nail Care & Hand Creams) as Gift-With-Purchase (GWP) rewards for <strong>New / Promising</strong> buyers to accelerate graduation into Loyal tiers.</li>
-          </ul>
-          <div class="project-actions" style="margin-top: 24px;">
+          <h2>4. Technical Artifacts</h2>
+          <div class="project-links" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </main>
