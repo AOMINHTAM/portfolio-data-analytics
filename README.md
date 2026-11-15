@@ -1,14 +1,14 @@
-# 🌐 Data Analytics & Analytics Engineering Portfolio
+# 🌐 Data Analytics, Data Engineering & Analytics Engineering Portfolio
 
-An interactive, responsive portfolio website showcasing technical projects, data pipelines, and analytical case studies across the Modern Data Stack (dbt, Snowflake, Airflow, Python, SQL).
+An interactive, responsive portfolio website showcasing event-driven Cloud ELT pipelines, Kimball dimensional data models, and behavioral analytics case studies across the Modern Data Stack (AWS, Snowflake, dbt, Airflow 3, Python, SQL, Power BI).
 
-🔗 **Live Website:** https://portfolio-data-analytics-rust.vercel.app/
+🔗 **Live Website:** https://aominhtam-portfolio.vercel.app/
 
 ---
 
 ## 🛠️ Architecture & Tech Stack
 
-* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+).
+* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+) with role-based project filter tabs (`All` / `DA` / `DE` / `AE`).
 * **Styling & Design:** Fully responsive layout, object-oriented CSS design, CSS grid/flexbox, accessibility-first contrast standards.
 * **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
 
@@ -18,12 +18,13 @@ An interactive, responsive portfolio website showcasing technical projects, data
 
 | Project | Domain | Stack |
 | :--- | :--- | :--- |
-| **[dbt-snowflake-data-pipeline](https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline)** | Analytics Engineering | dbt, Snowflake, Apache Airflow, Docker |
+| **[aws-data-pipeline](https://github.com/AOMINHTAM/aws-data-pipeline)** | Data Engineering & AE (Event-Driven ELT) | AWS (S3, SQS, Redshift Serverless, IAM), Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker |
+| **[dbt-snowflake-data-pipeline](https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline)** | Cloud ELT & Analytics Engineering | dbt Core, Snowflake, Apache Airflow (Cosmos), Docker |
 | **[user-journey-sankey-analysis](https://github.com/AOMINHTAM/user-journey-sankey-analysis)** | Clickstream Flow Diagnostics | Python, Pandas, Plotly (Sankey DAG) |
-| **[product-conversion-funnel-analysis](https://github.com/AOMINHTAM/product-conversion-funnel-analysis)** | Conversion Diagnostics | Python, Pandas, Plotly Funnel |
-| **[market-basket-analysis](https://github.com/AOMINHTAM/market-basket-analysis)** | Algorithmic Association Rules | Python, mlxtend (Apriori) |
 | **[customer-rfm-segmentation-analysis](https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis)** | Customer Intelligence | Python, Pandas, Squarify, RFM |
+| **[product-conversion-funnel-analysis](https://github.com/AOMINHTAM/product-conversion-funnel-analysis)** | Conversion Diagnostics | Python, Pandas, Plotly Funnel |
 | **[cohort-retention-analysis](https://github.com/AOMINHTAM/cohort-retention-analysis)** | Retention Modeling | Python, Pandas, Cohort Heatmaps |
+| **[market-basket-analysis](https://github.com/AOMINHTAM/market-basket-analysis)** | Algorithmic Association Rules | Python, mlxtend (Apriori) |
 | **[abc-inventory-analysis](https://github.com/AOMINHTAM/abc-inventory-analysis)** | Customer Profitability | Python, Pareto ABC, IQR Auditing |
 | **[pareto-revenue-analysis](https://github.com/AOMINHTAM/pareto-revenue-analysis)** | Revenue Concentration | Python, Pandas, Dual-Axis Pareto |
 

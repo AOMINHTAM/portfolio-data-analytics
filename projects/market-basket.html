@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Study: Market Basket Analysis | Ao Minh Tam</title>
+  <title>Case Study: Market Basket Analysis | Ao Minh Tâm</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- Favicon Branding (Lùi 1 cấp ra thư mục gốc) -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-  <link rel="alternate icon" href="../favicon.png" type="image/png" />
 </head>
 <body>
 
@@ -38,7 +36,8 @@
         <h1>Market Basket Analysis & Product Bundling Strategy</h1>
         <div class="detail-meta">
           <span><strong>Role:</strong> Data Analyst</span>
-          <span><strong>Stack:</strong> Python 3.x, mlxtend (Apriori), Pandas, NumPy, Seaborn</span>
+          <span><strong>Timeline:</strong> Aug – Sep 2026</span>
+          <span><strong>Stack:</strong> Python 3.x, mlxtend (Apriori), TransactionEncoder, Pandas, NumPy, Seaborn</span>
           <span><strong>Focus:</strong> Association Rules Mining, Support/Confidence/Lift Optimization</span>
         </div>
       </div>
@@ -78,8 +77,8 @@
         <div class="detail-block">
           <h2>3. Technical Debt Audited & Bug Fixes</h2>
           <ul>
-            <li><strong>Out-of-Memory (OOM) Prevention via Support Tuning:</strong> Initial `min_support` of `0.001` (0.1%) generated millions of combinatorial itemsets, crashing kernel RAM. Recalibrated threshold to `0.005` (0.5%) to maintain compute stability without losing high-lift rules.</li>
-            <li><strong>In-Basket Deduplication:</strong> Refactored raw item aggregation using <code>.unique()</code>, eliminating repeated subcategories within a single `OrderID` prior to `TransactionEncoder` processing.</li>
+            <li><strong>Out-of-Memory (OOM) Prevention via Support Tuning:</strong> Initial <code>min_support</code> of <code>0.001</code> (0.1%) generated millions of combinatorial itemsets, crashing kernel RAM. Recalibrated threshold to <code>0.005</code> (0.5%) to maintain compute stability without losing high-lift rules.</li>
+            <li><strong>In-Basket Deduplication:</strong> Refactored raw item aggregation using <code>.unique()</code>, eliminating repeated subcategories within a single <code>OrderID</code> prior to <code>TransactionEncoder</code> processing.</li>
             <li><strong>Pre-Algorithmic EDA Pipeline:</strong> Engineered exploratory subplots visualizing top-10 category velocity and basket-size distributions before model execution.</li>
           </ul>
         </div>
@@ -105,7 +104,7 @@
 
   <footer>
     <div class="container footer-content">
-      <p>&copy; 2026 Ao Minh Tam. Designed with Cyber Amber Aesthetic.</p>
+      <p>&copy; 2026 Ao Minh Tâm. Designed with Cyber Amber Aesthetic.</p>
     </div>
   </footer>
 

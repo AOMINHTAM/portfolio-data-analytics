@@ -49,3 +49,28 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+
+// --- 4. PROJECT CATEGORY FILTER TABS ---
+const filterBtns = document.querySelectorAll(".filter-btn");
+const projectCards = document.querySelectorAll(".project-card");
+
+if (filterBtns.length && projectCards.length) {
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const selectedFilter = btn.getAttribute("data-filter");
+
+      filterBtns.forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
+
+      projectCards.forEach((card) => {
+        const categories = (card.getAttribute("data-categories") || "").split(/\s+/);
+        const shouldShow = selectedFilter === "all" || categories.includes(selectedFilter);
+        card.classList.toggle("is-hidden", !shouldShow);
+      });
+    });
+  });
+}

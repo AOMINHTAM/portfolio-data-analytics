@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study: AWS Event-Driven ELT Pipeline | Ao Minh Tâm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">AT<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#certifications">CERTIFICATIONS</a></li>
+        <li><a href="../index.html#contact">CONTACT</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeBtn">☀ LIGHT</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECT DETAILS -->
+  <main class="section">
+    <div class="container">
+      <a href="../index.html" class="back-link">&larr; Back to Home</a>
+
+      <div class="detail-header">
+        <span class="project-badge">DATA ENGINEERING &amp; ANALYTICS ENGINEERING • CASE STUDY</span>
+        <h1>AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)</h1>
+        <div class="detail-meta">
+          <span><strong>Role:</strong> Data Engineer &amp; Analytics Engineer</span>
+          <span><strong>Timeline:</strong> Oct 2026 – Nov 2026</span>
+          <span><strong>Stack:</strong> AWS (S3, SQS, Redshift Serverless, IAM), Apache Airflow 3 (Astro CLI, Cosmos), dbt Core v1.8+, Docker, SQL</span>
+          <span><strong>Scale:</strong> 100,000+ Olist E-Commerce Orders</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+
+        <!-- 1. Context & Objectives -->
+        <div class="detail-block">
+          <h2>1. Problem Statement &amp; FinOps Objectives</h2>
+          <p>
+            Traditional scheduled batch pipelines repeatedly poll Amazon S3 buckets (<code>LIST</code> requests) and spin up data warehouse compute even when no new files have arrived, creating unnecessary cloud costs and operational noise.
+          </p>
+          <p>
+            This project evolved from a baseline batch ingestion setup (V2) into a <strong>Pure Event-Driven ELT Architecture (V4)</strong> designed to ingest and model ~100,000+ orders from the Olist Brazilian E-Commerce dataset while enforcing strict FinOps compute guardrails and production data reliability.
+          </p>
+        </div>
+
+        <!-- 2. System Architecture -->
+        <div class="detail-block">
+          <h2>2. Pure Event-Driven ELT Architecture (V4)</h2>
+          <div class="arch-flow">
+            Amazon S3 (s3:ObjectCreated:*) &rarr; AWS SQS Queue &rarr; Airflow 3 SqsSensor &rarr; @task load_raw_from_sqs (Redshift COPY) &rarr; Cosmos DbtTaskGroup &rarr; S3 Archive &amp; SQS ACK
+          </div>
+          <ul>
+            <li><strong>Push-Based Event Ingestion (S3 + SQS):</strong> Configured S3 <code>s3:ObjectCreated:*</code> notifications to push file arrival metadata directly to an AWS SQS queue, achieving <strong>zero S3 <code>LIST</code> overhead</strong>.</li>
+            <li><strong>Zero-Waste Airflow 3 Orchestration:</strong> Built an Apache Airflow 3 DAG (via Astro CLI &amp; Docker on Ubuntu WSL2) utilizing <code>SqsSensor</code> on a 5-minute cadence with a <strong>45s timeout</strong> and <code>soft_fail=True</code>. When queues are empty, the DAG skips cleanly with <strong>$0 Redshift RPU</strong> spend.</li>
+            <li><strong>High-Throughput Warehouse Loading:</strong> Executed atomic <code>TRUNCATE + COPY</code> loads into Amazon Redshift Serverless via TaskFlow <code>@task</code> and least-privilege <strong>IAM Roles</strong>.</li>
+            <li><strong>Reliability &amp; At-Least-Once Delivery:</strong> Implemented post-load S3 archival and atomic SQS message deletion (with a <strong>300s visibility timeout</strong>) to guarantee fault-tolerant delivery without duplicate processing.</li>
+          </ul>
+        </div>
+
+        <!-- 3. Analytics Engineering & FinOps -->
+        <div class="detail-block">
+          <h2>3. Dimensional Modeling, Data Quality &amp; FinOps Guardrails</h2>
+          <ul>
+            <li><strong>Incremental Kimball Star Schema:</strong> Orchestrated Medallion transformation layers using Astronomer Cosmos (<code>DbtTaskGroup</code>) and dbt Core v1.8+, building incremental Star Schema marts (<code>fct_orders</code>, <code>dim_customers</code>) via <code>delete+insert</code> with a <strong>3-day lookback window</strong>.</li>
+            <li><strong>Automated Data Quality Gates:</strong> Enforced <strong>9/9 automated dbt schema and assertion tests</strong> (uniqueness, non-null, accepted values, and referential integrity) with a <strong>100% pass rate</strong>.</li>
+            <li><strong>Redshift Serverless FinOps:</strong> Enforced <strong>4-RPU</strong> scaling guardrails in Amazon Redshift Serverless, cutting baseline warehouse compute costs by <strong>50%</strong> while maintaining predictable ELT performance.</li>
+          </ul>
+        </div>
+
+        <!-- 4. Key Outcomes -->
+        <div class="detail-block">
+          <h2>4. Verified Outcomes &amp; Repository</h2>
+          <ul>
+            <li>Ingested and modeled <strong>100,000+ Olist orders</strong> end-to-end with zero S3 polling overhead.</li>
+            <li>Achieved <strong>$0 Redshift RPU compute cost</strong> on idle runs via <code>SqsSensor</code> soft-fail skipping and <strong>50% compute savings</strong> under 4-RPU guardrails.</li>
+            <li>Delivered <strong>100% pass rate</strong> across <strong>9/9 automated dbt data quality test suites</strong> inside isolated containerized Airflow DAGs.</li>
+          </ul>
+          <div class="project-actions" style="margin-top: 24px;">
+            <a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
+              View Repository on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Ao Minh Tâm. Designed with Cyber Amber Aesthetic.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
