@@ -1,4 +1,4 @@
-# 🌐 Data Analytics, Data Engineering & Analytics Engineering Portfolio
+# 🌐 Data Analytics & Data Engineering Portfolio
 
 An interactive, responsive portfolio website showcasing event-driven Cloud ELT pipelines, Kimball dimensional data models, and behavioral analytics case studies across the Modern Data Stack (AWS, Snowflake, dbt, Airflow 3, Python, SQL, Power BI).
 
@@ -8,7 +8,7 @@ An interactive, responsive portfolio website showcasing event-driven Cloud ELT p
 
 ## 🛠️ Architecture & Tech Stack
 
-* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+) with role-based project filter tabs (`All` / `DA` / `DE` / `AE`).
+* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+) with role-based project filter tabs (`All` / `DA` / `DE`).
 * **Styling & Design:** Fully responsive layout, object-oriented CSS design, CSS grid/flexbox, accessibility-first contrast standards.
 * **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
 
@@ -18,8 +18,8 @@ An interactive, responsive portfolio website showcasing event-driven Cloud ELT p
 
 | Project | Domain | Stack |
 | :--- | :--- | :--- |
-| **[aws-data-pipeline](https://github.com/AOMINHTAM/aws-data-pipeline)** | Data Engineering & AE (Event-Driven ELT) | AWS (S3, SQS, Redshift Serverless, IAM), Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker |
-| **[dbt-snowflake-data-pipeline](https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline)** | Cloud ELT & Analytics Engineering | dbt Core, Snowflake, Apache Airflow (Cosmos), Docker |
+| **[aws-data-pipeline](https://github.com/AOMINHTAM/aws-data-pipeline)** | Data Engineering (Event-Driven ELT) | AWS (S3, SQS, Redshift Serverless, IAM), Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker |
+| **[dbt-snowflake-data-pipeline](https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline)** | Data Engineering (Cloud ELT & Star Schema) | dbt Core, Snowflake, Apache Airflow (Cosmos), Docker |
 | **[user-journey-sankey-analysis](https://github.com/AOMINHTAM/user-journey-sankey-analysis)** | Clickstream Flow Diagnostics | Python, Pandas, Plotly (Sankey DAG) |
 | **[customer-rfm-segmentation-analysis](https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis)** | Customer Intelligence | Python, Pandas, Squarify, RFM |
 | **[product-conversion-funnel-analysis](https://github.com/AOMINHTAM/product-conversion-funnel-analysis)** | Conversion Diagnostics | Python, Pandas, Plotly Funnel |
