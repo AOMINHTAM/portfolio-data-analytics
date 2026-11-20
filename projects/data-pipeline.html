@@ -46,12 +46,32 @@
         
         <!-- Problem Statement -->
         <div class="detail-block">
-          <h2>1. Problem Statement &amp; Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Objectives</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Data Engineering Project (Cloud ELT Architecture)
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Snowflake Sample Data (TPC-H Benchmark Schema)
+              </div>
+              <div class="scope-item">
+                <strong>Modeling Layers</strong>
+                Medallion Staging Views &rarr; Kimball Star Schema Marts
+              </div>
+              <div class="scope-item">
+                <strong>Quality Scope</strong>
+                Schema &amp; referential tests (<code>unique</code>, <code>not_null</code>, FK integrity)
+              </div>
+            </div>
+          </div>
           <p>
             In production environments, disparate source data often suffers from schema fragmentation, redundant records, and recurrent manual script execution. This leads to fragile operational reporting and inconsistent metrics across downstream consumers.
           </p>
           <p>
-            The objective of this project was to architect a fully automated, containerized cloud ELT platform decoupling Snowflake storage/compute from Apache Airflow orchestration, transforming raw TPC-H operational records into verified Kimball Star Schema Data Marts.
+            The objective of this project was to architect a fully automated, containerized cloud ELT platform decoupling Snowflake storage/compute from Apache Airflow orchestration, transforming raw TPC-H operational records into clean Kimball Star Schema Data Marts.
           </p>
         </div>
 
@@ -84,9 +104,9 @@
 
         <!-- Key Outcomes -->
         <div class="detail-block">
-          <h2>4. Key Outcomes &amp; Verified Impact</h2>
+          <h2>4. Key Outcomes &amp; Scope Notes</h2>
           <p>
-            The pipeline eliminated <strong>100% of recurring manual runs</strong>, accelerated downstream analytical query execution by <strong>35%</strong> through Kimball Star Schema modeling, and guaranteed <strong>100% data reliability</strong> across reporting assets ready for Power BI consumption.
+            The pipeline eliminated manual script execution via containerized Airflow scheduling, improved downstream analytical query speed by ~<strong>35%</strong> on pre-joined Kimball Star Schema marts compared against ad-hoc normalized joins, and enforced automated dbt schema/referential quality gates prior to Power BI consumption.
           </p>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">

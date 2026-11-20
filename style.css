@@ -745,6 +745,158 @@ code {
   font-size: 0.9em;
 }
 
+/* SKILL CARD APPLIED-IN FOOTER */
+.skill-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-card .tech-tags {
+  margin-bottom: 16px;
+}
+
+.skill-applied {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.skill-applied strong {
+  color: var(--amber-main);
+}
+
+/* DATASET & SCOPE BOX */
+.scope-box {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--amber-main);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 20px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.scope-item strong {
+  display: block;
+  color: var(--text-main);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+/* ARCHITECTURE FIGURES & EVIDENCE GALLERY */
+.detail-figure {
+  margin: 20px 0 24px 0;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.detail-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.detail-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 18px 0 24px 0;
+}
+
+.evidence-card {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  transition: var(--transition);
+}
+
+.evidence-card:hover {
+  border-color: var(--amber-main);
+}
+
+.evidence-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+
+.evidence-caption {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.evidence-caption strong {
+  color: var(--text-main);
+}
+
+/* DATA & EVOLUTION TABLES */
+.table-scroll {
+  overflow-x: auto;
+  margin: 16px 0 20px 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  color: var(--text-main);
+  font-weight: 700;
+  background-color: rgba(245, 158, 11, 0.06);
+}
+
+.hypothesis-note {
+  background-color: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 14px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hypothesis-note strong {
+  color: var(--amber-main);
+}
+
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 900px) {
   .hero-grid {

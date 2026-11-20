@@ -35,10 +35,10 @@
         <span class="project-badge">E-COMMERCE ANALYTICS • CASE STUDY</span>
         <h1>TeddyWorld — Revenue Contribution Analysis via Pareto (80/20)</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Personal Analytics Project)</span>
           <span><strong>Timeline:</strong> Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Matplotlib, Seaborn, Jupyter</span>
-          <span><strong>Dataset:</strong> 32,000+ E-commerce Orders</span>
+          <span><strong>Dataset:</strong> 32,313 E-Commerce Orders (Maven Fuzzy Factory)</span>
         </div>
       </div>
 
@@ -46,9 +46,29 @@
         
         <!-- 1. Business Context -->
         <div class="detail-block">
-          <h2>1. Business Context & Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Context</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case ("TeddyWorld")
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Maven Fuzzy Factory Teaching Dataset (<code>orders</code>, <code>order_items</code>, <code>order_item_refunds</code>, <code>products</code>)
+              </div>
+              <div class="scope-item">
+                <strong>Scale &amp; Calculation</strong>
+                32,313 orders &bull; Net Revenue = Gross Revenue &minus; Refunds
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Mar 2012 – Mar 2015 (3 Years) &bull; USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            TeddyWorld retails a wide catalog of plush toys and gift accessories. Management needed to assess portfolio revenue concentration to optimize marketing budget allocation and warehouse stock policies.
+            Using the Maven Fuzzy Factory catalog ("TeddyWorld" scenario), this project quantifies SKU-level revenue concentration after refunds to inform inventory safety-stock buffers and ad-spend allocation tests.
           </p>
           <ul>
             <li>Calculate accurate Net Revenue post-refunds (<code>Net Revenue = Gross Revenue - Refunds</code>).</li>
@@ -131,12 +151,15 @@
 
         <!-- 4. Strategic Recommendations -->
         <div class="detail-block">
-          <h2>4. Actionable Strategic Recommendations</h2>
+          <h2>4. Proposed Inventory &amp; Ad-Spend Experiments</h2>
           <ul>
-            <li><strong>Prioritized Inventory Buffer:</strong> Enforce strict safety stocks and lead-time tracking for the Top 3 SKUs to avoid peak-season stockouts.</li>
-            <li><strong>Product Bundling:</strong> Pair slow-moving accessories with top-performing plush toys to liquidate stagnant inventory.</li>
-            <li><strong>Digital Marketing Reallocation:</strong> Channel 70–80% of acquisition ad budgets into the Top 3 conversion champions to maximize ROAS.</li>
+            <li><strong>Prioritized Inventory Buffer:</strong> Enforce stricter safety stocks and supplier lead-time monitoring for Top 3 SKUs (~82% revenue share) to mitigate stockout risk.</li>
+            <li><strong>Tail-SKU Bundling:</strong> Test pairing low-velocity accessories with high-traffic plush items to move slow-turning stock without margin-eroding clearance cuts.</li>
+            <li><strong>Hypothesis — Paid Ad Focus (70–80% Weighting):</strong> Test concentrating 70–80% of paid conversion ad spend toward Top 3 revenue drivers while monitoring marginal CAC/ROAS so tail-SKU discovery isn't starved.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Observed Insight vs. Business Hypothesis:</strong> SKU revenue concentration (Top 3 generating ~81.9% net revenue) is empirically measured from the 32,313-order dataset. Optimal budget weighting (70–80%) is a proposed allocation hypothesis to verify via channel-level <strong>Incremental ROAS</strong> and <strong>Inventory Turnover</strong> tracking.
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/pareto-revenue-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

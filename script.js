@@ -50,27 +50,37 @@ window.addEventListener("scroll", () => {
   });
 });
 
-// --- 4. PROJECT CATEGORY FILTER TABS ---
+// --- 4. PROJECT CATEGORY FILTER TABS & HERO TRACK SHORTCUTS ---
 const filterBtns = document.querySelectorAll(".filter-btn");
 const projectCards = document.querySelectorAll(".project-card");
+const heroFilterTriggers = document.querySelectorAll("[data-hero-filter]");
+
+function applyProjectFilter(selectedFilter) {
+  if (!filterBtns.length || !projectCards.length) return;
+
+  filterBtns.forEach((btn) => {
+    const isMatch = btn.getAttribute("data-filter") === selectedFilter;
+    btn.classList.toggle("active", isMatch);
+    btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
+  });
+
+  projectCards.forEach((card) => {
+    const categories = (card.getAttribute("data-categories") || "").split(/\s+/);
+    const shouldShow = selectedFilter === "all" || categories.includes(selectedFilter);
+    card.classList.toggle("is-hidden", !shouldShow);
+  });
+}
 
 if (filterBtns.length && projectCards.length) {
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const selectedFilter = btn.getAttribute("data-filter");
+      applyProjectFilter(btn.getAttribute("data-filter"));
+    });
+  });
 
-      filterBtns.forEach((b) => {
-        b.classList.remove("active");
-        b.setAttribute("aria-pressed", "false");
-      });
-      btn.classList.add("active");
-      btn.setAttribute("aria-pressed", "true");
-
-      projectCards.forEach((card) => {
-        const categories = (card.getAttribute("data-categories") || "").split(/\s+/);
-        const shouldShow = selectedFilter === "all" || categories.includes(selectedFilter);
-        card.classList.toggle("is-hidden", !shouldShow);
-      });
+  heroFilterTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      applyProjectFilter(trigger.getAttribute("data-hero-filter"));
     });
   });
 }

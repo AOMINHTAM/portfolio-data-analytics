@@ -35,10 +35,10 @@
         <span class="project-badge">E-COMMERCE DIAGNOSTICS • CASE STUDY</span>
         <h1>Product Performance & Conversion Funnel Analysis</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Personal Analytics Project)</span>
           <span><strong>Timeline:</strong> Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Plotly (Funnel), Seaborn, Matplotlib</span>
-          <span><strong>Scope:</strong> Session-Based Clickstream Funnels &amp; Product Net Revenue Auditing</span>
+          <span><strong>Scope:</strong> 32,313 Orders &bull; 472,871 Sessions &bull; 1,188,124 Pageviews</span>
         </div>
       </div>
 
@@ -46,12 +46,32 @@
         
         <!-- 1. Context & Objectives -->
         <div class="detail-block">
-          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Scenario</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case (Maven Fuzzy Factory)
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Maven Fuzzy Factory Teaching Dataset (6 CSVs: orders, items, refunds, products, sessions, pageviews)
+              </div>
+              <div class="scope-item">
+                <strong>Data Scale</strong>
+                32,313 orders &bull; 472,871 sessions &bull; 1,188,124 pageviews
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Mar 2012 – Mar 2015 (3 Years) &bull; USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            The business was experiencing a significant drop-off between top-of-funnel traffic and completed sales. The analytics team conducted an audit of product-level conversion steps to identify leakages within the browsing-to-purchase journey.
+            To investigate a drop-off gap between top-of-funnel site traffic and completed revenue, this analysis audits product-level conversion steps and refund risks across the browsing-to-purchase journey.
           </p>
           <ul>
-            <li>Calculate GAAP-aligned Net Revenue after factoring in product refunds across all catalog items.</li>
+            <li>Calculate <strong>Net Revenue After Refunds</strong> (<code>Gross Revenue - Refund Amount</code>) across all catalog items.</li>
             <li>Construct session-based conversion funnels tracking users across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart</code> &rarr; <code>Checkout (/thank-you)</code>.</li>
             <li>Compare conversion performance between flagship SKUs: <em>The Original Mr. Fuzzy</em> vs. <em>The Forever Love Bear</em>.</li>
           </ul>
@@ -84,12 +104,15 @@
 
         <!-- 4. Strategic Recommendations -->
         <div class="detail-block">
-          <h2>4. Actionable Strategic Recommendations</h2>
+          <h2>4. Proposed Experiments &amp; Recommendations</h2>
           <ul>
-            <li><strong>Traffic Injection via Cross-Selling:</strong> Inject <em>Love Bear</em> as a "Frequently Bought Together" widget directly onto <em>Mr. Fuzzy's</em> high-traffic product page.</li>
-            <li><strong>Checkout UX Overhaul:</strong> Audit hidden shipping fees and eliminate mandatory account creation to address the 66% cart abandonment drop-off.</li>
-            <li><strong>Automated Abandoned Cart Flows:</strong> Trigger automated email and SMS recovery sequences at 1 hour and 24 hours post-abandonment.</li>
+            <li><strong>Traffic Injection via Cross-Selling:</strong> Place <em>Love Bear</em> as a "Frequently Bought Together" widget on <em>Mr. Fuzzy's</em> high-traffic product page to test catalog-to-PDP lift.</li>
+            <li><strong>Checkout UX Overhaul:</strong> Audit hidden shipping costs and guest checkout friction to address the observed 66% cart-to-order abandonment rate.</li>
+            <li><strong>Automated Abandoned-Cart Recovery:</strong> Pilot automated email/SMS recovery reminders at 1 hour and 24 hours post-abandonment.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Validation Plan:</strong> All UX and recovery changes should be evaluated via A/B testing measuring <strong>Cart-to-Order Completion Rate</strong>, <strong>Net Revenue per Session</strong>, and <strong>Refund Rate</strong> (monitoring quality controls on higher-refund items such as <em>Birthday Sugar Panda</em>).
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

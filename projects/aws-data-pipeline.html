@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Study: AWS Event-Driven ELT Pipeline | Ao Minh Tâm</title>
+  <title>Case Study: AWS Event-Driven ELT Pipeline (V5.0.1) | Ao Minh Tâm</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -33,61 +33,170 @@
       <a href="../index.html" class="back-link">&larr; Back to Home</a>
 
       <div class="detail-header">
-        <span class="project-badge">DATA ENGINEERING • CASE STUDY</span>
-        <h1>AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)</h1>
+        <span class="project-badge">DATA ENGINEERING • V5.0.1 CLOUDFORMATION IaC &amp; EVENT-DRIVEN ELT</span>
+        <h1>AWS E-Commerce Modern Data Pipeline (V5)</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Engineer</span>
-          <span><strong>Timeline:</strong> Oct 2026 – Nov 2026</span>
-          <span><strong>Stack:</strong> AWS (S3, SQS, Redshift Serverless, IAM), Apache Airflow 3 (Astro CLI, Cosmos), dbt Core v1.8+, Docker, SQL</span>
-          <span><strong>Scale:</strong> 100,000+ Olist E-Commerce Orders</span>
+          <span><strong>Role:</strong> Data Engineer (Personal CloudOps Project)</span>
+          <span><strong>Timeline:</strong> Oct 2026 – Nov 2026 (Tags <code>v4.0.1</code> &rarr; <code>5.0.1</code>)</span>
+          <span><strong>Stack:</strong> AWS (CloudFormation, S3, SQS + DLQ, CloudWatch, SNS, Redshift Serverless, IAM), Apache Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker</span>
         </div>
       </div>
 
       <div class="detail-card">
 
-        <!-- 1. Context & Objectives -->
+        <!-- Dataset & Scope -->
         <div class="detail-block">
-          <h2>1. Problem Statement &amp; FinOps Objectives</h2>
-          <p>
-            Traditional scheduled batch pipelines repeatedly poll Amazon S3 buckets (<code>LIST</code> requests) and spin up data warehouse compute even when no new files have arrived, creating unnecessary cloud costs and operational noise.
-          </p>
-          <p>
-            This project evolved from a baseline batch ingestion setup (V2) into a <strong>Pure Event-Driven ELT Architecture (V4)</strong> designed to ingest and model ~100,000+ orders from the Olist Brazilian E-Commerce dataset while enforcing strict FinOps compute guardrails and production data reliability.
-          </p>
-        </div>
-
-        <!-- 2. System Architecture -->
-        <div class="detail-block">
-          <h2>2. Pure Event-Driven ELT Architecture (V4)</h2>
-          <div class="arch-flow">
-            Amazon S3 (s3:ObjectCreated:*) &rarr; AWS SQS Queue &rarr; Airflow 3 SqsSensor &rarr; @task load_raw_from_sqs (Redshift COPY) &rarr; Cosmos DbtTaskGroup &rarr; S3 Archive &amp; SQS ACK
+          <h2>1. Dataset, Scope &amp; Engineering Objectives</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Cloud Engineering Project (AWS First Cloud Journey Standard)
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Olist Brazilian E-Commerce Public Dataset (Kaggle, ~120 MB across 9 CSVs)
+              </div>
+              <div class="scope-item">
+                <strong>Data Scale &amp; Range</strong>
+                99,441 orders, 112,650 order items (Sep 2016 – Oct 2018) &rarr; 4 BI CSVs (~56 MB)
+              </div>
+              <div class="scope-item">
+                <strong>Verification Status</strong>
+                <code>5.0.0</code> live-verified E2E on AWS; <code>5.0.1</code> hardened (21/21 unit tests &amp; CI pass)
+              </div>
+            </div>
           </div>
+          <p>
+            Scheduled batch polling pipelines waste warehouse compute on empty runs and risk data loss when partial loads fail or malformed files enter a queue. The goal of this project was to evolve a manual batch ETL prototype (<strong>V2</strong>) into a reproducible, fault-tolerant, push-based CloudOps platform (<strong>V5.0.1</strong>) while keeping idle AWS compute cost at <strong>$0</strong>.
+          </p>
+        </div>
+
+        <!-- Architecture Diagram & Evolution -->
+        <div class="detail-block">
+          <h2>2. V5.0.1 System Architecture &amp; Evolution (V2 &rarr; V4 &rarr; V5)</h2>
+          <div class="arch-flow">
+            Amazon S3 (raw/*.csv) &rarr; SQS Main Queue (20s Long Poll, 900s Timeout) &rarr; Airflow 3 AssetWatcher &rarr; Task 1 (Two-Phase TEMP TABLE Swap + Guards) &rarr; Task 2 (Cosmos dbt Marts &amp; 11 Tests) &rarr; Task 3 (Deterministic Archive + Audit COMPLETED + Safe ACK)
+          </div>
+          <figure class="detail-figure">
+            <a href="../images/aws/architecture_v5_1.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/aws/architecture_v5_1.png" alt="AWS E-Commerce Data Pipeline V5.0.1 System Architecture" />
+            </a>
+            <figcaption>End-to-End V5.0.1 Architecture: CloudFormation IaC, S3 Versioning, SQS + DLQ, 4 CloudWatch Alarms + SNS, Airflow 3 AssetWatcher, and Redshift Serverless. (Click image to open full resolution)</figcaption>
+          </figure>
+
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>V2 (Manual Baseline)</th>
+                  <th>V4 (<code>v4.0.1</code> — Data Core)</th>
+                  <th>V5 (<code>5.0.0</code> &rarr; <code>5.0.1</code> — CloudOps)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Provisioning</strong></td>
+                  <td>Manual AWS Console / CLI</td>
+                  <td>Manual AWS infra + 3-job GitHub Actions CI</td>
+                  <td><strong>AWS CloudFormation IaC</strong> (15 core + 4 conditional resources), <code>cfn-lint</code> CI, Native Auto-Rollback, <code>make cfn-delete</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Orchestration</strong></td>
+                  <td>Manual trigger (<code>schedule=None</code>)</td>
+                  <td>Airflow 3 <code>Asset</code> + <code>AssetWatcher</code> (20s SQS Long Poll, zero <code>*/5</code> cron)</td>
+                  <td><code>AssetWatcher</code> hardened for Airflow 3 <code>Mapping</code> accessor + <code>VisibilityTimeout=900s</code> heartbeat</td>
+                </tr>
+                <tr>
+                  <td><strong>Ingestion &amp; Atomicity</strong></td>
+                  <td>Static <code>COPY</code> / <code>TRUNCATE</code></td>
+                  <td>Per-table <code>TEMP TABLE</code> + <code>DELETE/INSERT</code> + Empty-Stage Guard</td>
+                  <td><strong>Two-Phase Batch Staging</strong> + CSV Header Guard + <code>ops.pipeline_ingestion_audit</code> + <strong>Two-Proof Safe ACK</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Failure &amp; Alerting</strong></td>
+                  <td>Silent failure / manual log check</td>
+                  <td>Transaction rollback + ACK retry safety</td>
+                  <td><strong>SQS DLQ</strong> (<code>maxReceiveCount=3</code>) + <strong>4 CloudWatch Alarms</strong> + <strong>SNS Email</strong> + DLQ Redrive</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <figure class="detail-figure">
+            <a href="../images/aws/notebook_03_evolution_timeline.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/aws/notebook_03_evolution_timeline.png" alt="Architecture Evolution Timeline V2 to V5.0.1" />
+            </a>
+            <figcaption>Architectural evolution across V2, V3, V4 (<code>v4.0.1</code>), V5.0.0 (live E2E verified), and V5.0.1 (13 cross-review blind spots hardened).</figcaption>
+          </figure>
+        </div>
+
+        <!-- Engineering Deep Dive -->
+        <div class="detail-block">
+          <h2>3. Key Engineering Mechanisms &amp; Bug Fixes</h2>
           <ul>
-            <li><strong>Push-Based Event Ingestion (S3 + SQS):</strong> Configured S3 <code>s3:ObjectCreated:*</code> notifications to push file arrival metadata directly to an AWS SQS queue, achieving <strong>zero S3 <code>LIST</code> overhead</strong>.</li>
-            <li><strong>Zero-Waste Airflow 3 Orchestration:</strong> Built an Apache Airflow 3 DAG (via Astro CLI &amp; Docker on Ubuntu WSL2) utilizing <code>SqsSensor</code> on a 5-minute cadence with a <strong>45s timeout</strong> and <code>soft_fail=True</code>. When queues are empty, the DAG skips cleanly with <strong>$0 Redshift RPU</strong> spend.</li>
-            <li><strong>High-Throughput Warehouse Loading:</strong> Executed atomic <code>TRUNCATE + COPY</code> loads into Amazon Redshift Serverless via TaskFlow <code>@task</code> and least-privilege <strong>IAM Roles</strong>.</li>
-            <li><strong>Reliability &amp; At-Least-Once Delivery:</strong> Implemented post-load S3 archival and atomic SQS message deletion (with a <strong>300s visibility timeout</strong>) to guarantee fault-tolerant delivery without duplicate processing.</li>
+            <li><strong>Declarative CloudFormation IaC (Dual Circular Dependency Fix):</strong> <code>infra/cloudformation/template.yaml</code> provisions S3 (AES256, Versioning, Lifecycle, HTTPS-only bucket policy), SQS + DLQ, split least-privilege IAM (<code>RedshiftS3ReadOnlyRole</code>, <code>AirflowRuntimePolicy</code>, <code>DlqOperatorPolicy</code>), 4 CloudWatch Alarms, and SNS. Resolved circular references between <code>S3RawBucket &harr; SqsMainQueuePolicy</code> and <code>SqsMainQueue &harr; SqsDeadLetterQueue</code> by constructing deterministic ARNs with <code>!Sub</code> instead of cross-referencing <code>!GetAtt</code>.</li>
+            <li><strong>Live Airflow 3 Task SDK Bug Caught &amp; Fixed:</strong> During live testing, <code>extract_messages_from_asset_events</code> initially skipped runs because Airflow 3's <code>context["triggering_asset_events"]</code> returns a <code>TriggeringAssetEventsAccessor</code> (<code>collections.abc.Mapping</code>, not a plain <code>dict</code>). Updated <code>include/sqs_parser.py</code> to validate against <code>Mapping</code> with unit-test regression coverage.</li>
+            <li><strong>Two-Phase Batch Staging (Why Not <code>TRUNCATE + COPY</code>?):</strong> In Redshift, <code>TRUNCATE</code> auto-commits immediately and cannot be rolled back if <code>COPY</code> fails. Task 1 first validates headers (<code>validate_csv_header</code>), stages all batch CSVs into session <code>TEMP TABLE</code>s, and enforces <code>ensure_non_empty_stage (&gt; 0)</code> before touching target tables. Only when 100% of batch files pass staging does Phase B run <code>DELETE + INSERT</code> alongside an audit insert (<code>SWAPPED</code>) inside an explicit <code>autocommit=False</code> transaction.</li>
+            <li><strong>Deterministic Archive &amp; Two-Proof Safe ACK:</strong> Uses an immutable <code>event_token</code> (<code>versionId</code> / <code>eTag</code> / <code>sequencer</code>) so retries across different DAG Runs map to the exact same <code>audit_id</code> and <code>archive/&lt;audit_id&gt;/&lt;filename&gt;</code> path. Both Task 1 and Task 3 enforce <code>verify_safe_to_ack_when_raw_missing()</code>—permitting SQS <code>DeleteMessage</code> only if <code>ops.pipeline_ingestion_audit</code> confirms <code>ARCHIVED</code>/<code>COMPLETED</code> and the archived S3 key exists—while deferring multi-record SQS ACKs until the entire batch finishes.</li>
           </ul>
         </div>
 
-        <!-- 3. Dimensional Modeling & FinOps -->
+        <!-- Data Modeling & Testing Scope -->
         <div class="detail-block">
-          <h2>3. Dimensional Modeling, Data Quality &amp; FinOps Guardrails</h2>
+          <h2>4. Dimensional Modeling, Quality Scope &amp; FinOps Transparency</h2>
+          <figure class="detail-figure">
+            <a href="../images/aws/dbt_lineage.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/aws/dbt_lineage.png" alt="dbt Data Lineage Graph" />
+            </a>
+            <figcaption>dbt Data Lineage: 9 <code>raw_data</code> Bronze sources &rarr; 7 <code>public_staging</code> Silver views &rarr; 3 <code>public_marts</code> Gold Star Schema tables.</figcaption>
+          </figure>
           <ul>
-            <li><strong>Incremental Kimball Star Schema:</strong> Orchestrated Medallion transformation layers using Astronomer Cosmos (<code>DbtTaskGroup</code>) and dbt Core v1.8+, building incremental Star Schema marts (<code>fct_orders</code>, <code>dim_customers</code>) via <code>delete+insert</code> with a <strong>3-day lookback window</strong>.</li>
-            <li><strong>Automated Data Quality Gates:</strong> Enforced <strong>9/9 automated dbt schema and assertion tests</strong> (uniqueness, non-null, accepted values, and referential integrity) with a <strong>100% pass rate</strong>.</li>
-            <li><strong>Redshift Serverless FinOps:</strong> Enforced <strong>4-RPU</strong> scaling guardrails in Amazon Redshift Serverless, cutting baseline warehouse compute costs by <strong>50%</strong> while maintaining predictable ELT performance.</li>
+            <li><strong>Multi-Source Incremental Modeling:</strong> <code>fct_orders</code> (<code>delete+insert</code>) uses an <code>affected_order_ids</code> CTE across all 4 upstream tables (<code>stg_orders</code>, <code>stg_order_items</code>, <code>stg_payments</code>, <code>stg_reviews</code>) so late updates on older orders (&gt;3 days) are captured. <code>dim_customers</code> keeps order-customer grain (<code>customer_id</code>) to preserve 1:1 joins while computing lifetime spend (LTV) by <code>customer_unique_id</code>.</li>
+            <li><strong>Scope of Automated Testing (Honest Coverage):</strong>
+              <ul>
+                <li><em>21 Unit Tests &amp; 3 DAG Pytests:</em> Validate SQS event parsing, Airflow 3 <code>Mapping</code> accessors, header/empty-stage guards, multi-record deferred ACKs, and DAG import/retry metadata inside GitHub Actions CI (Ruff + <code>cfn-lint</code> + offline <code>dbt parse</code> + Astro Docker build).</li>
+                <li><em>11 dbt Schema Tests:</em> Validate structural integrity (<code>unique</code> and <code>not_null</code> primary/key checks, <code>relationships</code> between <code>fct_orders</code> and <code>dim_customers</code>, and <code>accepted_values</code> on <code>delivery_status</code>). They enforce schema/referential contracts rather than guaranteeing upstream source semantics.</li>
+              </ul>
+            </li>
+            <li><strong>Transparent FinOps Mechanics:</strong> Idle compute stays at <strong>$0</strong> when local Astro stops polling (<code>astro dev stop</code>), because Redshift Serverless (4 RPUs) bills RPU-seconds only during active queries and <code>AssetWatcher</code> spawns <strong>0 empty DAG runs</strong>. SQS Long Polling (~104k requests/month if kept running 24/7) fits inside the 1M/month AWS Free Tier, backed by a $5/month AWS Budget alert (persistent S3/Redshift storage billed separately per GB/month).</li>
           </ul>
         </div>
 
-        <!-- 4. Key Outcomes -->
+        <!-- Live AWS Evidence Gallery -->
         <div class="detail-block">
-          <h2>4. Verified Outcomes &amp; Repository</h2>
-          <ul>
-            <li>Ingested and modeled <strong>100,000+ Olist orders</strong> end-to-end with zero S3 polling overhead.</li>
-            <li>Achieved <strong>$0 Redshift RPU compute cost</strong> on idle runs via <code>SqsSensor</code> soft-fail skipping and <strong>50% compute savings</strong> under 4-RPU guardrails.</li>
-            <li>Delivered <strong>100% pass rate</strong> across <strong>9/9 automated dbt data quality test suites</strong> inside isolated containerized Airflow DAGs.</li>
-          </ul>
+          <h2>5. Live AWS Verification Evidence (<code>5.0.0</code> Run + <code>5.0.1</code> Hardening)</h2>
+          <p>
+            All AWS screenshots below were captured live on <code>us-east-1</code> during the <code>5.0.0</code> release verification (Happy Path 17/17 + Empty-CSV Poison Isolation &rarr; DLQ &rarr; CloudWatch Alarms &rarr; SNS Gmail &rarr; DLQ Redrive recovery). Following <code>5.0.0</code>, release <code>5.0.1</code> patched 13 cross-review edge cases verified by <code>21/21</code> unit tests, <code>cfn-lint</code>, and <code>aws cloudformation validate-template</code> (pending next live stack re-run).
+          </p>
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <a href="../images/aws/airflow_v5_asset_watcher_run.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/aws/airflow_v5_asset_watcher_run.png" alt="Airflow 3 AssetWatcher 17/17 Green Run" />
+              </a>
+              <div class="evidence-caption"><strong>Happy Path (17/17 Tasks):</strong> Triggered automatically by <code>AssetWatcher</code> on S3 file arrival with zero scheduled empty runs.</div>
+            </div>
+            <div class="evidence-card">
+              <a href="../images/aws/redshift_v5_ops_audit_table.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/aws/redshift_v5_ops_audit_table.png" alt="Redshift ops.pipeline_ingestion_audit Ledger" />
+              </a>
+              <div class="evidence-caption"><strong>Audit Ledger:</strong> <code>ops.pipeline_ingestion_audit</code> logging <code>FAILED</code> (0-row guard) and recovery <code>SWAPPED &rarr; ARCHIVED &rarr; COMPLETED</code>.</div>
+            </div>
+            <div class="evidence-card">
+              <a href="../images/aws/cloudwatch_v5_alarms_in_alarm.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/aws/cloudwatch_v5_alarms_in_alarm.png" alt="CloudWatch 4 Alarms In Alarm State" />
+              </a>
+              <div class="evidence-caption"><strong>Fault Isolation &amp; CloudWatch:</strong> Poison 0-row CSV moved to SQS DLQ after 3 retries, triggering CloudWatch <code>ALARM</code> state.</div>
+            </div>
+            <div class="evidence-card">
+              <a href="../images/aws/gmail_v5_sns_dlq_alarm.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/aws/gmail_v5_sns_dlq_alarm.png" alt="Amazon SNS Real-Time Email Alert" />
+              </a>
+              <div class="evidence-caption"><strong>SNS Alert Delivery:</strong> Real-time incident notification delivered to Gmail via <code>PipelineAlertTopicPolicy</code> before DLQ Redrive recovery.</div>
+            </div>
+          </div>
+
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

@@ -35,10 +35,10 @@
         <span class="project-badge">NETWORK VISUALIZATION • CASE STUDY</span>
         <h1>User Journey & Traffic Flow Analysis via Plotly Sankey</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Personal Analytics Project)</span>
           <span><strong>Timeline:</strong> Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Plotly (graph_objects.Sankey)</span>
-          <span><strong>Architecture:</strong> Acquisition &amp; Retention Directed Acyclic Graphs (DAGs)</span>
+          <span><strong>Scope:</strong> 32,313 Orders &bull; 472,871 Sessions &bull; 1,188,124 Pageviews</span>
         </div>
       </div>
 
@@ -46,9 +46,29 @@
         
         <!-- 1. Context & Objectives -->
         <div class="detail-block">
-          <h2>1. Business Context & Strategic Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Context</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case (Maven Fuzzy Factory)
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Maven Fuzzy Factory Teaching Dataset (5 CSVs: orders, order_items, products, website_sessions, website_pageviews)
+              </div>
+              <div class="scope-item">
+                <strong>Data Scale</strong>
+                32,313 orders &bull; 472,871 sessions &bull; 1,188,124 pageviews
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Mar 2012 – Mar 2015 (3 Years) &bull; USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            Marketing and product leadership struggled to visualize how users navigated across multi-touch browsing sessions. Static aggregate bar charts failed to depict the sequential transition of traffic sources filtering into landing pages or the specific product sequences adopted by repeat buyers.
+            Standard aggregate bar charts failed to capture how traffic sources filtered into landing pages or the exact product transitions adopted by repeat buyers across multi-touch sessions.
           </p>
           <ul>
             <li>Build an <strong>Acquisition Sankey Flow:</strong> <code>UTM Source &rarr; Device &rarr; Landing Page &rarr; Conversion / Drop-off</code>.</li>
@@ -85,11 +105,14 @@
 
         <!-- 4. Recommendations -->
         <div class="detail-block">
-          <h2>4. Actionable Strategic Recommendations</h2>
+          <h2>4. Proposed UX &amp; CRM Experiments</h2>
           <ul>
-            <li><strong>Mobile UX/UI Overhaul:</strong> Implement sticky "Add to Cart" CTAs and optimize mobile asset delivery to mitigate the high mobile drop-off rate.</li>
-            <li><strong>Lifecycle Email Automation:</strong> Suppress <em>Mr. Fuzzy</em> promotions to existing <em>Mr. Fuzzy</em> owners; trigger automated <em>Love Bear</em> campaigns 14 days post-purchase to leverage the natural transition path revealed by the Sankey flow.</li>
+            <li><strong>Mobile UI/UX Audit:</strong> Test sticky "Add to Cart" CTAs and lighter mobile media payloads to test whether mobile checkout friction drives the observed drop-off discrepancy.</li>
+            <li><strong>Lifecycle Cross-Sell Trigger:</strong> Suppress <em>Mr. Fuzzy</em> promos to existing <em>Mr. Fuzzy</em> owners and A/B test a 14-day post-purchase <em>Love Bear</em> email trigger aligned with the observed repurchase flow.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Evaluation Metrics:</strong> Track <strong>Mobile Cart-to-Order Conversion Rate</strong> (UX audit) and <strong>Incremental 30-Day Second-Purchase Rate</strong> vs. control group (CRM trigger).
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

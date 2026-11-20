@@ -35,10 +35,10 @@
         <span class="project-badge">ASSOCIATION RULES • CASE STUDY</span>
         <h1>Market Basket Analysis & Product Bundling Strategy</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Personal Analytics Project)</span>
           <span><strong>Timeline:</strong> Aug – Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, mlxtend (Apriori), TransactionEncoder, Pandas, NumPy, Seaborn</span>
-          <span><strong>Focus:</strong> Association Rules Mining, Support/Confidence/Lift Optimization</span>
+          <span><strong>Scope:</strong> 51,290 Line-Items across 25,728 Distinct Order Baskets</span>
         </div>
       </div>
 
@@ -46,9 +46,29 @@
         
         <!-- 1. Context -->
         <div class="detail-block">
-          <h2>1. Business Context & Strategic Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Context</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Simulated E-Commerce CSVs (<code>EcomSales</code>, <code>Product</code>)
+              </div>
+              <div class="scope-item">
+                <strong>Scale &amp; Deduplication</strong>
+                51,290 line-items grouped into 25,728 unique <code>OrderID</code> baskets
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Jan 2020 – Dec 2023 (4 Years) &bull; Simulated USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            The e-commerce platform sought to increase Average Order Value (AOV) by replacing generic cross-selling prompts with algorithmic association rules mining.
+            To explore opportunities for increasing Average Order Value (AOV), this analysis replaces generic cross-selling assumptions with Apriori association rule mining across deduplicated order baskets.
           </p>
           <ul>
             <li>Perform Exploratory Data Analysis (EDA) on basket size distributions and top-moving categories.</li>
@@ -85,12 +105,15 @@
 
         <!-- 4. Recommendations -->
         <div class="detail-block">
-          <h2>4. Actionable Commercial Recommendations</h2>
+          <h2>4. Proposed Commercial Experiments</h2>
           <ul>
-            <li><strong>Launch the "Weekend Reset Kit":</strong> Package Ecosystem A items together with a 10% bundle discount, increasing Average Order Value.</li>
-            <li><strong>Dynamic Checkout Cross-Selling:</strong> When a user adds <em>Candles</em> to cart, trigger a dynamic prompt suggesting <em>Bath Bombs</em> instead of competing candle brands.</li>
-            <li><strong>Targeted Content Marketing:</strong> Direct the creative team to produce short-form video content titled <em>"The 4-Step Post-Deadline Self-Care Routine"</em> featuring the Ecosystem A product combination.</li>
+            <li><strong>Bundle Pilot ("Weekend Reset Kit"):</strong> Test packaging Ecosystem A items with a 10% bundle discount against standalone pricing to evaluate net AOV lift vs. margin dilution.</li>
+            <li><strong>Dynamic Checkout Cross-Selling:</strong> When a user adds <em>Candles</em> to cart, test triggering a complementary prompt for <em>Bath Bombs</em> instead of competing candle brands.</li>
+            <li><strong>Content Marketing Alignment:</strong> Test short-form campaign creatives around the 4-item Ecosystem A self-care routine.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Validation Plan:</strong> Because bundle discounts impact unit margin, validate via a 50/50 checkout A/B test measuring <strong>Incremental Gross Profit per Order</strong>, <strong>Basket Attach Rate</strong>, and <strong>AOV Lift</strong>.
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/market-basket-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

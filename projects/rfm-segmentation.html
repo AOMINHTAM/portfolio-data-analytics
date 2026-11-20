@@ -35,10 +35,10 @@
         <span class="project-badge">CUSTOMER ANALYTICS • CASE STUDY</span>
         <h1>Customer 360 & RFM Segmentation Analysis</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Simulated Business Case)</span>
           <span><strong>Timeline:</strong> Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Squarify, Seaborn, Matplotlib</span>
-          <span><strong>Scope:</strong> 51,290 Orders across 17,415 Unique Customers</span>
+          <span><strong>Scope:</strong> 51,290 Line-Items (25,728 Unique Orders) / 17,415 Customers</span>
         </div>
       </div>
 
@@ -46,9 +46,29 @@
         
         <!-- 1. Context -->
         <div class="detail-block">
-          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Scenario</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case ("CosmeticWorld")
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Simulated E-Commerce CSVs (<code>EcomSales</code>, <code>Customer</code>, <code>Product</code>, <code>Region</code>)
+              </div>
+              <div class="scope-item">
+                <strong>Scale &amp; Granularity</strong>
+                51,290 transaction line-items &bull; 25,728 unique orders &bull; 17,415 unique customers
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Jan 2020 – Dec 2023 (4 Years) &bull; Simulated USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            Marketing leadership at cosmetic retailer <em>CosmeticWorld</em> needed to restructure their annual promotional budget for the <strong>New Year Rejuvenation Campaign</strong>, shifting from broad-spectrum discounting toward high-ROI customer lifecycle campaigns.
+            In this simulated <em>CosmeticWorld</em> scenario, marketing leadership needed to restructure annual promotional spend for a <strong>New Year Rejuvenation Campaign</strong>, shifting from broad-spectrum discounting toward targeted lifecycle retention. Note that 51,290 represents order line-items across 25,728 distinct <code>OrderID</code>s.
           </p>
           <ul>
             <li>Quantify customer behavior across <strong>Recency</strong>, <strong>Frequency</strong>, and <strong>Monetary</strong> dimensions using quantile scoring (<code>pd.qcut</code>).</li>
@@ -158,12 +178,15 @@
 
         <!-- 4. Recommendations -->
         <div class="detail-block">
-          <h2>4. Actionable Campaign Execution</h2>
+          <h2>4. Proposed Campaign Experiments &amp; Evaluation Plan</h2>
           <ul>
-            <li><strong>70/30 Budget Reallocation:</strong> Allocate 70% of campaign funds exclusively to <strong>Champions</strong> (concierge gifting) and <strong>Cant Lose Them</strong> (tailored win-back reactivation vouchers).</li>
-            <li><strong>Direct Mail Suppression:</strong> Immediately halt expensive SMS and catalog marketing to <strong>Lost</strong> and <strong>Hibernating</strong> cohorts (>5,100 accounts), reducing unnecessary CAC.</li>
-            <li><strong>Cross-Selling Bridge:</strong> Package high-performing items (Nail Care & Hand Creams) as Gift-With-Purchase (GWP) rewards for <strong>New / Promising</strong> buyers to accelerate graduation into Loyal tiers.</li>
+            <li><strong>Hypothesis — Weighted Budget Focus (70/30 Pilot):</strong> Prioritize ~70% of promotional spend as a controlled pilot toward <strong>Champions</strong> (loyalty perks) and <strong>Cant Lose Them</strong> (win-back reactivation vouchers, $653k historical pool), while keeping 30% for nurturing <em>Big Spenders</em> and <em>New / Promising</em> tiers.</li>
+            <li><strong>Hypothesis — Dormant Outreach Suppression:</strong> Pause paid SMS/direct mail to <strong>Lost</strong> and <strong>Hibernating</strong> tiers (5,181 combined accounts) to curb CAC waste, testing email-only low-cost reactivation instead.</li>
+            <li><strong>Hypothesis — Cross-Selling Bridge:</strong> Offer top-affinity subcategories (<code>Nail Care</code> &amp; <code>Hand Creams</code>) as Gift-With-Purchase incentives for <strong>New / Promising</strong> buyers to test graduation into <em>Loyal Customers</em>.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Observed Insight vs. Business Hypothesis:</strong> The revenue concentration (&lt;29% generating &gt;53% revenue) and demographic profiles (ages 25–49 driving &gt;60% gross sales) are empirically observed from the 2020–2023 dataset. The proposed 70/30 split is an initial testing hypothesis rather than a proven optimum—requiring an <strong>A/B holdout test</strong> tracking channel CAC, Incremental Gross Margin, Reactivation Rate, and 60-day Repeat Purchase Rate before scaling.
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

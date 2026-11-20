@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ao Minh Tâm | Data Analyst &amp; Data Engineer</title>
-  <meta name="description" content="Portfolio of Ao Minh Tâm — Third-Year IT Undergraduate specializing in Data Analytics (DA) and Cloud Data Engineering (DE: AWS, Snowflake, Airflow, dbt)." />
+  <meta name="description" content="Portfolio of Ao Minh Tâm — Third-Year IT Undergraduate focused on Data Analytics (SQL, Python, Power BI) and Cloud Data Engineering (AWS CloudFormation, S3, SQS + DLQ, Redshift, Snowflake, Airflow 3, dbt)." />
   <link rel="canonical" href="https://aominhtam-portfolio.vercel.app/" />
 
   <!-- Open Graph / Social Sharing Meta Tags -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ao Minh Tâm Portfolio" />
   <meta property="og:title" content="Ao Minh Tâm | Data Analyst &amp; Data Engineer" />
-  <meta property="og:description" content="Cloud Event-Driven ELT Pipelines (AWS, Snowflake, Airflow 3, dbt) and Customer &amp; Product Analytics (Python, SQL, Power BI)." />
+  <meta property="og:description" content="Transforming raw data into reliable datasets, actionable insights, and business recommendations across Data Analytics and AWS/Snowflake Cloud Data Engineering." />
   <meta property="og:url" content="https://aominhtam-portfolio.vercel.app/" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Ao Minh Tâm | Data Analyst &amp; Data Engineer" />
-  <meta name="twitter:description" content="Portfolio showcasing Cloud ELT Data Pipelines, Dimensional Modeling, and E-Commerce Behavioral Analytics." />
+  <meta name="twitter:description" content="Portfolio showcasing Event-Driven AWS Cloud ELT Pipelines (V5.0.1), Dimensional Modeling, and E-Commerce Behavioral Analytics." />
 
   <!-- Favicon Branding -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -57,7 +57,8 @@
     "knowsAbout": [
       "Data Analytics",
       "Data Engineering",
-      "AWS",
+      "AWS CloudFormation",
+      "Amazon Redshift Serverless",
       "Snowflake",
       "dbt",
       "Apache Airflow",
@@ -95,7 +96,7 @@
       <div class="hero-left">
         <div class="status-badge">
           <span class="pulse-dot"></span>
-          <span>Available for DA &amp; DE Roles (Intern &amp; Fresher)</span>
+          <span>Open to Data Analyst &amp; Data Engineer Intern Roles</span>
         </div>
 
         <div class="sub-headline">DATA ANALYST | DATA ENGINEER</div>
@@ -106,12 +107,13 @@
         </h1>
 
         <p class="hero-desc">
-          Specializing in event-driven Cloud ELT pipelines (AWS, Snowflake, Apache Airflow, dbt) and behavioral e-commerce analytics (RFM, Cohort, Funnel, Sankey, Apriori, Pareto). Bridging raw operational data to strategic business decisions.
+          IT undergraduate focused on Data Analytics and Data Engineering. I use SQL, Python, Power BI, and modern cloud data tools to transform raw data into reliable datasets, actionable insights, and business recommendations.
         </p>
 
-        <!-- CTA Buttons -->
+        <!-- Dual-Track CTA Buttons for Hiring Managers / HR -->
         <div class="cta-row">
-          <a href="#projects" class="btn btn-amber">EXPLORE WORK &rarr;</a>
+          <a href="#projects" class="btn btn-amber" data-hero-filter="da">Explore DA Projects &rarr;</a>
+          <a href="#projects" class="btn btn-outline" data-hero-filter="de">Explore DE Projects &rarr;</a>
           <button class="btn btn-outline" onclick="copyEmail()">📋 Copy Email</button>
         </div>
 
@@ -152,10 +154,13 @@
       <h2 class="section-title">ABOUT ME</h2>
       <div class="card card-body">
         <p>
-          I am a <strong>Third-Year IT Undergraduate</strong> at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE), focused on bridging <strong>Data Analysis (DA)</strong> and <strong>Data Engineering (DE)</strong>.
+          I am a <strong>Third-Year Information Technology undergraduate</strong> at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE), with a strong interest in <strong>Data Analytics</strong> and <strong>Data Engineering</strong>.
         </p>
         <p>
-          I emphasize precision, FinOps cost efficiency, and data integrity: building event-driven Cloud ELT pipelines on <strong>AWS</strong> and <strong>Snowflake</strong>, modeling clean Data Marts via <strong>dbt &amp; Kimball Star Schema</strong>, enforcing automated schema quality assertions, and delivering quantitative business storytelling across e-commerce lifecycle economics.
+          I enjoy exploring data, identifying meaningful patterns, and building reliable data workflows that support business decision-making. Through hands-on personal projects, I have worked with <strong>SQL, Python, Power BI, AWS, Snowflake, Apache Airflow, and dbt</strong>, developing practical experience in data analysis, dimensional modeling, and cloud-based ELT pipelines.
+        </p>
+        <p>
+          I am currently seeking an opportunity to apply my technical skills, strengthen my analytical thinking, and grow as a <strong>Data Analyst or Data Engineer Intern</strong>.
         </p>
         <p>
           <strong>Languages:</strong> Native Vietnamese | Intermediate English.
@@ -173,7 +178,7 @@
           <span class="timeline-date">2024 – Expected 2028</span>
           <h3>Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE)</h3>
           <p class="timeline-role">Third-Year IT Undergraduate — Bachelor of Science in Information Technology</p>
-          <p class="timeline-desc">Focused on Database Management Systems, Cloud ELT Architecture, Dimensional Data Modeling, and Quantitative Business Analytics.</p>
+          <p class="timeline-desc">Focused on Database Management Systems, SQL Querying, Dimensional Data Modeling, Cloud ELT Pipelines, and Quantitative Business Analytics.</p>
         </div>
       </div>
     </div>
@@ -184,39 +189,49 @@
     <div class="container">
       <h2 class="section-title">TECHNICAL SKILLS</h2>
       <div class="grid-3">
-        <div class="card">
-          <h4>Programming &amp; Querying</h4>
-          <p class="card-sub">Data Processing &amp; Libraries</p>
+        <div class="card skill-card">
+          <h4>Data Analytics &amp; BI</h4>
+          <p class="card-sub">SQL, Python &amp; Storytelling</p>
           <div class="tech-tags">
-            <span>Advanced SQL (CTEs, Windows)</span>
-            <span>Python (Pandas, NumPy, SciPy)</span>
-            <span>Plotly / Seaborn / Matplotlib</span>
-            <span>mlxtend (Apriori)</span>
-            <span>squarify (Treemaps)</span>
-          </div>
-        </div>
-        <div class="card">
-          <h4>Cloud, DE &amp; Orchestration</h4>
-          <p class="card-sub">Pipelines &amp; Infrastructure</p>
-          <div class="tech-tags">
-            <span>AWS (S3, SQS, Redshift Serverless, IAM)</span>
-            <span>Snowflake Data Cloud</span>
-            <span>Apache Airflow 3 (Astro CLI, Cosmos)</span>
-            <span>dbt Core / dbt Cloud</span>
-            <span>Docker &amp; Git / GitHub</span>
-            <span>Linux (Ubuntu WSL2 / Bash)</span>
-          </div>
-        </div>
-        <div class="card">
-          <h4>Modeling, BI &amp; Analytics</h4>
-          <p class="card-sub">Governance &amp; Business Insights</p>
-          <div class="tech-tags">
-            <span>Kimball Star Schema &amp; Medallion</span>
-            <span>dbt Automated Testing &amp; Lineage</span>
-            <span>Power BI</span>
+            <span>SQL (Joins, CTEs, Window Functions)</span>
+            <span>Python (Pandas, NumPy, EDA)</span>
+            <span>Power BI (DAX, Power Query)</span>
             <span>Microsoft Excel (Pivot, Power Query)</span>
-            <span>RFM &amp; Cohort Retention</span>
-            <span>Funnel, Sankey &amp; Pareto ABC</span>
+            <span>Plotly, Seaborn &amp; Matplotlib</span>
+            <span>mlxtend (Apriori) &amp; squarify</span>
+          </div>
+          <div class="skill-applied">
+            <strong>Applied in:</strong> Customer RFM 360, Conversion Funnel, Cohort Retention, Sankey Flow, Market Basket &amp; Pareto ABC
+          </div>
+        </div>
+        <div class="card skill-card">
+          <h4>Cloud &amp; Data Warehousing</h4>
+          <p class="card-sub">AWS Infrastructure &amp; Storage</p>
+          <div class="tech-tags">
+            <span>AWS S3 (Versioning, Lifecycle)</span>
+            <span>AWS SQS + Dead-Letter Queue</span>
+            <span>AWS CloudFormation (IaC)</span>
+            <span>CloudWatch Alarms, SNS &amp; IAM</span>
+            <span>Amazon Redshift Serverless</span>
+            <span>Snowflake Data Cloud</span>
+          </div>
+          <div class="skill-applied">
+            <strong>Applied in:</strong> AWS E-Commerce Event-Driven ELT (V5.0.1) &amp; Snowflake Cloud ELT Pipeline
+          </div>
+        </div>
+        <div class="card skill-card">
+          <h4>Orchestration, Modeling &amp; CI</h4>
+          <p class="card-sub">Pipelines, Testing &amp; DevOps</p>
+          <div class="tech-tags">
+            <span>Apache Airflow 3 (AssetWatcher, Cosmos)</span>
+            <span>dbt Core (Incremental, Schema Tests)</span>
+            <span>Kimball Star Schema &amp; Medallion</span>
+            <span>Docker &amp; Ubuntu WSL2</span>
+            <span>GitHub Actions CI (Ruff, cfn-lint)</span>
+            <span>Unit Testing (Unittest / Pytest)</span>
+          </div>
+          <div class="skill-applied">
+            <strong>Applied in:</strong> Two-Phase Atomic Swaps, Audit Ledger Safe ACK, dbt Marts &amp; 3-Job CI Pipelines
           </div>
         </div>
       </div>
@@ -237,25 +252,26 @@
 
       <div class="projects-list">
 
-        <!-- Project 1: AWS Event-Driven ELT Pipeline -->
+        <!-- Project 1: AWS Event-Driven ELT Pipeline (V5.0.1) -->
         <div class="card project-card" data-categories="de">
-          <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • OCT – NOV 2026</div>
-          <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (Event-Driven ELT) ↗</a></h3>
+          <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • V5.0.1 (OCT – NOV 2026)</div>
+          <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (CloudFormation IaC &amp; Event-Driven ELT) ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Architected push-based ELT</strong> on <strong>AWS S3, SQS, and Redshift Serverless</strong> ingesting <strong>100,000+ Olist orders</strong> with <strong>zero S3 LIST overhead</strong>.</li>
-            <li><strong>Built Airflow 3 <code>SqsSensor</code> orchestration</strong> with <strong>45s timeout</strong> and <code>soft_fail</code>, skipping idle runs for <strong>$0 Redshift RPU</strong> compute cost.</li>
-            <li><strong>Engineered incremental dbt Star Schema marts</strong> (<code>delete+insert</code>, <strong>3-day lookback</strong>) and <strong>9 automated data tests</strong> with <strong>100% pass rate</strong>.</li>
-            <li><strong>Cut warehouse compute costs by 50%</strong> via <strong>4-RPU Redshift Serverless</strong> guardrails, least-privilege IAM Roles, and atomic SQS ACKs.</li>
+            <li><strong>Provisioned reproducible AWS CloudFormation IaC</strong> (15 core + 4 conditional resources, SQS DLQ, 4 CloudWatch Alarms, SNS email, split IAM) ingesting <strong>99,441 Olist orders</strong> (~120 MB).</li>
+            <li><strong>Eliminated cron polling with Airflow 3 <code>AssetWatcher</code></strong> (20s SQS Long Polling, <strong>0 empty DAG runs</strong>) and Two-Phase atomic <code>TEMP TABLE</code> swaps guarded by CSV header &amp; non-empty checks.</li>
+            <li><strong>Built incremental dbt Star Schema marts &amp; audit Safe ACK:</strong> 11 dbt schema tests + <code>ops.pipeline_ingestion_audit</code> + deterministic archive; <strong>5.0.0</strong> live-verified on AWS (17/17 tasks, DLQ &rarr; SNS &rarr; Redrive) &amp; <strong>5.0.1</strong> passing <code>21/21</code> unit tests + CI.</li>
           </ul>
           <div class="tech-tags">
-            <span>AWS (S3, SQS, Redshift Serverless, IAM)</span>
-            <span>Apache Airflow 3 (Astro CLI, Cosmos)</span>
+            <span>AWS CloudFormation</span>
+            <span>S3 / SQS + DLQ</span>
+            <span>Redshift Serverless</span>
+            <span>Airflow 3 (AssetWatcher)</span>
             <span>dbt Core</span>
+            <span>CloudWatch &amp; SNS</span>
             <span>Docker</span>
-            <span>SQL</span>
           </div>
           <div class="project-links">
-            <a href="projects/aws-data-pipeline.html" class="btn btn-amber">Read Case Study &rarr;</a>
+            <a href="projects/aws-data-pipeline.html" class="btn btn-amber">Read Case Study &amp; Diagrams &rarr;</a>
             <a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
           </div>
         </div>
@@ -265,14 +281,14 @@
           <div class="project-badge">CLOUD ELT • DATA ENGINEERING • JUN 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Automated End-to-End Cloud ELT Pipeline &amp; Dimensional Modeling ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Architected an automated cloud ELT platform</strong> on <strong>Snowflake</strong>, <strong>dbt Core</strong>, and containerized <strong>Apache Airflow</strong>, eliminating <strong>100% of manual runs</strong>.</li>
-            <li><strong>Engineered Medallion Staging and Kimball Star Schema marts</strong> using modular dbt models and <code>dbt_utils</code>, <strong>speeding queries by 35%</strong>.</li>
-            <li><strong>Integrated Astronomer Cosmos</strong> for dynamic dbt-to-Airflow DAG generation inside an isolated <code>dbt_venv</code>, ensuring <strong>100% data reliability</strong>.</li>
+            <li><strong>Automated cloud ELT platform</strong> on Snowflake, dbt Core, and containerized Airflow, eliminating recurring manual script runs on TPC-H benchmark data.</li>
+            <li><strong>Modeled Medallion Staging &amp; Kimball Star Schema marts</strong> using modular dbt SQL and <code>dbt_utils</code>, speeding analytical queries by ~<strong>35%</strong> vs. normalized joins.</li>
+            <li><strong>Integrated Astronomer Cosmos</strong> for dynamic dbt-to-Airflow DAG generation inside an isolated <code>dbt_venv</code> with automated schema/referential tests.</li>
           </ul>
           <div class="tech-tags">
-            <span>dbt Core</span>
             <span>Snowflake</span>
-            <span>Apache Airflow (Astronomer Cosmos)</span>
+            <span>dbt Core</span>
+            <span>Apache Airflow (Cosmos)</span>
             <span>Docker</span>
             <span>Python</span>
             <span>SQL</span>
@@ -283,35 +299,14 @@
           </div>
         </div>
 
-        <!-- Project 3: User Journey & Sankey Analysis -->
-        <div class="card project-card" data-categories="da">
-          <div class="project-badge">NETWORK VISUALIZATION • DATA ANALYTICS • SEP 2026</div>
-          <h3><a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">User Journey &amp; Traffic Flow Sankey Analysis ↗</a></h3>
-          <ul class="project-bullets">
-            <li><strong>Built interactive Plotly Sankey diagrams</strong> mapping multi-step acquisition and repeat-purchase flows across <strong>1M+ pageview records</strong>.</li>
-            <li><strong>Eliminated circular DAG crashes</strong> via chronological <code>.rank()</code> prefixes and reduced join RAM bloat with <code>usecols</code> and pre-aggregation.</li>
-            <li><strong>Pinpointed heavy mobile drop-off</strong> and gateway-to-cross-sell paths (<em>Mr. Fuzzy &rarr; Love Bear</em>) to recommend <strong>14-day</strong> post-acquisition CRM email triggers.</li>
-          </ul>
-          <div class="tech-tags">
-            <span>Python</span>
-            <span>Plotly (Sankey)</span>
-            <span>Pandas</span>
-            <span>NumPy</span>
-          </div>
-          <div class="project-links">
-            <a href="projects/user-journey-sankey.html" class="btn btn-amber">Read Case Study &rarr;</a>
-            <a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
-          </div>
-        </div>
-
-        <!-- Project 4: Customer 360 & RFM -->
+        <!-- Project 3: Customer 360 & RFM (Featured DA #1) -->
         <div class="card project-card" data-categories="da">
           <div class="project-badge">CUSTOMER INTELLIGENCE • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer 360 &amp; Dynamic RFM Segmentation Analysis ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Built quantile RFM segmentation</strong> (<code>pd.qcut</code>) over <strong>51,290 orders</strong> and <strong>17,415 customers</strong>, classifying 8 lifecycle tiers and Customer 360.</li>
-            <li><strong>Proved top 2 tiers (&lt;29% of users) generate &gt;53% of revenue</strong> (<em>Champions</em>: 13.56% users / 32.8% revenue), while <strong>833 Cant-Lose</strong> accounts (<strong>4.78%</strong>) hold <strong>10.0%</strong> historical value.</li>
-            <li><strong>Synthesized demographic and geographic profiles</strong> showing ages <strong>25–49 drive &gt;60% of sales</strong> to optimize annual campaign budgets.</li>
+            <li><strong>Segmented 17,415 customers</strong> across <strong>51,290 transaction line-items</strong> (25,728 orders, 2020–2023 simulated dataset) into 8 lifecycle tiers via quantile RFM scoring (<code>pd.qcut</code>).</li>
+            <li><strong>Identified high revenue concentration:</strong> top 2 tiers (<strong>&lt;29%</strong> of users) generate <strong>&gt;53%</strong> of revenue, while <strong>833 Cant-Lose</strong> accounts (4.78%) hold <strong>10.0%</strong> historical value ($653k).</li>
+            <li><strong>Profiled Customer 360 demographics</strong> (ages 25–49 driving &gt;60% gross sales) and formulated testable A/B win-back &amp; dormant suppression hypotheses.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
@@ -326,14 +321,14 @@
           </div>
         </div>
 
-        <!-- Project 5: Product Conversion Funnel -->
+        <!-- Project 4: Product Conversion Funnel (Featured DA #2) -->
         <div class="card project-card" data-categories="da">
           <div class="project-badge">CONVERSION DIAGNOSTICS • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Product Performance &amp; Conversion Funnel Analysis ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Built session-level conversion funnels</strong> in Python and Plotly tracking Catalog-to-Checkout survival across flagship product lines.</li>
-            <li><strong>Uncovered the "Love Bear Paradox"</strong> (<strong>10.0%</strong> catalog share vs. <strong>55.6%</strong> cart-add rate, compared to <em>Mr. Fuzzy</em> at 62.2% / 43.0%) and a <strong>66%</strong> cart-to-order checkout abandonment.</li>
-            <li><strong>Audited GAAP-aligned net revenue</strong> after refunds and proposed <strong>1h / 24h</strong> abandoned-cart retargeting and cross-sell widgets.</li>
+            <li><strong>Built session-level conversion funnels</strong> in Plotly tracking Catalog-to-Checkout survival across <strong>472,871 sessions</strong> and <strong>32,313 orders</strong> (Maven Fuzzy Factory dataset).</li>
+            <li><strong>Uncovered the "Love Bear Paradox":</strong> 10.0% catalog share yet <strong>55.6%</strong> cart-add rate (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a <strong>66%</strong> checkout abandonment bottleneck.</li>
+            <li><strong>Calculated Net Revenue After Refunds</strong> and proposed A/B tests for 1h/24h abandoned-cart retargeting and cross-sell product widgets.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
@@ -348,14 +343,14 @@
           </div>
         </div>
 
-        <!-- Project 6: Cohort Retention Dynamics -->
+        <!-- Project 5: Cohort Retention Dynamics (Featured DA #3) -->
         <div class="card project-card" data-categories="da">
           <div class="project-badge">BEHAVIORAL ANALYTICS • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/cohort-retention-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Cohort Analysis &amp; Customer Retention Dynamics ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Constructed time-based cohort retention heatmaps</strong> across B2B/B2C segments, exposing a <strong>1%–3% Month-1 retention drop-off crisis</strong>.</li>
-            <li><strong>Eliminated left-truncation bias</strong> by anchoring <code>FirstPurchaseDate</code> globally across <code>df_sales</code> before subsetting cohort windows.</li>
-            <li><strong>Identified B2B cyclical restock bumps</strong> (<strong>5%–6% at Month 5 and 8</strong>) to propose <strong>Day 20–25</strong> nurture flows and Month 4/7 CRM sales alerts.</li>
+            <li><strong>Modeled time-based retention heatmaps</strong> across B2B/B2C segments (51,290 transactions, 2020–2023), exposing a severe <strong>1%–3% Month-1 retention drop-off</strong>.</li>
+            <li><strong>Eliminated left-truncation bias</strong> by anchoring <code>FirstPurchaseDate</code> globally across the unpartitioned sales history before subsetting cohort windows.</li>
+            <li><strong>Uncovered B2B cyclical restock bumps</strong> (<strong>5%–6%</strong> at Month 5 and 8), proposing Day 20–25 nurture flows and Month 4/7 CRM alert experiments.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
@@ -370,21 +365,41 @@
           </div>
         </div>
 
+        <!-- Project 6: User Journey & Sankey Analysis -->
+        <div class="card project-card" data-categories="da">
+          <div class="project-badge">NETWORK VISUALIZATION • DATA ANALYTICS • SEP 2026</div>
+          <h3><a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">User Journey &amp; Traffic Flow Sankey Analysis ↗</a></h3>
+          <ul class="project-bullets">
+            <li><strong>Built interactive Plotly Sankey DAGs</strong> mapping acquisition and repeat-purchase flows across <strong>1.18M+ pageview records</strong> and 32,313 orders.</li>
+            <li><strong>Prevented circular DAG crashes</strong> with chronological <code>.rank()</code> node prefixes and reduced join RAM overhead via <code>usecols</code> and pre-aggregation.</li>
+            <li><strong>Pinpointed heavy mobile drop-off</strong> and cross-sell paths (<em>Mr. Fuzzy &rarr; Love Bear</em>) to design testable mobile UX and 14-day CRM triggers.</li>
+          </ul>
+          <div class="tech-tags">
+            <span>Python</span>
+            <span>Plotly (Sankey)</span>
+            <span>Pandas</span>
+            <span>NumPy</span>
+          </div>
+          <div class="project-links">
+            <a href="projects/user-journey-sankey.html" class="btn btn-amber">Read Case Study &rarr;</a>
+            <a href="https://github.com/AOMINHTAM/user-journey-sankey-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+          </div>
+        </div>
+
         <!-- Project 7: Market Basket Analysis -->
         <div class="card project-card" data-categories="da">
           <div class="project-badge">ALGORITHMIC MINING • DATA ANALYTICS • AUG – SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/market-basket-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Market Basket Analysis &amp; Product Bundling Strategy ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Applied Apriori association rules</strong> (<strong>0.5%</strong> min support) and basket deduplication via <code>TransactionEncoder</code>, <strong>preventing 100% of OOM crashes</strong>.</li>
-            <li><strong>Surfaced high-affinity cross-sell pairs</strong> with <strong>Lift up to 4.25</strong> and <strong>45% confidence</strong> to design a <strong>10% discounted</strong> 4-item bundle boosting AOV.</li>
-            <li><strong>Identified Home Spa and Wellness ecosystems</strong> to drive dynamic checkout recommendation logic and targeted marketing.</li>
+            <li><strong>Applied Apriori association rules</strong> (0.5% min support) with basket deduplication via <code>TransactionEncoder</code> across 25,728 baskets, preventing kernel OOM crashes.</li>
+            <li><strong>Surfaced high-affinity pairs</strong> with <strong>Lift up to 4.25</strong> and <strong>45% confidence</strong> across Home Spa &amp; Wellness ecosystems.</li>
+            <li><strong>Designed A/B bundle hypotheses</strong> (10%-discounted 4-item kit and checkout prompts) to test net AOV lift vs. margin impact.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
             <span>mlxtend (Apriori)</span>
             <span>TransactionEncoder</span>
             <span>Pandas</span>
-            <span>NumPy</span>
             <span>Seaborn</span>
           </div>
           <div class="project-links">
@@ -398,9 +413,9 @@
           <div class="project-badge">PROFITABILITY &amp; BUDGET AUDIT • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer Profitability Segmentation via Pareto ABC Analysis ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Performed Pareto ABC profit segmentation</strong> and IQR anomaly audits across <strong>51,290 transactions</strong> and <strong>17,415 customer accounts</strong>.</li>
-            <li><strong>Discovered hyper-concentrated profit</strong> where <strong>12.94% of Group A VIPs (2,254 users)</strong> generate <strong>80% of cumulative net profit</strong>.</li>
-            <li><strong>Audited a 500-gift budget shortfall (1,754 gap)</strong> and designed a tiered physical-plus-digital VIP retention rollout.</li>
+            <li><strong>Performed Pareto ABC profit segmentation</strong> and IQR anomaly audits across <strong>51,290 transactions</strong> (25,728 orders) and <strong>17,415 customers</strong>.</li>
+            <li><strong>Uncovered hyper-concentrated profit:</strong> <strong>12.94%</strong> of Group A VIPs (2,254 accounts) generate <strong>80%</strong> of cumulative net profit.</li>
+            <li><strong>Audited a 500-gift budget shortfall (1,754 gap)</strong>, proposing a measurable tiered physical-plus-digital VIP retention pilot.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
@@ -420,9 +435,9 @@
           <div class="project-badge">REVENUE CONCENTRATION • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/pareto-revenue-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">E-Commerce Revenue Contribution Analysis (Pareto 80/20) ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Analyzed 32,000+ e-commerce orders</strong> in Python to quantify SKU-level net revenue after refunds using Pareto 80/20 <code>cumsum</code> curves.</li>
-            <li><strong>Validated 80/20 concentration:</strong> <strong>3 core SKUs</strong> drive <strong>~82% of net revenue</strong> while 1 flagship SKU holds <strong>45.2% concentration risk</strong>.</li>
-            <li><strong>Recommended safety-stock thresholds</strong>, tail-SKU bundling, and reallocating <strong>70%–80% of paid ad budget</strong> to top 3 conversion drivers.</li>
+            <li><strong>Analyzed 32,313 e-commerce orders</strong> (Maven Fuzzy Factory) to quantify SKU-level Net Revenue After Refunds using Pareto 80/20 curves.</li>
+            <li><strong>Validated 80/20 concentration:</strong> <strong>3 core SKUs</strong> drive <strong>~82%</strong> of net revenue while 1 flagship SKU holds <strong>45.2%</strong> single-product dependency risk.</li>
+            <li><strong>Proposed safety-stock buffers</strong>, tail-SKU bundling, and ROAS-monitored ad focus tests on top 3 conversion drivers.</li>
           </ul>
           <div class="tech-tags">
             <span>Python</span>
@@ -454,7 +469,7 @@
           <h3 class="cert-title">dbt Fundamentals</h3>
           <p class="cert-issuer">Issued by dbt Labs (Badge ID: daf3523f)</p>
           <p class="cert-desc">
-            Demonstrates core competency in building, testing, and documenting scalable data transformation pipelines and dimensional models using dbt Core &amp; Cloud.
+            Demonstrates core competency in building, testing, and documenting modular SQL transformation pipelines and dimensional models using dbt Core &amp; Cloud.
           </p>
           <div class="tech-tags">
             <span>Data Modeling</span>
@@ -477,11 +492,13 @@
     <div class="container text-center">
       <h2 class="section-title">GET IN TOUCH</h2>
       <p class="contact-sub">
-        Open to Data Analyst and Data Engineer (Intern / Fresher) opportunities, as well as data architecture discussions.
+        Open to Data Analyst and Data Engineer Intern opportunities, as well as data architecture and analytics discussions.
       </p>
       <div class="cta-row justify-center">
         <a href="mailto:aominhtam@gmail.com" class="btn btn-amber">Send Email</a>
         <button class="btn btn-outline" onclick="copyEmail()">📋 Copy Email</button>
+        <a href="https://www.linkedin.com/in/ao-minh-tam/" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">LinkedIn ↗</a>
+        <a href="https://github.com/AOMINHTAM" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub ↗</a>
       </div>
     </div>
   </section>

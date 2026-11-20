@@ -35,10 +35,10 @@
         <span class="project-badge">CUSTOMER INTELLIGENCE • CASE STUDY</span>
         <h1>Customer Profitability Segmentation via Pareto ABC Analysis</h1>
         <div class="detail-meta">
-          <span><strong>Role:</strong> Data Analyst</span>
+          <span><strong>Role:</strong> Data Analyst (Personal Analytics Project)</span>
           <span><strong>Timeline:</strong> Sep 2026</span>
           <span><strong>Stack:</strong> Python 3.x, Pandas, NumPy, Matplotlib, Seaborn, IQR Anomaly Auditing</span>
-          <span><strong>Scale:</strong> 51,290 Transactions / 17,415 Unique Customers</span>
+          <span><strong>Scope:</strong> 51,290 Line-Items (25,728 Orders) / 17,415 Unique Customers</span>
         </div>
       </div>
 
@@ -46,9 +46,29 @@
         
         <!-- 1. Problem Context -->
         <div class="detail-block">
-          <h2>1. Business Scenario & Strategic Objectives</h2>
+          <h2>1. Dataset, Scope &amp; Business Scenario</h2>
+          <div class="scope-box">
+            <div class="scope-grid">
+              <div class="scope-item">
+                <strong>Project Type</strong>
+                Personal Project / Simulated Business Case
+              </div>
+              <div class="scope-item">
+                <strong>Dataset Source</strong>
+                Simulated E-Commerce CSVs (<code>EcomSales</code>, <code>Customer</code>, <code>Product</code>, <code>Region</code>)
+              </div>
+              <div class="scope-item">
+                <strong>Scale &amp; Granularity</strong>
+                51,290 transaction line-items &bull; 25,728 unique orders &bull; 17,415 customer accounts
+              </div>
+              <div class="scope-item">
+                <strong>Time Range &amp; Currency</strong>
+                Jan 2020 – Dec 2023 (4 Years) &bull; Simulated USD ($)
+              </div>
+            </div>
+          </div>
           <p>
-            Management planned an exclusive year-end customer appreciation campaign constrained by a fixed budget cap of <strong>500 luxury physical gift sets</strong>.
+            In this simulated year-end appreciation scenario, management faced a fixed cap of <strong>500 physical luxury gift sets</strong> and needed to evaluate profit concentration across all 17,415 accounts.
           </p>
           <ul>
             <li>Aggregate transaction-level profitability and quantify cumulative profit concentration.</li>
@@ -129,6 +149,9 @@
             <li><strong>Modular Constants:</strong> Parameterized ABC thresholds and budget quotas into maintainable global variables.</li>
             <li><strong>Data Integrity:</strong> Implemented defensive copy operations (<code>.copy()</code>) inside IQR outlier filtering utilities to prevent DataFrame side-effects.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Validation Plan:</strong> Evaluate the tiered physical (Top 1–500) vs. digital VVIP (Ranks 501–2,254) retention pilot by tracking <strong>90-Day VIP Repeat Rate</strong> and <strong>Incremental Net Profit vs. Reward Cost</strong>.
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;
