@@ -71,10 +71,15 @@
             In this simulated year-end appreciation scenario, management faced a fixed cap of <strong>500 physical luxury gift sets</strong> and needed to evaluate profit concentration across all 17,415 accounts.
           </p>
           <ul>
-            <li>Aggregate transaction-level profitability and quantify cumulative profit concentration.</li>
-            <li>Segment customer base into <strong>Group A (0–80%)</strong>, <strong>Group B (80–95%)</strong>, and <strong>Group C (>95%)</strong>.</li>
+            <li>Aggregate transaction-level <code>Profit</code> and quantify cumulative profit concentration.</li>
+            <li>Segment customer base into <strong>Group A (0–80%)</strong>, <strong>Group B (80–95%)</strong>, and <strong>Group C (&gt;95%)</strong>.</li>
             <li>Audit whether the 500-gift quota covers Group A and propose a tiered rollout roadmap.</li>
             <li>Profile VIP demographic personas (Income, Age, Occupation) and geographic clusters.</li>
+          </ul>
+          <div class="hypothesis-note">
+            <strong>Profit Metric Definition (Verified in Code):</strong>
+            Rankings use the pre-computed line-item <code>Profit</code> field supplied in <code>EcomSales.csv</code> (separate from gross <code>Sales</code>). Because the simulated schema lacks marketing/CAC, fulfillment shipping, and corporate SG&amp;A expenses, this reflects transaction-level gross dataset profit rather than full bottom-line customer net profit.
+          </div>
           </ul>
         </div>
 
@@ -142,7 +147,7 @@
 
         <!-- 4. Technical Refactoring Notes -->
         <div class="detail-block">
-          <h2>4. Technical Review & Production Refactoring</h2>
+          <h2>4. Methodology &amp; Code Refactoring</h2>
           <ul>
             <li><strong>Cross-Platform Portability:</strong> Decoupled hardcoded drive paths using <code>os.path.join()</code>.</li>
             <li><strong>Dynamic Timestamp Calculation:</strong> Replaced fixed-year logic with <code>pd.Timestamp.now().year</code>.</li>
@@ -150,7 +155,7 @@
             <li><strong>Data Integrity:</strong> Implemented defensive copy operations (<code>.copy()</code>) inside IQR outlier filtering utilities to prevent DataFrame side-effects.</li>
           </ul>
           <div class="hypothesis-note">
-            <strong>Validation Plan:</strong> Evaluate the tiered physical (Top 1–500) vs. digital VVIP (Ranks 501–2,254) retention pilot by tracking <strong>90-Day VIP Repeat Rate</strong> and <strong>Incremental Net Profit vs. Reward Cost</strong>.
+            <strong>Validation Plan:</strong> Historical spend alone does not prove future gift responsiveness; evaluate the tiered physical (Top 1–500) vs. digital VVIP (Ranks 501–2,254) retention pilot against a randomized holdout control group measuring <strong>90-Day VIP Repeat Rate</strong> and <strong>Incremental Profit vs. Reward Cost</strong>.
           </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">

@@ -768,6 +768,35 @@ code {
   color: var(--amber-main);
 }
 
+.skill-tier-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.skill-tier-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skill-tier-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber-main);
+}
+
+.skill-tier-label.working {
+  color: var(--text-muted);
+}
+
+.skill-tier-row .tech-tags {
+  margin-bottom: 0;
+}
+
 /* DATASET & SCOPE BOX */
 .scope-box {
   background-color: var(--bg-alt);

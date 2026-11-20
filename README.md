@@ -9,8 +9,8 @@ An interactive, responsive portfolio website showcasing **Data Engineering** (AW
 ## 🛠️ Architecture & Features
 
 * **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+).
-* **Dual-Track HR Navigation:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired directly to interactive project category filters (`All` / `DA` / `DE`).
-* **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
+* **Dual-Track HR Navigation:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired directly to interactive project category filters (`All` / `DA` / `DE`), with Skill Matrix grouped by proficiency tier (**Hands-on** vs. **Working Knowledge**).
+* **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), methodological formulas/denominators, embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
 * **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
 
 ---

@@ -192,13 +192,23 @@
         <div class="card skill-card">
           <h4>Data Analytics &amp; BI</h4>
           <p class="card-sub">SQL, Python &amp; Storytelling</p>
-          <div class="tech-tags">
-            <span>SQL (Joins, CTEs, Window Functions)</span>
-            <span>Python (Pandas, NumPy, EDA)</span>
-            <span>Power BI (DAX, Power Query)</span>
-            <span>Microsoft Excel (Pivot, Power Query)</span>
-            <span>Plotly, Seaborn &amp; Matplotlib</span>
-            <span>mlxtend (Apriori) &amp; squarify</span>
+          <div class="skill-tier-group">
+            <div class="skill-tier-row">
+              <span class="skill-tier-label">Hands-on</span>
+              <div class="tech-tags">
+                <span>Python (Pandas, NumPy, EDA)</span>
+                <span>SQL (Joins, CTEs, Window Functions)</span>
+                <span>Plotly, Seaborn &amp; Matplotlib</span>
+              </div>
+            </div>
+            <div class="skill-tier-row">
+              <span class="skill-tier-label working">Working Knowledge</span>
+              <div class="tech-tags">
+                <span>Power BI (DAX, Star Schema)</span>
+                <span>Microsoft Excel (Pivot, Power Query)</span>
+                <span>mlxtend (Apriori) &amp; squarify</span>
+              </div>
+            </div>
           </div>
           <div class="skill-applied">
             <strong>Applied in:</strong> Customer RFM 360, Conversion Funnel, Cohort Retention, Sankey Flow, Market Basket &amp; Pareto ABC
@@ -207,13 +217,23 @@
         <div class="card skill-card">
           <h4>Cloud &amp; Data Warehousing</h4>
           <p class="card-sub">AWS Infrastructure &amp; Storage</p>
-          <div class="tech-tags">
-            <span>AWS S3 (Versioning, Lifecycle)</span>
-            <span>AWS SQS + Dead-Letter Queue</span>
-            <span>AWS CloudFormation (IaC)</span>
-            <span>CloudWatch Alarms, SNS &amp; IAM</span>
-            <span>Amazon Redshift Serverless</span>
-            <span>Snowflake Data Cloud</span>
+          <div class="skill-tier-group">
+            <div class="skill-tier-row">
+              <span class="skill-tier-label">Hands-on</span>
+              <div class="tech-tags">
+                <span>AWS S3 (Versioning, Lifecycle)</span>
+                <span>AWS SQS + Dead-Letter Queue</span>
+                <span>Amazon Redshift Serverless</span>
+              </div>
+            </div>
+            <div class="skill-tier-row">
+              <span class="skill-tier-label working">Working Knowledge</span>
+              <div class="tech-tags">
+                <span>AWS CloudFormation (IaC)</span>
+                <span>CloudWatch Alarms, SNS &amp; IAM</span>
+                <span>Snowflake Data Cloud</span>
+              </div>
+            </div>
           </div>
           <div class="skill-applied">
             <strong>Applied in:</strong> AWS E-Commerce Event-Driven ELT (V5.0.1) &amp; Snowflake Cloud ELT Pipeline
@@ -222,13 +242,23 @@
         <div class="card skill-card">
           <h4>Orchestration, Modeling &amp; CI</h4>
           <p class="card-sub">Pipelines, Testing &amp; DevOps</p>
-          <div class="tech-tags">
-            <span>Apache Airflow 3 (AssetWatcher, Cosmos)</span>
-            <span>dbt Core (Incremental, Schema Tests)</span>
-            <span>Kimball Star Schema &amp; Medallion</span>
-            <span>Docker &amp; Ubuntu WSL2</span>
-            <span>GitHub Actions CI (Ruff, cfn-lint)</span>
-            <span>Unit Testing (Unittest / Pytest)</span>
+          <div class="skill-tier-group">
+            <div class="skill-tier-row">
+              <span class="skill-tier-label">Hands-on</span>
+              <div class="tech-tags">
+                <span>Apache Airflow 3 (AssetWatcher, Cosmos)</span>
+                <span>dbt Core (Incremental, Schema Tests)</span>
+                <span>Kimball Star Schema &amp; Medallion</span>
+              </div>
+            </div>
+            <div class="skill-tier-row">
+              <span class="skill-tier-label working">Working Knowledge</span>
+              <div class="tech-tags">
+                <span>Docker &amp; Ubuntu WSL2</span>
+                <span>GitHub Actions CI (Ruff, cfn-lint)</span>
+                <span>Unit Testing (Unittest / Pytest)</span>
+              </div>
+            </div>
           </div>
           <div class="skill-applied">
             <strong>Applied in:</strong> Two-Phase Atomic Swaps, Audit Ledger Safe ACK, dbt Marts &amp; 3-Job CI Pipelines
@@ -259,7 +289,7 @@
           <ul class="project-bullets">
             <li><strong>Provisioned reproducible AWS CloudFormation IaC</strong> (15 core + 4 conditional resources, SQS DLQ, 4 CloudWatch Alarms, SNS email, split IAM) ingesting <strong>99,441 Olist orders</strong> (~120 MB).</li>
             <li><strong>Eliminated cron polling with Airflow 3 <code>AssetWatcher</code></strong> (20s SQS Long Polling, <strong>0 empty DAG runs</strong>) and Two-Phase atomic <code>TEMP TABLE</code> swaps guarded by CSV header &amp; non-empty checks.</li>
-            <li><strong>Built incremental dbt Star Schema marts &amp; audit Safe ACK:</strong> 11 dbt schema tests + <code>ops.pipeline_ingestion_audit</code> + deterministic archive; <strong>5.0.0</strong> live-verified on AWS (17/17 tasks, DLQ &rarr; SNS &rarr; Redrive) &amp; <strong>5.0.1</strong> passing <code>21/21</code> unit tests + CI.</li>
+            <li><strong>Built incremental dbt Star Schema marts &amp; audit Safe ACK:</strong> <code>ops.pipeline_ingestion_audit</code> + deterministic archive; <strong>5.0.0</strong> live-verified E2E on AWS (17/17 tasks, 11 dbt schema tests, DLQ &rarr; SNS &rarr; Redrive) &amp; <strong>5.0.1</strong> passing <code>21/21</code> Python unit tests + 3 DAG tests + <code>dbt parse</code> in CI.</li>
           </ul>
           <div class="tech-tags">
             <span>AWS CloudFormation</span>
@@ -282,7 +312,7 @@
           <h3><a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Automated End-to-End Cloud ELT Pipeline &amp; Dimensional Modeling ↗</a></h3>
           <ul class="project-bullets">
             <li><strong>Automated cloud ELT platform</strong> on Snowflake, dbt Core, and containerized Airflow, eliminating recurring manual script runs on TPC-H benchmark data.</li>
-            <li><strong>Modeled Medallion Staging &amp; Kimball Star Schema marts</strong> using modular dbt SQL and <code>dbt_utils</code>, speeding analytical queries by ~<strong>35%</strong> vs. normalized joins.</li>
+            <li><strong>Modeled Medallion Staging &amp; Kimball Star Schema marts</strong> using modular dbt SQL and <code>dbt_utils</code> to pre-join core entities and simplify downstream BI queries.</li>
             <li><strong>Integrated Astronomer Cosmos</strong> for dynamic dbt-to-Airflow DAG generation inside an isolated <code>dbt_venv</code> with automated schema/referential tests.</li>
           </ul>
           <div class="tech-tags">
@@ -326,8 +356,8 @@
           <div class="project-badge">CONVERSION DIAGNOSTICS • DATA ANALYTICS • SEP 2026</div>
           <h3><a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Product Performance &amp; Conversion Funnel Analysis ↗</a></h3>
           <ul class="project-bullets">
-            <li><strong>Built session-level conversion funnels</strong> in Plotly tracking Catalog-to-Checkout survival across <strong>472,871 sessions</strong> and <strong>32,313 orders</strong> (Maven Fuzzy Factory dataset).</li>
-            <li><strong>Uncovered the "Love Bear Paradox":</strong> 10.0% catalog share yet <strong>55.6%</strong> cart-add rate (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a <strong>66%</strong> checkout abandonment bottleneck.</li>
+            <li><strong>Built session-level conversion funnels</strong> in Plotly tracking Catalog-to-Order Confirmation (<code>/thank-you-for-your-order</code>) across <strong>261,231 catalog sessions</strong> (472,871 sitewide sessions; <strong>32,313 orders</strong>, Maven Fuzzy Factory).</li>
+            <li><strong>Uncovered the "Love Bear Paradox":</strong> 10.0% catalog share yet <strong>55.6%</strong> cart-add rate (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a ~<strong>66%</strong> cart-to-order drop-off bottleneck.</li>
             <li><strong>Calculated Net Revenue After Refunds</strong> and proposed A/B tests for 1h/24h abandoned-cart retargeting and cross-sell product widgets.</li>
           </ul>
           <div class="tech-tags">
@@ -414,7 +444,7 @@
           <h3><a href="https://github.com/AOMINHTAM/abc-inventory-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer Profitability Segmentation via Pareto ABC Analysis ↗</a></h3>
           <ul class="project-bullets">
             <li><strong>Performed Pareto ABC profit segmentation</strong> and IQR anomaly audits across <strong>51,290 transactions</strong> (25,728 orders) and <strong>17,415 customers</strong>.</li>
-            <li><strong>Uncovered hyper-concentrated profit:</strong> <strong>12.94%</strong> of Group A VIPs (2,254 accounts) generate <strong>80%</strong> of cumulative net profit.</li>
+            <li><strong>Uncovered hyper-concentrated profit:</strong> <strong>12.94%</strong> of Group A VIPs (2,254 accounts) generate <strong>80%</strong> of cumulative profit (using dataset <code>Profit</code> field).</li>
             <li><strong>Audited a 500-gift budget shortfall (1,754 gap)</strong>, proposing a measurable tiered physical-plus-digital VIP retention pilot.</li>
           </ul>
           <div class="tech-tags">
@@ -464,10 +494,10 @@
         <div class="card cert-card">
           <div class="cert-header">
             <div class="cert-issuer-badge">dbt Labs</div>
-            <span class="cert-status">Verified Badge</span>
+            <span class="cert-status">Verified Credential</span>
           </div>
-          <h3 class="cert-title">dbt Fundamentals</h3>
-          <p class="cert-issuer">Issued by dbt Labs (Badge ID: daf3523f)</p>
+          <h3 class="cert-title">dbt Fundamentals — Verified Credential</h3>
+          <p class="cert-issuer">Issued by dbt Labs (Credential ID: daf3523f)</p>
           <p class="cert-desc">
             Demonstrates core competency in building, testing, and documenting modular SQL transformation pipelines and dimensional models using dbt Core &amp; Cloud.
           </p>

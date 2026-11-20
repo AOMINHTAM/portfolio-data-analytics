@@ -81,7 +81,7 @@
         <div class="detail-block">
           <h2>2. Key Findings & Behavioral Flow Insights</h2>
           <ul>
-            <li><strong>The "Engaged Leaver" Discovery:</strong> Filtering out 1-pageview bouncers exposed that even among actively engaged visitors, the mid-funnel drop-off node remains massive, signaling catalog or checkout friction rather than low-quality ad traffic.</li>
+            <li><strong>Denominator Scope &amp; the "Engaged Leaver" Pattern:</strong> Out of <strong>472,871 total sessions</strong>, <strong>211,640 (44.8%)</strong> were single-pageview bounce sessions and were excluded via a <code>pageviews &gt; 1</code> filter so Sankey 1 focuses strictly on the <strong>261,231 (55.2%)</strong> engaged multi-page sessions. Even within this engaged denominator, the mid-funnel drop-off node dominates over <code>Converted</code>—pinpointing catalog/checkout UX hypotheses beyond initial ad-click quality.</li>
             <li><strong>Device Conversion Discrepancy:</strong> Desktop sessions flow smoothly into the <code>Converted</code> node, whereas Mobile traffic disproportionately terminates at the <code>Drop-off</code> node.</li>
             <li><strong>The Gateway & Cross-Pollination Journey:</strong>
               <ul>
@@ -94,7 +94,7 @@
 
         <!-- 3. Technical QA & Engineering Refactoring -->
         <div class="detail-block">
-          <h2>3. Technical Debt Audited & Production Bug Fixes</h2>
+          <h2>3. Methodology &amp; Analysis Fixes</h2>
           <ul>
             <li><strong>Preventing Circular Link Kernel Crashes:</strong> Plotly Sankey diagrams fail when target nodes loop back into identical source nodes. Resolved by prefixing chronological order rankings (<code>1 - Product A</code> &rarr; <code>2 - Product A</code>), ensuring every node in the directed acyclic graph (DAG) remains strictly unique.</li>
             <li><strong>Memory Optimization on 1M+ Row Joins:</strong> Resolved severe RAM bloat by specifying <code>usecols</code> during <code>pd.read_csv()</code> and aggregating standalone tables via <code>.groupby().first()</code> before performing final joins.</li>

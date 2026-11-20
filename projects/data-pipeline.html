@@ -106,7 +106,7 @@
         <div class="detail-block">
           <h2>4. Key Outcomes &amp; Scope Notes</h2>
           <p>
-            The pipeline eliminated manual script execution via containerized Airflow scheduling, improved downstream analytical query speed by ~<strong>35%</strong> on pre-joined Kimball Star Schema marts compared against ad-hoc normalized joins, and enforced automated dbt schema/referential quality gates prior to Power BI consumption.
+            The pipeline eliminated manual script execution via containerized Airflow scheduling, materialized pre-joined Kimball Star Schema marts (<code>fct_orders</code>) to reduce repetitive multi-table joins in downstream BI workflows, and enforced automated dbt schema/referential quality gates prior to analytical consumption. <em>Note: Timing claims were omitted because no controlled cross-warehouse cache benchmark was logged.</em>
           </p>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">

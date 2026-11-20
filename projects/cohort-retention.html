@@ -82,8 +82,8 @@
         <div class="detail-block">
           <h2>2. Key Findings & Behavioral Discoveries</h2>
           <ul>
-            <li><strong>The Month-1 Churn Crisis:</strong> While Q1 acquisition volume was high, Month-1 retention collapsed to a dismal <strong>1% to 3% baseline</strong> across all cohorts, proving a complete lack of post-purchase onboarding engagement.</li>
-            <li><strong>Corporate (B2B) Restock Cyclicality:</strong> Unlike erratic B2C buying, B2B corporate buyers exhibited clear retention spikes (+5% to 6%) at <strong>Month 5</strong> and <strong>Month 8</strong>, reflecting structural inventory restock rhythms.</li>
+            <li><strong>The Month-1 Churn Cliff:</strong> Across 2022 cohorts, Month-1 repeat purchase rates drop sharply to a <strong>1% to 3% baseline</strong>, highlighting an early post-purchase retention gap to test via lifecycle onboarding (clickstream engagement itself is not directly measured in order logs).</li>
+            <li><strong>Corporate (B2B) Restock Cyclicality (Sample Caveat):</strong> Unlike flatter B2C buying, the Corporate segment shows observable retention bumps (+5% to 6%) around <strong>Month 5</strong> and <strong>Month 8</strong>; because the B2B cohort base is smaller than B2C, persistence should be monitored across future periods.</li>
             <li><strong>The Income Profitability Paradox:</strong>
               <ul>
                 <li><em>Low-Income Cohort (The Cash Cow):</em> Generated lowest AOV per transaction, but their high volume and consistency produced the largest cumulative profit pool.</li>
@@ -95,7 +95,7 @@
 
         <!-- 3. Technical Debt & Auditing -->
         <div class="detail-block">
-          <h2>3. Technical Debt Audited & Production Bug Fixes</h2>
+          <h2>3. Methodology &amp; Analysis Fixes</h2>
           <ul>
             <li><strong>Eliminated Left-Truncation Bias:</strong> Identified that computing <code>FirstPurchaseDate</code> *after* subsetting 2022 data falsely misclassified returning 2020–2021 buyers as Month-0 acquisitions. Fixed by anchoring first-purchase dates globally across the unpartitioned master table.</li>
             <li><strong>Cohort Size Weighting Layout:</strong> Paired absolute acquisition volume bar charts side-by-side with retention heatmaps using <code>gridspec_kw={'width_ratios': [1, 4]}</code> to ensure small cohorts were not over-interpreted.</li>

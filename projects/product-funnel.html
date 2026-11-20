@@ -72,9 +72,15 @@
           </p>
           <ul>
             <li>Calculate <strong>Net Revenue After Refunds</strong> (<code>Gross Revenue - Refund Amount</code>) across all catalog items.</li>
-            <li>Construct session-based conversion funnels tracking users across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart</code> &rarr; <code>Checkout (/thank-you)</code>.</li>
+            <li>Construct sequential session-based conversion funnels tracking unique sessions across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart (/cart)</code> &rarr; <code>Order Confirmation (/thank-you-for-your-order)</code>.</li>
             <li>Compare conversion performance between flagship SKUs: <em>The Original Mr. Fuzzy</em> vs. <em>The Forever Love Bear</em>.</li>
           </ul>
+          <div class="hypothesis-note">
+            <strong>Denominator &amp; Funnel Definitions (Verified in Code):</strong>
+            Each milestone counts deduplicated <code>website_session_id</code>s (<code>groupby.max()</code>) progressing sequentially from <code>/products</code> (<strong>261,231</strong> sessions):
+            <em>Mr. Fuzzy</em> (<strong>162,525</strong> PDP &rarr; <strong>69,957</strong> Cart &rarr; <strong>23,861</strong> Order Confirmation, 34.1% Cart-to-Order) vs. <em>Love Bear</em> (<strong>26,033</strong> PDP &rarr; <strong>14,485</strong> Cart &rarr; <strong>4,803</strong> Order Confirmation, 33.2% Cart-to-Order).
+            Sessions landing directly on a PDP without <code>/products</code> are outside this catalog-anchored funnel, and refunds are deducted separately in SKU Net Revenue rather than removed from clickstream progression.
+          </div>
         </div>
 
         <!-- 2. Funnel Diagnostics & Key Findings -->
@@ -83,12 +89,12 @@
           <ul>
             <li><strong>The "Love Bear" Paradox:</strong>
               <ul>
-                <li><em>Top-of-Funnel (Catalog &rarr; PDP):</em> <em>Mr. Fuzzy</em> captures a massive <strong>62.2%</strong> of all catalog traffic, while <em>Love Bear</em> captures only <strong>10.0%</strong> due to poor placement.</li>
-                <li><em>Mid-Funnel (PDP &rarr; Cart):</em> Once a user views <em>Love Bear</em>, it generates a significantly higher Cart-Add conversion rate (<strong>55.6%</strong>) compared to <em>Mr. Fuzzy</em> (<strong>43.0%</strong>). The product is persuasive but under-exposed.</li>
+                <li><em>Top-of-Funnel (Catalog &rarr; PDP):</em> <em>Mr. Fuzzy</em> captures <strong>62.2%</strong> of catalog sessions, while <em>Love Bear</em> captures only <strong>10.0%</strong>—indicating substantially lower catalog-page click-through exposure (placement hypothesis to test).</li>
+                <li><em>Mid-Funnel (PDP &rarr; Cart):</em> Once a user views <em>Love Bear</em>, it converts at a higher PDP-to-Cart rate (<strong>55.6%</strong>) than <em>Mr. Fuzzy</em> (<strong>43.0%</strong>), making it a high-intent candidate for merchandising visibility tests.</li>
               </ul>
             </li>
-            <li><strong>Severe Checkout Bottleneck:</strong> Across all product lines, the step from Cart to Completed Order experiences a <strong>66% abandonment rate</strong>.</li>
-            <li><strong>Quality Control Red Flag:</strong> While <em>Mr. Fuzzy</em> is the primary net revenue driver, <em>The Birthday Sugar Panda</em> exhibits the highest refund rate in the catalog, requiring immediate supplier reviews.</li>
+            <li><strong>Severe Cart-to-Order Drop-off Bottleneck:</strong> Across both product lines, progression from <code>/cart</code> to <code>/thank-you-for-your-order</code> drops by ~<strong>66%</strong> (~33–34% completion).</li>
+            <li><strong>Refund Rate Anomaly:</strong> While <em>Mr. Fuzzy</em> is the primary net revenue driver, <em>The Birthday Sugar Panda</em> exhibits the highest refund rate in the catalog, flagging it as a priority candidate for product quality and supplier investigation rather than a proven supplier defect.</li>
           </ul>
         </div>
 

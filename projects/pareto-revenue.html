@@ -144,7 +144,7 @@
           <h2>3. Business Insights & Engineering Notes</h2>
           <ul>
             <li><strong>Single SKU Vulnerability:</strong> Over 45% of net revenue depends entirely on <em>The Original Mr. Fuzzy</em>. Any supply chain bottleneck on this SKU directly disrupts cash flow.</li>
-            <li><strong>Underperforming Long Tail:</strong> Low-velocity accessories consume valuable warehouse space while offering negligible contribution margins.</li>
+            <li><strong>Underperforming Long Tail (Inventory Caveat):</strong> Tail SKUs contribute a small fraction of net revenue and gross margin (<code>price_usd - cogs_usd</code>); because the dataset contains no warehouse-holding or storage-cost data, these items are flagged for assortment/margin review rather than assumed storage waste.</li>
             <li><strong>Technical Guardrail:</strong> Refund records must be subtracted prior to grouping to avoid gross revenue inflation. Strict descending sorting (<code>sort_values(ascending=False)</code>) is mandated before <code>.cumsum()</code>.</li>
           </ul>
         </div>
