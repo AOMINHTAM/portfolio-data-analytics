@@ -386,7 +386,8 @@ body:not(.light-theme) .btn-amber {
   color: var(--text-main);
 }
 
-.card h4 {
+.card h4,
+.skill-card h3 {
   font-size: 1.15rem;
   color: var(--text-main);
   margin-bottom: 4px;
@@ -924,6 +925,69 @@ code {
 
 .hypothesis-note strong {
   color: var(--amber-main);
+}
+
+/* PROJECTS SUBTITLE, EXPAND TOGGLE, LAST UPDATED & BACK TO TOP */
+.projects-intro {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-top: -12px;
+  margin-bottom: 20px;
+}
+
+.projects-intro strong {
+  color: var(--amber-main);
+}
+
+.projects-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.projects-toggle-wrap.is-hidden {
+  display: none;
+}
+
+.footer-updated {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--amber-main);
+  font-weight: 600;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 900;
+  background-color: var(--bg-card);
+  color: var(--amber-main);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: var(--transition);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background-color: var(--amber-main);
+  border-color: var(--amber-main);
+  color: #1a0f00;
 }
 
 /* --- RESPONSIVE MOBILE --- */

@@ -9,8 +9,9 @@ An interactive, responsive portfolio website showcasing **Data Engineering** (AW
 ## 🛠️ Architecture & Features
 
 * **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+).
-* **Dual-Track HR Navigation:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired directly to interactive project category filters (`All` / `DA` / `DE`), with Skill Matrix grouped by proficiency tier (**Hands-on** vs. **Working Knowledge**).
+* **Dual-Track HR Navigation & Featured Layout:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired to interactive category filters; defaults to **4 Featured Flagship Projects** (2 DE + 2 DA) with an expand toggle (`Show All 9 Projects`), two-tier card bullets (**Business Outcome → Technical Implementation → Measurement**), and Skill Matrix grouped by proficiency tier (**Hands-on** vs. **Working Knowledge**).
 * **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), methodological formulas/denominators, embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
+* **Technical SEO & UX:** Configured `robots.txt`, `sitemap.xml`, per-page Open Graph & `canonical` tags, `Person` / `CreativeWork` JSON-LD schemas, semantic `H1 → H2 → H3` headings, `loading="lazy"` below-the-fold diagrams, and a floating Back-to-Top control. See [`docs/SEO_GLOSSARY.md`](docs/SEO_GLOSSARY.md) for setup notes and Google Search Console steps.
 * **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
 
 ---
