@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /docs/
 
 Sitemap: https://aominhtam-portfolio.vercel.app/sitemap.xml

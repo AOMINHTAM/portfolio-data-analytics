@@ -1,0 +1,9 @@
+# Local-only documentation & notes (kept on disk, excluded from GitHub/Vercel deploy)
+docs/
+*.local.md
+
+# OS & Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+__pycache__/
