@@ -11,19 +11,37 @@
   <meta property="og:title" content="AWS Event-Driven ELT Pipeline (V5.0.1) | Ao Minh Tâm" />
   <meta property="og:description" content="CloudFormation IaC, S3/SQS + DLQ fault isolation, Airflow 3 AssetWatcher, Redshift atomic swaps, and dbt Star Schema marts for 99,441 Olist orders." />
   <meta property="og:url" content="https://aominhtam-portfolio.vercel.app/projects/aws-data-pipeline.html" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://aominhtam-portfolio.vercel.app/images/aws/architecture_v5_1.png" />
+  <meta property="og:image:width" content="3720" />
+  <meta property="og:image:height" content="2010" />
+  <meta property="og:image:alt" content="AWS E-Commerce Data Pipeline V5.0.1 System Architecture Diagram" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AWS Event-Driven ELT Pipeline (V5.0.1) | Ao Minh Tâm" />
   <meta name="twitter:description" content="CloudFormation IaC, SQS DLQ, Airflow 3 AssetWatcher, Redshift Serverless, and dbt Star Schema case study." />
+  <meta name="twitter:image" content="https://aominhtam-portfolio.vercel.app/images/aws/architecture_v5_1.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": "AWS E-Commerce Modern Data Pipeline (V5.0.1)",
-    "description": "Event-driven ELT pipeline for 99,441 Olist orders using AWS CloudFormation, S3, SQS + DLQ, CloudWatch, SNS, Redshift Serverless, Apache Airflow 3 (AssetWatcher), and dbt Core.",
-    "url": "https://aominhtam-portfolio.vercel.app/projects/aws-data-pipeline.html",
-    "codeRepository": "https://github.com/AOMINHTAM/aws-data-pipeline",
-    "author": { "@type": "Person", "name": "Ao Minh Tâm", "url": "https://aominhtam-portfolio.vercel.app/" },
-    "keywords": ["AWS", "CloudFormation", "S3", "SQS", "Redshift Serverless", "Apache Airflow 3", "dbt Core", "Data Engineering"]
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "name": "AWS E-Commerce Modern Data Pipeline (V5.0.1)",
+        "description": "Event-driven ELT pipeline for 99,441 Olist orders using AWS CloudFormation, S3, SQS + DLQ, CloudWatch, SNS, Redshift Serverless, Apache Airflow 3 (AssetWatcher), and dbt Core.",
+        "url": "https://aominhtam-portfolio.vercel.app/projects/aws-data-pipeline.html",
+        "image": "https://aominhtam-portfolio.vercel.app/images/aws/architecture_v5_1.png",
+        "codeRepository": "https://github.com/AOMINHTAM/aws-data-pipeline",
+        "author": { "@type": "Person", "name": "Ao Minh Tâm", "url": "https://aominhtam-portfolio.vercel.app/" },
+        "keywords": ["AWS", "CloudFormation", "S3", "SQS", "Redshift Serverless", "Apache Airflow 3", "dbt Core", "Data Engineering"]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aominhtam-portfolio.vercel.app/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://aominhtam-portfolio.vercel.app/#projects" },
+          { "@type": "ListItem", "position": 3, "name": "AWS Event-Driven ELT Pipeline (V5.0.1)", "item": "https://aominhtam-portfolio.vercel.app/projects/aws-data-pipeline.html" }
+        ]
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -102,7 +120,7 @@
           </div>
           <figure class="detail-figure">
             <a href="../images/aws/architecture_v5_1.png" target="_blank" rel="noopener noreferrer">
-              <img src="../images/aws/architecture_v5_1.png" alt="AWS E-Commerce Data Pipeline V5.0.1 System Architecture" />
+              <img src="../images/aws/architecture_v5_1.png" alt="AWS E-Commerce Data Pipeline V5.0.1 System Architecture" width="3720" height="2010" />
             </a>
             <figcaption>End-to-End V5.0.1 Architecture: CloudFormation IaC, S3 Versioning, SQS + DLQ, 4 CloudWatch Alarms + SNS, Airflow 3 AssetWatcher, and Redshift Serverless. (Click image to open full resolution)</figcaption>
           </figure>
@@ -148,7 +166,7 @@
 
           <figure class="detail-figure">
             <a href="../images/aws/notebook_03_evolution_timeline.png" target="_blank" rel="noopener noreferrer">
-              <img src="../images/aws/notebook_03_evolution_timeline.png" alt="AWS data pipeline architecture evolution timeline from V2 to V5.0.1" loading="lazy" />
+              <img src="../images/aws/notebook_03_evolution_timeline.png" alt="AWS data pipeline architecture evolution timeline from V2 to V5.0.1" width="3420" height="1170" loading="lazy" />
             </a>
             <figcaption>Architectural evolution across V2, V3, V4 (<code>v4.0.1</code>), V5.0.0 (live E2E verified), and V5.0.1 (13 cross-review blind spots hardened).</figcaption>
           </figure>
@@ -170,7 +188,7 @@
           <h2>4. Dimensional Modeling, Quality Scope &amp; FinOps Transparency</h2>
           <figure class="detail-figure">
             <a href="../images/aws/dbt_lineage.png" target="_blank" rel="noopener noreferrer">
-              <img src="../images/aws/dbt_lineage.png" alt="dbt Core data lineage graph from 9 Bronze sources to 7 Silver views and 3 Gold Star Schema tables" loading="lazy" />
+              <img src="../images/aws/dbt_lineage.png" alt="dbt Core data lineage graph from 9 Bronze sources to 7 Silver views and 3 Gold Star Schema tables" width="1024" height="420" loading="lazy" />
             </a>
             <figcaption>dbt Data Lineage: 9 <code>raw_data</code> Bronze sources &rarr; 7 <code>public_staging</code> Silver views &rarr; 3 <code>public_marts</code> Gold Star Schema tables.</figcaption>
           </figure>
@@ -196,25 +214,25 @@
           <div class="evidence-grid">
             <div class="evidence-card">
               <a href="../images/aws/airflow_v5_asset_watcher_run.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/airflow_v5_asset_watcher_run.png" alt="Airflow 3 AssetWatcher 17 of 17 green task run on AWS V5.0.0" loading="lazy" />
+                <img src="../images/aws/airflow_v5_asset_watcher_run.png" alt="Airflow 3 AssetWatcher 17 of 17 green task run on AWS V5.0.0" width="1024" height="447" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>Happy Path (17/17 Tasks):</strong> Triggered automatically by <code>AssetWatcher</code> on S3 file arrival with zero scheduled empty runs.</div>
             </div>
             <div class="evidence-card">
               <a href="../images/aws/redshift_v5_ops_audit_table.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/redshift_v5_ops_audit_table.png" alt="Redshift ops.pipeline_ingestion_audit state transition ledger" loading="lazy" />
+                <img src="../images/aws/redshift_v5_ops_audit_table.png" alt="Redshift ops.pipeline_ingestion_audit state transition ledger" width="1024" height="479" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>Audit Ledger:</strong> <code>ops.pipeline_ingestion_audit</code> logging <code>FAILED</code> (0-row guard) and recovery <code>SWAPPED &rarr; ARCHIVED &rarr; COMPLETED</code>.</div>
             </div>
             <div class="evidence-card">
               <a href="../images/aws/cloudwatch_v5_alarms_in_alarm.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/cloudwatch_v5_alarms_in_alarm.png" alt="AWS CloudWatch 4 alarms entering ALARM state on poison CSV isolation" loading="lazy" />
+                <img src="../images/aws/cloudwatch_v5_alarms_in_alarm.png" alt="AWS CloudWatch 4 alarms entering ALARM state on poison CSV isolation" width="1024" height="459" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>Fault Isolation &amp; CloudWatch:</strong> Poison 0-row CSV moved to SQS DLQ after 3 retries, triggering CloudWatch <code>ALARM</code> state.</div>
             </div>
             <div class="evidence-card">
               <a href="../images/aws/gmail_v5_sns_dlq_alarm.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/gmail_v5_sns_dlq_alarm.png" alt="Amazon SNS real-time email alert delivered to Gmail from DLQ alarm" loading="lazy" />
+                <img src="../images/aws/gmail_v5_sns_dlq_alarm.png" alt="Amazon SNS real-time email alert delivered to Gmail from DLQ alarm" width="1024" height="447" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>SNS Alert Delivery:</strong> Real-time incident notification delivered to Gmail via <code>PipelineAlertTopicPolicy</code> before DLQ Redrive recovery.</div>
             </div>
