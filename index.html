@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ao Minh Tâm | Data Analyst &amp; Data Engineer Portfolio</title>
   <meta name="description" content="Portfolio of Ao Minh Tâm — Third-Year IT Undergraduate focused on Data Analytics (SQL, Python, Power BI) and Cloud Data Engineering (AWS CloudFormation, S3, SQS + DLQ, Redshift, Snowflake, Airflow 3, dbt)." />
+  <meta name="author" content="Ao Minh Tâm" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="theme-color" content="#0f1015" />
   <link rel="canonical" href="https://aominhtam-portfolio.vercel.app/" />
 
   <!-- Open Graph / Social Sharing Meta Tags -->
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Ao Minh Tâm Portfolio" />
   <meta property="og:title" content="Ao Minh Tâm | Data Analyst &amp; Data Engineer" />
   <meta property="og:description" content="Transforming raw data into reliable datasets, actionable insights, and business recommendations across Data Analytics and AWS/Snowflake Cloud Data Engineering." />
@@ -42,40 +46,90 @@
     gtag('config', 'G-VRB4RENV7J');
   </script>
 
-  <!-- Schema.org ProfilePage + Person JSON-LD for SEO -->
+  <!-- Schema.org WebSite + ProfilePage + Person JSON-LD for SEO -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "dateModified": "2026-11-21",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Ao Minh Tâm",
-      "jobTitle": "Data Analyst & Data Engineer",
-      "url": "https://aominhtam-portfolio.vercel.app/",
-      "image": "https://aominhtam-portfolio.vercel.app/images/og-cover.png",
-      "email": "mailto:aominhtam@gmail.com",
-      "sameAs": [
-        "https://github.com/AOMINHTAM",
-        "https://www.linkedin.com/in/ao-minh-tam/"
-      ],
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Ho Chi Minh City University of Natural Resources and Environment"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://aominhtam-portfolio.vercel.app/#website",
+        "name": "Ao Minh Tâm Portfolio",
+        "alternateName": "Ao Minh Tam Portfolio",
+        "url": "https://aominhtam-portfolio.vercel.app/",
+        "publisher": { "@id": "https://aominhtam-portfolio.vercel.app/#person" }
       },
-      "knowsAbout": [
-        "Data Analytics",
-        "Data Engineering",
-        "AWS CloudFormation",
-        "Amazon Redshift Serverless",
-        "Snowflake",
-        "dbt",
-        "Apache Airflow",
-        "SQL",
-        "Python",
-        "Power BI"
-      ]
-    }
+      {
+        "@type": "ProfilePage",
+        "@id": "https://aominhtam-portfolio.vercel.app/#profilepage",
+        "url": "https://aominhtam-portfolio.vercel.app/",
+        "name": "Ao Minh Tâm | Data Analyst & Data Engineer Portfolio",
+        "isPartOf": { "@id": "https://aominhtam-portfolio.vercel.app/#website" },
+        "dateModified": "2026-11-21",
+        "mainEntity": { "@id": "https://aominhtam-portfolio.vercel.app/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://aominhtam-portfolio.vercel.app/#person",
+        "name": "Ao Minh Tâm",
+        "alternateName": "Ao Minh Tam",
+        "jobTitle": "Data Analyst & Data Engineer",
+        "description": "Third-Year IT Undergraduate at Ho Chi Minh City University of Natural Resources and Environment (HCMUNRE) focused on Data Analytics (SQL, Python, Power BI) and Cloud Data Engineering (AWS, Snowflake, Apache Airflow, dbt), seeking Data Analyst or Data Engineer Intern roles.",
+        "url": "https://aominhtam-portfolio.vercel.app/",
+        "image": "https://aominhtam-portfolio.vercel.app/images/og-cover.png",
+        "email": "mailto:aominhtam@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ho Chi Minh City",
+          "addressCountry": "VN"
+        },
+        "knowsLanguage": ["Vietnamese", "English"],
+        "sameAs": [
+          "https://github.com/AOMINHTAM",
+          "https://www.linkedin.com/in/ao-minh-tam/"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Ho Chi Minh City University of Natural Resources and Environment",
+          "alternateName": "HCMUNRE"
+        },
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "dbt Fundamentals — Verified Credential",
+            "credentialCategory": "certificate",
+            "url": "https://credentials.getdbt.com/daf3523f-38ca-48fe-9b95-548d6ca7da8d",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "dbt Labs"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "AI Career Readiness Training",
+            "credentialCategory": "certificate",
+            "datePublished": "2026-11-21",
+            "url": "https://aominhtam-portfolio.vercel.app/images/certs/asean_ai_career_readiness.jpg",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "ASEAN Foundation & LinkedIn"
+            }
+          }
+        ],
+        "knowsAbout": [
+          "Data Analytics",
+          "Data Engineering",
+          "AWS CloudFormation",
+          "Amazon Redshift Serverless",
+          "Snowflake",
+          "dbt",
+          "Apache Airflow",
+          "SQL",
+          "Python",
+          "Power BI"
+        ]
+      }
+    ]
   }
   </script>
 </head>
