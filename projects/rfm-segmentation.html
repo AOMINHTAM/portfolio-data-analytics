@@ -74,6 +74,7 @@
       <a href="../index.html" class="logo">AT<span>.</span></a>
       <ul class="nav-links">
         <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#certifications">CREDENTIALS</a></li>
         <li><a href="../index.html#contact">CONTACT</a></li>
       </ul>
       <div class="nav-actions">
@@ -148,82 +149,88 @@
           <p>
             The analysis revealed strong revenue concentration: <strong>Champions &amp; Loyal Customers account for under 29% of the customer base but generate over 53% of company revenue ($3.45M+)</strong>.
           </p>
-          <div style="overflow-x: auto; margin-bottom: 20px;">
-            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
+          <figure class="detail-figure">
+            <a href="../images/da/rfm_segments.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/da/rfm_segments.png" alt="Customer 360 RFM Segmentation chart showing Revenue Share and Customer Share across 8 tiers" width="1754" height="839" loading="lazy" />
+            </a>
+            <figcaption>RFM Revenue Share vs. Customer Share across 17,415 simulated accounts (Snapshot: 2024-01-01). Click image to zoom.</figcaption>
+          </figure>
+          <div class="table-scroll">
+            <table class="data-table">
               <thead>
-                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
-                  <th style="padding: 10px;">RFM Segment</th>
-                  <th style="padding: 10px;">Customer Count</th>
-                  <th style="padding: 10px;">Customer Share (%)</th>
-                  <th style="padding: 10px;">Total Revenue ($)</th>
-                  <th style="padding: 10px;">Revenue Share (%)</th>
-                  <th style="padding: 10px;">Strategic Designation</th>
+                <tr>
+                  <th>RFM Segment</th>
+                  <th>Customer Count</th>
+                  <th>Customer Share (%)</th>
+                  <th>Total Revenue ($)</th>
+                  <th>Revenue Share (%)</th>
+                  <th>Strategic Designation</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Champions</td>
-                  <td style="padding: 10px; font-weight: 700; color: var(--text-main);">2,361</td>
-                  <td style="padding: 10px;">13.56%</td>
-                  <td style="padding: 10px; color: var(--amber-light); font-weight: 700;">$2,138,211</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">32.8%</td>
-                  <td style="padding: 10px;">Core Brand Advocates</td>
+                <tr>
+                  <td style="color: var(--amber-main); font-weight: 700;">Champions</td>
+                  <td style="font-weight: 700; color: var(--text-main);">2,361</td>
+                  <td>13.56%</td>
+                  <td style="color: var(--amber-light); font-weight: 700;">$2,138,211</td>
+                  <td style="color: #10b981; font-weight: 600;">32.8%</td>
+                  <td>Core Brand Advocates</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">Loyal Customers</td>
-                  <td style="padding: 10px;">2,616</td>
-                  <td style="padding: 10px;">15.02%</td>
-                  <td style="padding: 10px;">$1,319,383</td>
-                  <td style="padding: 10px;">20.2%</td>
-                  <td style="padding: 10px;">Consistent Multi-Repurchasers</td>
+                <tr>
+                  <td style="color: var(--amber-main); font-weight: 700;">Loyal Customers</td>
+                  <td>2,616</td>
+                  <td>15.02%</td>
+                  <td>$1,319,383</td>
+                  <td>20.2%</td>
+                  <td>Consistent Multi-Repurchasers</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Big Spenders</td>
-                  <td style="padding: 10px;">1,979</td>
-                  <td style="padding: 10px;">11.36%</td>
-                  <td style="padding: 10px;">$1,354,794</td>
-                  <td style="padding: 10px;">20.8%</td>
-                  <td style="padding: 10px;">High Basket Value / Low Freq</td>
+                <tr>
+                  <td>Big Spenders</td>
+                  <td>1,979</td>
+                  <td>11.36%</td>
+                  <td>$1,354,794</td>
+                  <td>20.8%</td>
+                  <td>High Basket Value / Low Freq</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: #ef4444; font-weight: 700;">Cant Lose Them</td>
-                  <td style="padding: 10px; font-weight: 700; color: #ef4444;">833</td>
-                  <td style="padding: 10px;">4.78%</td>
-                  <td style="padding: 10px;">$653,354</td>
-                  <td style="padding: 10px;">10.0%</td>
-                  <td style="padding: 10px;">Critical High-Value Churn Risk</td>
+                <tr>
+                  <td style="color: #ef4444; font-weight: 700;">Cant Lose Them</td>
+                  <td style="font-weight: 700; color: #ef4444;">833</td>
+                  <td>4.78%</td>
+                  <td>$653,354</td>
+                  <td>10.0%</td>
+                  <td>Critical High-Value Churn Risk</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Hibernating</td>
-                  <td style="padding: 10px;">4,701</td>
-                  <td style="padding: 10px;">26.99%</td>
-                  <td style="padding: 10px;">$715,415</td>
-                  <td style="padding: 10px;">11.0%</td>
-                  <td style="padding: 10px;">Inactive / Low Engagement</td>
+                <tr>
+                  <td>Hibernating</td>
+                  <td>4,701</td>
+                  <td>26.99%</td>
+                  <td>$715,415</td>
+                  <td>11.0%</td>
+                  <td>Inactive / Low Engagement</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Need Attention</td>
-                  <td style="padding: 10px;">3,274</td>
-                  <td style="padding: 10px;">18.80%</td>
-                  <td style="padding: 10px;">$263,137</td>
-                  <td style="padding: 10px;">4.0%</td>
-                  <td style="padding: 10px;">Borderline Engagement</td>
+                <tr>
+                  <td>Need Attention</td>
+                  <td>3,274</td>
+                  <td>18.80%</td>
+                  <td>$263,137</td>
+                  <td>4.0%</td>
+                  <td>Borderline Engagement</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">New / Promising</td>
-                  <td style="padding: 10px;">1,171</td>
-                  <td style="padding: 10px;">6.72%</td>
-                  <td style="padding: 10px;">$61,198</td>
-                  <td style="padding: 10px;">0.9%</td>
-                  <td style="padding: 10px;">Recent First-Time Buyers</td>
+                <tr>
+                  <td>New / Promising</td>
+                  <td>1,171</td>
+                  <td>6.72%</td>
+                  <td>$61,198</td>
+                  <td>0.9%</td>
+                  <td>Recent First-Time Buyers</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">Lost</td>
-                  <td style="padding: 10px;">480</td>
-                  <td style="padding: 10px;">2.76%</td>
-                  <td style="padding: 10px;">$12,182</td>
-                  <td style="padding: 10px;">0.2%</td>
-                  <td style="padding: 10px;">Dormant Accounts</td>
+                <tr>
+                  <td>Lost</td>
+                  <td>480</td>
+                  <td>2.76%</td>
+                  <td>$12,182</td>
+                  <td>0.2%</td>
+                  <td>Dormant Accounts</td>
                 </tr>
               </tbody>
             </table>

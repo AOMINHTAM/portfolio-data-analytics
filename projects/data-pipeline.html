@@ -74,7 +74,7 @@
       <a href="../index.html" class="logo">AT<span>.</span></a>
       <ul class="nav-links">
         <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
-        <li><a href="../index.html#certifications">CERTIFICATIONS</a></li>
+        <li><a href="../index.html#certifications">CREDENTIALS</a></li>
         <li><a href="../index.html#contact">CONTACT</a></li>
       </ul>
       <div class="nav-actions">
@@ -137,6 +137,12 @@
           <div class="arch-flow">
             TPC-H Raw Data &rarr; Snowflake Cloud Data Warehouse &rarr; Airflow + Astronomer Cosmos DAGs (dbt_venv) &rarr; dbt Core (Staging &rarr; Kimball Star Schema Marts) &rarr; BI Readiness
           </div>
+          <figure class="detail-figure">
+            <a href="../images/snowflake/architecture.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/snowflake/architecture.png" alt="Snowflake, dbt Core, and Apache Airflow Astronomer Cosmos ELT Architecture" width="1385" height="711" />
+            </a>
+            <figcaption>End-to-End Snowflake + dbt Core + Airflow (Astronomer Cosmos) Cloud ELT Architecture. (Click image to zoom)</figcaption>
+          </figure>
           <ul>
             <li><strong>Storage &amp; Compute (Snowflake Data Cloud):</strong> Serves as the central data warehouse, decoupling compute from storage and isolating raw TPC-H landing zones from clean analytical marts.</li>
             <li><strong>Transformation (dbt Core &amp; <code>dbt_utils</code>):</strong> Implements Medallion Staging (<code>stg_tpch_orders</code>) and Kimball Star Schema Mart layers (<code>fct_orders</code>) via modular SQL models.</li>
@@ -164,6 +170,20 @@
           <p>
             The pipeline eliminated manual script execution via containerized Airflow scheduling, materialized pre-joined Kimball Star Schema marts (<code>fct_orders</code>) to reduce repetitive multi-table joins in downstream BI workflows, and enforced automated dbt schema/referential quality gates prior to analytical consumption. <em>Note: Timing claims were omitted because no controlled cross-warehouse cache benchmark was logged.</em>
           </p>
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <a href="../images/snowflake/01-airflow-success.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/snowflake/01-airflow-success.png" alt="Apache Airflow and Astronomer Cosmos successful dbt DAG run" width="1566" height="730" loading="lazy" />
+              </a>
+              <div class="evidence-caption"><strong>Airflow &amp; Cosmos DAG Run:</strong> Dynamic dbt staging, mart, and schema test tasks completing green inside Docker.</div>
+            </div>
+            <div class="evidence-card">
+              <a href="../images/snowflake/02-snowflake-results.png" target="_blank" rel="noopener noreferrer">
+                <img src="../images/snowflake/02-snowflake-results.png" alt="Snowflake warehouse materialized Staging and Star Schema mart tables" width="383" height="448" loading="lazy" />
+              </a>
+              <div class="evidence-caption"><strong>Snowflake Materialized Objects:</strong> Verified <code>DBT_DB.DBT_SCHEMA</code> staging views and <code>fct_orders</code> Star Schema mart tables.</div>
+            </div>
+          </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
               View Repository on GitHub &rarr;

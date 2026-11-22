@@ -262,3 +262,111 @@ let updateScrollProgress = function () {};
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();
+
+// --- 7. MOBILE HAMBURGER MENU (ALL PAGES) ---
+(function initMobileNav() {
+  const navbar = document.querySelector(".navbar");
+  const navActions = document.querySelector(".nav-actions");
+  const navMenu = document.querySelector(".nav-links");
+  if (!navbar || !navActions || !navMenu || document.getElementById("mobileMenuBtn")) return;
+
+  const menuBtn = document.createElement("button");
+  menuBtn.id = "mobileMenuBtn";
+  menuBtn.className = "nav-menu-btn";
+  menuBtn.type = "button";
+  menuBtn.setAttribute("aria-label", "Toggle navigation menu");
+  menuBtn.setAttribute("aria-expanded", "false");
+  menuBtn.textContent = "☰";
+  navActions.appendChild(menuBtn);
+
+  function closeMenu() {
+    navbar.classList.remove("is-mobile-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.textContent = "☰";
+  }
+
+  menuBtn.addEventListener("click", () => {
+    const isOpen = navbar.classList.toggle("is-mobile-open");
+    menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    menuBtn.textContent = isOpen ? "✕" : "☰";
+  });
+
+  navMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+})();
+
+// --- 8. IN-PAGE IMAGE LIGHTBOX MODAL (DIAGRAMS & CHARTS) ---
+(function initImageLightbox() {
+  const targets = document.querySelectorAll(".detail-figure img, .evidence-card img");
+  if (!targets.length) return;
+
+  const backdrop = document.createElement("div");
+  backdrop.id = "imageLightbox";
+  backdrop.className = "lightbox-backdrop";
+  backdrop.setAttribute("role", "dialog");
+  backdrop.setAttribute("aria-modal", "true");
+  backdrop.setAttribute("aria-hidden", "true");
+  backdrop.innerHTML = `
+    <button type="button" class="lightbox-close" aria-label="Close image preview">&times;</button>
+    <div class="lightbox-dialog">
+      <img class="lightbox-img" src="" alt="" />
+      <div class="lightbox-bar">
+        <span class="lightbox-caption"></span>
+        <a class="lightbox-open-raw" href="#" target="_blank" rel="noopener noreferrer">Open Full Size ↗</a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+
+  const lbImg = backdrop.querySelector(".lightbox-img");
+  const lbCaption = backdrop.querySelector(".lightbox-caption");
+  const lbRaw = backdrop.querySelector(".lightbox-open-raw");
+  const lbClose = backdrop.querySelector(".lightbox-close");
+
+  function openLightbox(src, alt, captionText) {
+    lbImg.src = src;
+    lbImg.alt = alt || "Expanded figure";
+    lbCaption.textContent = captionText || alt || "";
+    lbRaw.href = src;
+    backdrop.classList.add("is-open");
+    backdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    if (!backdrop.classList.contains("is-open")) return;
+    backdrop.classList.remove("is-open");
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  targets.forEach((img) => {
+    const parentLink = img.closest("a");
+    const clickable = parentLink || img;
+    clickable.addEventListener("click", (e) => {
+      e.preventDefault();
+      const fig = img.closest(".detail-figure");
+      const ev = img.closest(".evidence-card");
+      let cap = img.alt;
+      if (fig && fig.querySelector("figcaption")) {
+        cap = fig.querySelector("figcaption").textContent.trim();
+      } else if (ev && ev.querySelector(".evidence-caption")) {
+        cap = ev.querySelector(".evidence-caption").textContent.trim();
+      }
+      openLightbox(parentLink ? parentLink.getAttribute("href") : img.src, img.alt, cap);
+    });
+  });
+
+  lbClose.addEventListener("click", closeLightbox);
+  backdrop.addEventListener("click", (e) => {
+    if (e.target === backdrop) closeLightbox();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
+})();

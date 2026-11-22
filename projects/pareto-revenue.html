@@ -13,7 +13,7 @@
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Ao Minh Tâm Portfolio" />
   <meta property="og:title" content="E-Commerce Revenue Pareto Analysis (80/20) | Ao Minh Tâm" />
-  <meta property="og:description" content="Pareto 80/20 revenue concentration across 32,313 orders showing 3 core SKUs generate ~81.9% of Net Revenue After Refunds." />
+  <meta property="og:description" content="Pareto 80/20 revenue concentration across 32,313 orders showing 2 core SKUs generate 80.4% of Net Revenue After Refunds." />
   <meta property="og:url" content="https://aominhtam-portfolio.vercel.app/projects/pareto-revenue.html" />
   <meta property="og:image" content="https://aominhtam-portfolio.vercel.app/images/og-cover.png" />
   <meta property="og:image:width" content="1200" />
@@ -74,6 +74,7 @@
       <a href="../index.html" class="logo">AT<span>.</span></a>
       <ul class="nav-links">
         <li><a href="../index.html#projects">BACK TO PROJECTS</a></li>
+        <li><a href="../index.html#certifications">CREDENTIALS</a></li>
         <li><a href="../index.html#contact">CONTACT</a></li>
       </ul>
       <div class="nav-actions">
@@ -136,59 +137,65 @@
 
         <!-- 2. Findings & Breakdown -->
         <div class="detail-block">
-          <h2>2. Key Findings & Cumulative Contribution</h2>
+          <h2>2. Key Findings &amp; Cumulative Contribution</h2>
           <p>
-            The Pareto Principle (80/20 Rule) was fully validated: just <strong>3 core SKUs</strong> account for <strong>~81.9% of total net revenue</strong>.
+            The Pareto Principle (80/20 Rule) was clearly validated on the 32,313-order dataset: just <strong>2 core SKUs</strong> account for <strong>80.4% of Net Revenue After Refunds</strong> ($1.49M out of $1.85M total).
           </p>
-          <div style="overflow-x: auto; margin-bottom: 20px;">
-            <table style="width: 100%; border-collapse: collapse; color: var(--text-muted); font-size: 0.95rem;">
+          <figure class="detail-figure">
+            <a href="../images/da/pareto_revenue.png" target="_blank" rel="noopener noreferrer">
+              <img src="../images/da/pareto_revenue.png" alt="Dual-axis Pareto 80/20 chart of SKU Net Revenue After Refunds across 32,313 orders" width="1600" height="779" loading="lazy" />
+            </a>
+            <figcaption>Dual-Axis Pareto 80/20 Chart: SKU Net Revenue After Refunds &amp; Cumulative Contribution across 32,313 Maven Fuzzy Factory orders. Click image to zoom.</figcaption>
+          </figure>
+          <div class="table-scroll">
+            <table class="data-table">
               <thead>
-                <tr style="border-bottom: 1px solid var(--border); color: var(--text-main); text-align: left;">
-                  <th style="padding: 10px;">Rank</th>
-                  <th style="padding: 10px;">Product Name</th>
-                  <th style="padding: 10px;">Units Sold</th>
-                  <th style="padding: 10px;">Net Revenue</th>
-                  <th style="padding: 10px;">Share (%)</th>
-                  <th style="padding: 10px;">Cumulative (%)</th>
-                  <th style="padding: 10px;">Pareto Segment</th>
+                <tr>
+                  <th>Rank</th>
+                  <th>Product Name</th>
+                  <th>Units Sold</th>
+                  <th>Net Revenue</th>
+                  <th>Share (%)</th>
+                  <th>Cumulative (%)</th>
+                  <th>Pareto Segment</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">1</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Original Mr. Fuzzy</td>
-                  <td style="padding: 10px;">15,200</td>
-                  <td style="padding: 10px;">$485,000</td>
-                  <td style="padding: 10px;">45.2%</td>
-                  <td style="padding: 10px;">45.2%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
+                <tr>
+                  <td style="color: var(--amber-main); font-weight: 700;">1</td>
+                  <td style="color: var(--text-main);">The Original Mr. Fuzzy</td>
+                  <td>24,226</td>
+                  <td>$1,149,220</td>
+                  <td>62.0%</td>
+                  <td>62.0%</td>
+                  <td style="color: #10b981; font-weight: 600;">Top 80% (Core)</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">2</td>
-                  <td style="padding: 10px; color: var(--text-main);">Forever Bear</td>
-                  <td style="padding: 10px;">8,400</td>
-                  <td style="padding: 10px;">$268,800</td>
-                  <td style="padding: 10px;">25.1%</td>
-                  <td style="padding: 10px;">70.3%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
+                <tr>
+                  <td style="color: var(--amber-main); font-weight: 700;">2</td>
+                  <td style="color: var(--text-main);">The Forever Love Bear</td>
+                  <td>5,796</td>
+                  <td>$339,963</td>
+                  <td>18.3%</td>
+                  <td>80.4%</td>
+                  <td style="color: #10b981; font-weight: 600;">Top 80% (Core)</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; color: var(--amber-main); font-weight: 700;">3</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Birthday Sugar Panda</td>
-                  <td style="padding: 10px;">3,900</td>
-                  <td style="padding: 10px;">$124,800</td>
-                  <td style="padding: 10px;">11.6%</td>
-                  <td style="padding: 10px;">81.9%</td>
-                  <td style="padding: 10px; color: #10b981; font-weight: 600;">Top 80% (Core)</td>
+                <tr>
+                  <td style="color: var(--amber-light); font-weight: 700;">3</td>
+                  <td style="color: var(--text-main);">The Birthday Sugar Panda</td>
+                  <td>4,985</td>
+                  <td>$215,417</td>
+                  <td>11.6%</td>
+                  <td>92.0%</td>
+                  <td>Secondary Tier</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px;">4</td>
-                  <td style="padding: 10px; color: var(--text-main);">The Hudson River Mini bear</td>
-                  <td style="padding: 10px;">3,100</td>
-                  <td style="padding: 10px;">$99,200</td>
-                  <td style="padding: 10px;">9.3%</td>
-                  <td style="padding: 10px;">91.2%</td>
-                  <td style="padding: 10px; color: var(--text-muted);">Bottom 20% (Tail)</td>
+                <tr>
+                  <td>4</td>
+                  <td style="color: var(--text-main);">The Hudson River Mini bear</td>
+                  <td>5,018</td>
+                  <td>$148,570</td>
+                  <td>8.0%</td>
+                  <td>100.0%</td>
+                  <td style="color: var(--text-muted);">Bottom 20% (Tail)</td>
                 </tr>
               </tbody>
             </table>
@@ -197,9 +204,9 @@
 
         <!-- 3. Engineering & Business Insights -->
         <div class="detail-block">
-          <h2>3. Business Insights & Engineering Notes</h2>
+          <h2>3. Business Insights &amp; Engineering Notes</h2>
           <ul>
-            <li><strong>Single SKU Vulnerability:</strong> Over 45% of net revenue depends entirely on <em>The Original Mr. Fuzzy</em>. Any supply chain bottleneck on this SKU directly disrupts cash flow.</li>
+            <li><strong>Single SKU Vulnerability:</strong> <strong>62.0%</strong> of net revenue depends on <em>The Original Mr. Fuzzy</em>. Any supply chain bottleneck on this SKU directly disrupts cash flow.</li>
             <li><strong>Underperforming Long Tail (Inventory Caveat):</strong> Tail SKUs contribute a small fraction of net revenue and gross margin (<code>price_usd - cogs_usd</code>); because the dataset contains no warehouse-holding or storage-cost data, these items are flagged for assortment/margin review rather than assumed storage waste.</li>
             <li><strong>Technical Guardrail:</strong> Refund records must be subtracted prior to grouping to avoid gross revenue inflation. Strict descending sorting (<code>sort_values(ascending=False)</code>) is mandated before <code>.cumsum()</code>.</li>
           </ul>
@@ -209,12 +216,12 @@
         <div class="detail-block">
           <h2>4. Proposed Inventory &amp; Ad-Spend Experiments</h2>
           <ul>
-            <li><strong>Prioritized Inventory Buffer:</strong> Enforce stricter safety stocks and supplier lead-time monitoring for Top 3 SKUs (~82% revenue share) to mitigate stockout risk.</li>
-            <li><strong>Tail-SKU Bundling:</strong> Test pairing low-velocity accessories with high-traffic plush items to move slow-turning stock without margin-eroding clearance cuts.</li>
-            <li><strong>Hypothesis — Paid Ad Focus (70–80% Weighting):</strong> Test concentrating 70–80% of paid conversion ad spend toward Top 3 revenue drivers while monitoring marginal CAC/ROAS so tail-SKU discovery isn't starved.</li>
+            <li><strong>Prioritized Inventory Buffer:</strong> Enforce stricter safety stocks and supplier lead-time monitoring for the Top 2 core SKUs (<strong>80.4%</strong> net revenue share) to mitigate stockout risk.</li>
+            <li><strong>Tail-SKU Bundling:</strong> Test pairing lower-volume items (<em>Sugar Panda</em> &amp; <em>Mini Bear</em>) with high-traffic flagship plush items to lift basket size without margin-eroding clearance cuts.</li>
+            <li><strong>Hypothesis — Paid Ad Focus (70–80% Weighting):</strong> Test concentrating 70–80% of paid conversion ad spend toward the Top 2 revenue drivers while monitoring marginal CAC/ROAS so secondary SKU discovery isn't starved.</li>
           </ul>
           <div class="hypothesis-note">
-            <strong>Observed Insight vs. Business Hypothesis:</strong> SKU revenue concentration (Top 3 generating ~81.9% net revenue) is empirically measured from the 32,313-order dataset. Optimal budget weighting (70–80%) is a proposed allocation hypothesis to verify via channel-level <strong>Incremental ROAS</strong> and <strong>Inventory Turnover</strong> tracking.
+            <strong>Observed Insight vs. Business Hypothesis:</strong> SKU revenue concentration (Top 2 SKUs generating <strong>80.4%</strong> of Net Revenue After Refunds; <em>Mr. Fuzzy</em> alone at <strong>62.0%</strong>) is empirically measured from the 32,313-order dataset. Optimal budget weighting (70–80%) is a proposed allocation hypothesis to verify via channel-level <strong>Incremental ROAS</strong> and <strong>Inventory Turnover</strong> tracking.
           </div>
           <div class="project-actions" style="margin-top: 24px;">
             <a href="https://github.com/AOMINHTAM/pareto-revenue-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-amber">
