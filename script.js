@@ -18,37 +18,100 @@ if (themeBtn) {
 }
 
 // --- 2. COPY EMAIL HELPER ---
-function copyEmail() {
+function copyEmail(triggerEl) {
   const email = "aominhtam@gmail.com";
-  navigator.clipboard.writeText(email).then(() => {
+
+  function showCopiedFeedback() {
+    if (triggerEl && triggerEl.classList && triggerEl.classList.contains("contact-card")) {
+      const sub = triggerEl.querySelector(".contact-card-sub");
+      if (sub) {
+        const original = sub.getAttribute("data-original") || sub.textContent;
+        sub.setAttribute("data-original", original);
+        sub.textContent = "Copied! ✓";
+        triggerEl.classList.add("is-copied");
+        clearTimeout(triggerEl._copyTimer);
+        triggerEl._copyTimer = setTimeout(() => {
+          sub.textContent = original;
+          triggerEl.classList.remove("is-copied");
+        }, 2200);
+      }
+      return;
+    }
+
+    if (triggerEl && triggerEl.tagName === "BUTTON") {
+      const original = triggerEl.getAttribute("data-original") || triggerEl.textContent;
+      triggerEl.setAttribute("data-original", original);
+      triggerEl.textContent = "✓ Email Copied";
+      clearTimeout(triggerEl._copyTimer);
+      triggerEl._copyTimer = setTimeout(() => {
+        triggerEl.textContent = original;
+      }, 2200);
+      return;
+    }
+
     alert("Email address copied to clipboard: " + email);
-  }).catch(() => {
-    alert("Failed to copy automatically. Email: " + email);
-  });
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(showCopiedFeedback).catch(() => {
+      alert("Copy email manually: " + email);
+    });
+  } else {
+    alert("Copy email manually: " + email);
+  }
 }
 
 // --- 3. SCROLLSPY: HIGHLIGHT ACTIVE NAV LINK ON SCROLL ---
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav-links a");
 
-window.addEventListener("scroll", () => {
-  let scrollY = window.pageYOffset;
+function setActiveNav(sectionId) {
+  if (!navLinks.length) return;
+  navLinks.forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("href") === `#${sectionId}`);
+  });
+}
+
+function updateScrollSpy() {
+  if (!sections.length || !navLinks.length) return;
+  const scrollY = window.scrollY || window.pageYOffset;
+  const firstSectionTop = sections[0].offsetTop - 140;
+  const atBottom =
+    window.innerHeight + scrollY >= document.documentElement.scrollHeight - 40;
+
+  if (scrollY < firstSectionTop) {
+    setActiveNav("about");
+    return;
+  }
+
+  if (atBottom) {
+    const lastId = sections[sections.length - 1].getAttribute("id");
+    if (lastId) setActiveNav(lastId);
+    return;
+  }
 
   sections.forEach((current) => {
     const sectionHeight = current.offsetHeight;
-    const sectionTop = current.offsetTop - 120;
+    const sectionTop = current.offsetTop - 140;
     const sectionId = current.getAttribute("id");
 
-    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === `#${sectionId}`) {
-          link.classList.add("active");
-        }
-      });
+    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      setActiveNav(sectionId);
     }
   });
-});
+}
+
+window.addEventListener("scroll", updateScrollSpy, { passive: true });
+window.addEventListener("load", updateScrollSpy);
+updateScrollSpy();
+
+// Also reset nav to ABOUT ME when clicking navbar logo at top
+const navLogo = document.querySelector(".navbar .logo");
+if (navLogo && navLogo.getAttribute("href") === "#") {
+  navLogo.addEventListener("click", () => {
+    setActiveNav("about");
+  });
+}
 
 // --- 4. PROJECT CATEGORY FILTER TABS, FEATURED COLLAPSE & HERO SHORTCUTS ---
 const filterBtns = document.querySelectorAll(".filter-btn");
@@ -116,6 +179,7 @@ function renderProjectsVisibility() {
 function applyProjectFilter(selectedFilter) {
   currentFilter = selectedFilter || "all";
   renderProjectsVisibility();
+  if (typeof updateScrollProgress === "function") updateScrollProgress();
 }
 
 if (filterBtns.length && projectCards.length) {
@@ -135,13 +199,43 @@ if (filterBtns.length && projectCards.length) {
     toggleProjectsBtn.addEventListener("click", () => {
       showAllProjects = !showAllProjects;
       renderProjectsVisibility();
+      if (typeof updateScrollProgress === "function") updateScrollProgress();
     });
   }
 
   renderProjectsVisibility();
 }
 
-// --- 5. BACK TO TOP FLOATING BUTTON (ALL PAGES) ---
+// --- 5. SCROLL READING PROGRESS BAR (ALL PAGES) ---
+let updateScrollProgress = function () {};
+(function initScrollProgress() {
+  if (document.getElementById("scrollProgressBar")) return;
+
+  const track = document.createElement("div");
+  track.className = "scroll-progress-track";
+  track.setAttribute("aria-hidden", "true");
+
+  const bar = document.createElement("div");
+  bar.id = "scrollProgressBar";
+  bar.className = "scroll-progress-bar";
+  track.appendChild(bar);
+  document.body.prepend(track);
+
+  updateScrollProgress = function () {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollable =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const pct =
+      scrollable > 0 ? Math.min(100, Math.max(0, (scrollTop / scrollable) * 100)) : 0;
+    bar.style.width = `${pct.toFixed(2)}%`;
+  };
+
+  window.addEventListener("scroll", updateScrollProgress, { passive: true });
+  window.addEventListener("resize", updateScrollProgress, { passive: true });
+  updateScrollProgress();
+})();
+
+// --- 6. BACK TO TOP FLOATING BUTTON (ALL PAGES) ---
 (function initBackToTop() {
   if (document.getElementById("backToTopBtn")) return;
   const btn = document.createElement("button");
@@ -164,6 +258,7 @@ if (filterBtns.length && projectCards.length) {
   updateVisibility();
 
   btn.addEventListener("click", () => {
+    setActiveNav("about");
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();
