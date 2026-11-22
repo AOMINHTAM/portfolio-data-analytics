@@ -372,94 +372,138 @@
       <div class="projects-list">
 
         <!-- Project 1: AWS Event-Driven ELT Pipeline (Featured DE #1) -->
-        <div class="card project-card" data-categories="de" data-featured="true">
-          <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • V5.0.1 (OCT – NOV 2026)</div>
-          <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)&nbsp;↗</a></h3>
-          <ul class="project-bullets">
-            <li><strong>Business Outcome:</strong> Automated ingestion and validation of <strong>99,441 Olist orders</strong> (~120 MB) into analytics-ready warehouse marts while eliminating scheduled empty runs and keeping idle AWS compute at <strong>$0</strong>.</li>
-            <li><strong>Technical Implementation:</strong> Provisioned CloudFormation IaC (15 core resources), S3 &rarr; SQS (<code>20s</code> Long Poll) + DLQ alerting (<code>4</code> CloudWatch Alarms + SNS), Airflow 3 <code>AssetWatcher</code>, Two-Phase Redshift swaps, and incremental dbt Star Schema marts.</li>
-            <li><strong>Verification &amp; Testing:</strong> Release <code>5.0.0</code> passed live AWS E2E checks (17/17 tasks, 11 dbt schema tests, DLQ Redrive); release <code>5.0.1</code> passes <code>21/21</code> Python unit tests, 3 DAG tests, and offline <code>dbt parse</code> in CI.</li>
-          </ul>
-          <div class="tech-tags">
-            <span>AWS CloudFormation</span>
-            <span>S3 / SQS + DLQ</span>
-            <span>Redshift Serverless</span>
-            <span>Airflow 3 (AssetWatcher)</span>
-            <span>dbt Core</span>
-            <span>CloudWatch &amp; SNS</span>
-            <span>Docker</span>
+        <div class="card project-card project-card--featured" data-categories="de" data-featured="true">
+          <div class="project-content">
+            <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • V5.0.1 (OCT – NOV 2026)</div>
+            <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)&nbsp;↗</a></h3>
+            <ul class="project-bullets">
+              <li><strong>Business Outcome:</strong> Automated ingestion and validation of <strong>99,441 Olist orders</strong> (~120 MB) into analytics-ready warehouse marts while eliminating scheduled empty runs and keeping idle AWS compute at <strong>$0</strong>.</li>
+              <li><strong>Technical Implementation:</strong> Provisioned CloudFormation IaC (15 core resources), S3 &rarr; SQS (<code>20s</code> Long Poll) + DLQ alerting (<code>4</code> CloudWatch Alarms + SNS), Airflow 3 <code>AssetWatcher</code>, Two-Phase Redshift swaps, and incremental dbt Star Schema marts.</li>
+              <li><strong>Verification &amp; Testing:</strong> Release <code>5.0.0</code> passed live AWS E2E checks (17/17 tasks, 11 dbt schema tests, DLQ Redrive); release <code>5.0.1</code> passes <code>21/21</code> Python unit tests, 3 DAG tests, and offline <code>dbt parse</code> in CI.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>AWS CloudFormation</span>
+              <span>S3 / SQS + DLQ</span>
+              <span>Redshift Serverless</span>
+              <span>Airflow 3 (AssetWatcher)</span>
+              <span>dbt Core</span>
+              <span>CloudWatch &amp; SNS</span>
+              <span>Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="projects/aws-data-pipeline.html" class="btn btn-amber" data-case-slug="aws-data-pipeline">Read Case Study &amp; Diagrams &rarr;</a>
+              <a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="projects/aws-data-pipeline.html" class="btn btn-amber">Read Case Study &amp; Diagrams &rarr;</a>
-            <a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
-          </div>
+          <a href="projects/aws-data-pipeline.html" class="project-thumb" data-case-slug="aws-data-pipeline" aria-label="Preview AWS V5.0.1 System Architecture Diagram">
+            <div class="project-thumb-media">
+              <img src="images/aws/architecture_v5_1.png" alt="AWS E-Commerce Data Pipeline V5.0.1 System Architecture Diagram" width="3720" height="2010" loading="lazy" />
+            </div>
+            <div class="project-thumb-caption">
+              <span>V5.0.1 CloudOps Diagram</span>
+              <span>Explore &rarr;</span>
+            </div>
+          </a>
         </div>
 
         <!-- Project 2: dbt + Snowflake ELT Pipeline (Featured DE #2) -->
-        <div class="card project-card" data-categories="de" data-featured="true">
-          <div class="project-badge">CLOUD ELT • DATA ENGINEERING • JUN 2026</div>
-          <h3><a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Automated End-to-End Cloud ELT Pipeline (Snowflake &amp; dbt)&nbsp;↗</a></h3>
-          <ul class="project-bullets">
-            <li><strong>Business Outcome:</strong> Replaced manual SQL scripts with a reproducible containerized ELT workflow producing clean, BI-ready Kimball dimensional tables on Snowflake TPC-H data.</li>
-            <li><strong>Technical Implementation:</strong> Modeled Medallion Staging (<code>stg_tpch_orders</code>) and pre-joined Star Schema marts (<code>fct_orders</code>) using modular dbt SQL and <code>dbt_utils</code> to reduce repetitive BI joins.</li>
-            <li><strong>Verification &amp; Orchestration:</strong> Integrated Astronomer Cosmos inside an isolated <code>dbt_venv</code> to generate dynamic Airflow task groups and run automated primary/foreign-key schema tests.</li>
-          </ul>
-          <div class="tech-tags">
-            <span>Snowflake</span>
-            <span>dbt Core</span>
-            <span>Apache Airflow (Cosmos)</span>
-            <span>Docker</span>
-            <span>Python</span>
-            <span>SQL</span>
+        <div class="card project-card project-card--featured" data-categories="de" data-featured="true">
+          <div class="project-content">
+            <div class="project-badge">CLOUD ELT • DATA ENGINEERING • JUN 2026</div>
+            <h3><a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Automated End-to-End Cloud ELT Pipeline (Snowflake &amp; dbt)&nbsp;↗</a></h3>
+            <ul class="project-bullets">
+              <li><strong>Business Outcome:</strong> Replaced manual SQL scripts with a reproducible containerized ELT workflow producing clean, BI-ready Kimball dimensional tables on Snowflake TPC-H data.</li>
+              <li><strong>Technical Implementation:</strong> Modeled Medallion Staging (<code>stg_tpch_orders</code>) and pre-joined Star Schema marts (<code>fct_orders</code>) using modular dbt SQL and <code>dbt_utils</code> to reduce repetitive BI joins.</li>
+              <li><strong>Verification &amp; Orchestration:</strong> Integrated Astronomer Cosmos inside an isolated <code>dbt_venv</code> to generate dynamic Airflow task groups and run automated primary/foreign-key schema tests.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Snowflake</span>
+              <span>dbt Core</span>
+              <span>Apache Airflow (Cosmos)</span>
+              <span>Docker</span>
+              <span>Python</span>
+              <span>SQL</span>
+            </div>
+            <div class="project-links">
+              <a href="projects/data-pipeline.html" class="btn btn-amber" data-case-slug="data-pipeline">Read Case Study &rarr;</a>
+              <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="projects/data-pipeline.html" class="btn btn-amber">Read Case Study &rarr;</a>
-            <a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
-          </div>
+          <a href="projects/data-pipeline.html" class="project-thumb" data-case-slug="data-pipeline" aria-label="Preview Snowflake and dbt ELT Architecture Diagram">
+            <div class="project-thumb-media">
+              <img src="images/snowflake/architecture.png" alt="Snowflake, dbt Core, and Airflow Cosmos ELT Architecture" width="1385" height="711" loading="lazy" />
+            </div>
+            <div class="project-thumb-caption">
+              <span>Snowflake + Cosmos ELT</span>
+              <span>Explore &rarr;</span>
+            </div>
+          </a>
         </div>
 
         <!-- Project 3: Customer 360 & RFM (Featured DA #1) -->
-        <div class="card project-card" data-categories="da" data-featured="true">
-          <div class="project-badge">CUSTOMER INTELLIGENCE • DATA ANALYTICS • SEP 2026</div>
-          <h3><a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer 360 &amp; Dynamic RFM Segmentation Analysis&nbsp;↗</a></h3>
-          <ul class="project-bullets">
-            <li><strong>Business Outcome:</strong> Found that top 2 tiers (<strong>&lt;29%</strong> of 17,415 customers) contribute <strong>&gt;53%</strong> of revenue ($3.45M+), while <strong>833</strong> churn-risk <em>Cant-Lose</em> accounts hold <strong>10.0%</strong> historical sales ($653k).</li>
-            <li><strong>Technical Method:</strong> Segmented <strong>51,290</strong> line-items (25,728 distinct <code>OrderID</code>s, 2020–2023 simulated dataset) into 8 RFM tiers via <code>pd.qcut</code> (snapshot <code>2024-01-01</code>) and built Customer 360 demographic profiles.</li>
-            <li><strong>Action &amp; Measurement:</strong> Proposed a 70/30 win-back budget pilot and dormant outreach suppression, evaluated via 90-day repeat purchase rate, retention, and incremental revenue.</li>
-          </ul>
-          <div class="tech-tags">
-            <span>Python</span>
-            <span>Pandas</span>
-            <span>NumPy</span>
-            <span>Seaborn</span>
-            <span>squarify</span>
+        <div class="card project-card project-card--featured" data-categories="da" data-featured="true">
+          <div class="project-content">
+            <div class="project-badge">CUSTOMER INTELLIGENCE • DATA ANALYTICS • SEP 2026</div>
+            <h3><a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer 360 &amp; Dynamic RFM Segmentation Analysis&nbsp;↗</a></h3>
+            <ul class="project-bullets">
+              <li><strong>Business Outcome:</strong> Found that top 2 tiers (<strong>&lt;29%</strong> of 17,415 customers) contribute <strong>&gt;53%</strong> of revenue ($3.45M+), while <strong>833</strong> churn-risk <em>Cant-Lose</em> accounts hold <strong>10.0%</strong> historical sales ($653k).</li>
+              <li><strong>Technical Method:</strong> Segmented <strong>51,290</strong> line-items (25,728 distinct <code>OrderID</code>s, 2020–2023 simulated dataset) into 8 RFM tiers via <code>pd.qcut</code> (snapshot <code>2024-01-01</code>) and built Customer 360 demographic profiles.</li>
+              <li><strong>Action &amp; Measurement:</strong> Proposed a 70/30 win-back budget pilot and dormant outreach suppression, evaluated via 90-day repeat purchase rate, retention, and incremental revenue.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>Pandas</span>
+              <span>NumPy</span>
+              <span>Seaborn</span>
+              <span>squarify</span>
+            </div>
+            <div class="project-links">
+              <a href="projects/rfm-segmentation.html" class="btn btn-amber" data-case-slug="rfm-segmentation">Read Case Study &rarr;</a>
+              <a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="projects/rfm-segmentation.html" class="btn btn-amber">Read Case Study &rarr;</a>
-            <a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
-          </div>
+          <a href="projects/rfm-segmentation.html" class="project-thumb" data-case-slug="rfm-segmentation" aria-label="Preview Customer 360 RFM Segmentation Chart">
+            <div class="project-thumb-media">
+              <img src="images/da/rfm_segments.png" alt="Customer 360 RFM Segmentation Revenue and Customer Share Chart" width="1754" height="839" loading="lazy" />
+            </div>
+            <div class="project-thumb-caption">
+              <span>8-Tier RFM Matrix Chart</span>
+              <span>Explore &rarr;</span>
+            </div>
+          </a>
         </div>
 
         <!-- Project 4: Product Conversion Funnel (Featured DA #2) -->
-        <div class="card project-card" data-categories="da" data-featured="true">
-          <div class="project-badge">CONVERSION DIAGNOSTICS • DATA ANALYTICS • SEP 2026</div>
-          <h3><a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Product Performance &amp; Conversion Funnel Analysis&nbsp;↗</a></h3>
-          <ul class="project-bullets">
-            <li><strong>Business Outcome:</strong> Pinpointed why <em>Love Bear</em> attracts only <strong>10.0%</strong> of catalog views despite converting <strong>55.6%</strong> PDP-to-Cart (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a ~<strong>66%</strong> cart-to-order drop-off bottleneck.</li>
-            <li><strong>Technical Method:</strong> Built sequential unique-session Plotly funnels (<code>/products</code> &rarr; PDP &rarr; <code>/cart</code> &rarr; <code>/thank-you-for-your-order</code>) across <strong>261,231</strong> catalog sessions (472,871 total sessions; 32,313 orders) and computed Net Revenue After Refunds.</li>
-            <li><strong>Action &amp; Measurement:</strong> Proposed A/B tests for <em>Love Bear</em> cross-sell placement and 1h/24h cart-recovery reminders, tracked via Cart-to-Order completion and Net Revenue per Session.</li>
-          </ul>
-          <div class="tech-tags">
-            <span>Python</span>
-            <span>Plotly (Funnel)</span>
-            <span>Pandas</span>
-            <span>NumPy</span>
-            <span>Seaborn</span>
+        <div class="card project-card project-card--featured" data-categories="da" data-featured="true">
+          <div class="project-content">
+            <div class="project-badge">CONVERSION DIAGNOSTICS • DATA ANALYTICS • SEP 2026</div>
+            <h3><a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Product Performance &amp; Conversion Funnel Analysis&nbsp;↗</a></h3>
+            <ul class="project-bullets">
+              <li><strong>Business Outcome:</strong> Pinpointed why <em>Love Bear</em> attracts only <strong>10.0%</strong> of catalog views despite converting <strong>55.6%</strong> PDP-to-Cart (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a ~<strong>66%</strong> cart-to-order drop-off bottleneck.</li>
+              <li><strong>Technical Method:</strong> Built sequential unique-session Plotly funnels (<code>/products</code> &rarr; PDP &rarr; <code>/cart</code> &rarr; <code>/thank-you-for-your-order</code>) across <strong>261,231</strong> catalog sessions (472,871 total sessions; 32,313 orders) and computed Net Revenue After Refunds.</li>
+              <li><strong>Action &amp; Measurement:</strong> Proposed A/B tests for <em>Love Bear</em> cross-sell placement and 1h/24h cart-recovery reminders, tracked via Cart-to-Order completion and Net Revenue per Session.</li>
+            </ul>
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>Plotly (Funnel)</span>
+              <span>Pandas</span>
+              <span>NumPy</span>
+              <span>Seaborn</span>
+            </div>
+            <div class="project-links">
+              <a href="projects/product-funnel.html" class="btn btn-amber" data-case-slug="product-funnel">Read Case Study &rarr;</a>
+              <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="projects/product-funnel.html" class="btn btn-amber">Read Case Study &rarr;</a>
-            <a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-subtle">GitHub Repo</a>
-          </div>
+          <a href="projects/product-funnel.html" class="project-thumb" data-case-slug="product-funnel" aria-label="Preview Product Conversion Funnel Chart">
+            <div class="project-thumb-media">
+              <img src="images/da/product_funnel.png" alt="Sequential Session Conversion Funnel comparing Mr. Fuzzy and Love Bear" width="1736" height="809" loading="lazy" />
+            </div>
+            <div class="project-thumb-caption">
+              <span>Session Funnel Chart</span>
+              <span>Explore &rarr;</span>
+            </div>
+          </a>
         </div>
 
         <!-- Project 5: Cohort Retention Dynamics (More DA #3) -->

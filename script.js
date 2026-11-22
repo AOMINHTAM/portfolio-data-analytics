@@ -1,3 +1,14 @@
+// --- 0. GA4 CUSTOM EVENT HELPER (SAFE NO-OP IF BLOCKED) ---
+function trackEvent(eventName, params) {
+  if (typeof window.gtag === "function") {
+    try {
+      window.gtag("event", eventName, params || {});
+    } catch (_) {
+      // Ignore analytics errors to never impact UX
+    }
+  }
+}
+
 // --- 1. DARK / LIGHT THEME TOGGLE ---
 const themeBtn = document.getElementById('themeBtn');
 
@@ -14,12 +25,18 @@ if (themeBtn) {
 
     themeBtn.textContent = isLight ? '🌙 DARK' : '☀ LIGHT';
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    trackEvent("toggle_theme", { theme: isLight ? "light" : "dark" });
   });
 }
 
 // --- 2. COPY EMAIL HELPER ---
 function copyEmail(triggerEl) {
   const email = "aominhtam@gmail.com";
+  const location =
+    triggerEl && triggerEl.classList && triggerEl.classList.contains("contact-card")
+      ? "contact_grid"
+      : "hero";
+  trackEvent("click_contact", { method: "copy_email", location });
 
   function showCopiedFeedback() {
     if (triggerEl && triggerEl.classList && triggerEl.classList.contains("contact-card")) {
@@ -185,13 +202,17 @@ function applyProjectFilter(selectedFilter) {
 if (filterBtns.length && projectCards.length) {
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      applyProjectFilter(btn.getAttribute("data-filter"));
+      const selected = btn.getAttribute("data-filter") || "all";
+      applyProjectFilter(selected);
+      trackEvent("filter_projects", { track: selected, source: "tab" });
     });
   });
 
   heroFilterTriggers.forEach((trigger) => {
     trigger.addEventListener("click", () => {
-      applyProjectFilter(trigger.getAttribute("data-hero-filter"));
+      const selected = trigger.getAttribute("data-hero-filter") || "all";
+      applyProjectFilter(selected);
+      trackEvent("filter_projects", { track: selected, source: "hero" });
     });
   });
 
@@ -200,6 +221,9 @@ if (filterBtns.length && projectCards.length) {
       showAllProjects = !showAllProjects;
       renderProjectsVisibility();
       if (typeof updateScrollProgress === "function") updateScrollProgress();
+      trackEvent("toggle_all_projects", {
+        state: showAllProjects ? "expanded" : "collapsed",
+      });
     });
   }
 
@@ -336,6 +360,7 @@ let updateScrollProgress = function () {};
     backdrop.classList.add("is-open");
     backdrop.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    trackEvent("open_lightbox", { image_src: src || "" });
   }
 
   function closeLightbox() {
@@ -368,5 +393,79 @@ let updateScrollProgress = function () {};
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeLightbox();
+  });
+})();
+
+// --- 9. GA4 CUSTOM EVENT TRACKING (CASE STUDIES & CONTACT LINKS) ---
+(function initAnalyticsTracking() {
+  function extractSlug(anchor) {
+    const explicit = anchor.getAttribute("data-case-slug");
+    if (explicit) return explicit;
+    const href = anchor.getAttribute("href") || "";
+    const match = href.match(/([^/]+)\.html$/i);
+    return match ? match[1] : href;
+  }
+
+  function detectLinkLocation(el) {
+    if (el.closest(".contact-grid")) return "contact_grid";
+    if (el.closest(".hero")) return "hero";
+    if (el.closest(".project-card")) return "project_card";
+    if (el.closest(".detail-card")) return "case_study";
+    if (el.closest("#certifications")) return "credentials";
+    return "other";
+  }
+
+  document.addEventListener("click", (e) => {
+    const anchor = e.target.closest("a");
+    if (!anchor) return;
+
+    // Case study navigation clicks (thumbnails, card buttons, prev/next bar)
+    if (anchor.classList.contains("project-thumb")) {
+      trackEvent("open_case_study", {
+        project_slug: extractSlug(anchor),
+        source: "card_thumb",
+      });
+      return;
+    }
+
+    if (anchor.classList.contains("case-nav-link")) {
+      trackEvent("open_case_study", {
+        project_slug: extractSlug(anchor),
+        source: anchor.classList.contains("case-nav-link--prev") ? "prev_nav" : "next_nav",
+      });
+      return;
+    }
+
+    const href = anchor.getAttribute("href") || "";
+    if (href.startsWith("projects/") && href.endsWith(".html")) {
+      trackEvent("open_case_study", {
+        project_slug: extractSlug(anchor),
+        source: "card_btn",
+      });
+      return;
+    }
+
+    // Contact & outbound profile clicks
+    if (href.startsWith("mailto:")) {
+      trackEvent("click_contact", {
+        method: "send_email",
+        location: detectLinkLocation(anchor),
+      });
+    } else if (href.includes("linkedin.com")) {
+      trackEvent("click_contact", {
+        method: "linkedin",
+        location: detectLinkLocation(anchor),
+      });
+    } else if (href.includes("github.com/AOMINHTAM")) {
+      trackEvent("click_contact", {
+        method: "github",
+        location: detectLinkLocation(anchor),
+      });
+    } else if (href.includes("facebook.com")) {
+      trackEvent("click_contact", {
+        method: "community_share",
+        location: detectLinkLocation(anchor),
+      });
+    }
   });
 })();
