@@ -521,6 +521,10 @@ body:not(.light-theme) .btn-amber {
   position: relative;
 }
 
+.timeline-item + .timeline-item {
+  margin-top: 28px;
+}
+
 .timeline-item::before {
   content: '';
   position: absolute;
@@ -743,6 +747,85 @@ body.light-theme .arch-flow {
 
 .cert-action {
   margin-top: auto;
+}
+
+/* CAREER ROADMAP */
+.roadmap-vision {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 760px;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+.roadmap-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.roadmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.roadmap-horizon {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--amber-main);
+  background-color: var(--amber-glow);
+  border: 1px solid var(--amber-main);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.roadmap-years {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.roadmap-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.roadmap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.roadmap-list li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.roadmap-list li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--amber-main);
+  font-weight: 700;
+}
+
+.roadmap-list strong {
+  color: var(--text-main);
 }
 
 /* GRIDS */
