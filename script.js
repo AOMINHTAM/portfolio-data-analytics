@@ -469,3 +469,31 @@ let updateScrollProgress = function () {};
     }
   });
 })();
+
+// --- 10. CAREER ROADMAP 3D FLIP CARDS (TOUCH & KEYBOARD) ---
+(function initRoadmapFlipCards() {
+  const cards = document.querySelectorAll(".flip-card");
+  if (!cards.length) return;
+
+  const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+  function toggleCard(card) {
+    const flipped = card.classList.toggle("is-flipped");
+    card.setAttribute("aria-pressed", String(flipped));
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      if (!hoverCapable.matches) {
+        toggleCard(card);
+      }
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleCard(card);
+      }
+    });
+  });
+})();

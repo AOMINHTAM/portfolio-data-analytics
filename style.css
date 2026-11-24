@@ -749,7 +749,7 @@ body.light-theme .arch-flow {
   margin-top: auto;
 }
 
-/* CAREER ROADMAP */
+/* CAREER ROADMAP — 3D FLIP CARDS */
 .roadmap-vision {
   color: var(--text-muted);
   font-size: 1rem;
@@ -758,10 +758,98 @@ body.light-theme .arch-flow {
   line-height: 1.65;
 }
 
-.roadmap-card {
+.roadmap-grid {
+  perspective: 1200px;
+}
+
+.flip-card {
+  cursor: pointer;
+  outline: none;
+  display: flex;
+}
+
+.flip-card-inner {
+  display: grid;
+  width: 100%;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+.flip-card:focus-visible .flip-card-inner,
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  min-height: 290px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.flip-card:hover .flip-card-front,
+.flip-card:focus-visible .flip-card-front {
+  border-color: var(--amber-main);
+}
+
+.flip-card-front {
+  justify-content: space-between;
+  background: radial-gradient(circle at top right, var(--amber-glow), transparent 65%), var(--bg-card);
+}
+
+.flip-front-body {
+  margin: auto 0;
+  padding: 12px 0;
+}
+
+.flip-year-display {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--amber-main);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.flip-card-front h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.flip-front-tag {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.flip-hint {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--amber-main);
+  letter-spacing: 0.03em;
+  opacity: 0.9;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  border-color: var(--amber-main);
+  box-shadow: 0 10px 28px -12px var(--amber-glow);
 }
 
 .roadmap-header {
@@ -791,21 +879,13 @@ body.light-theme .arch-flow {
   letter-spacing: 0.04em;
 }
 
-.roadmap-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 12px;
-  line-height: 1.35;
-}
-
 .roadmap-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .roadmap-list li {
@@ -826,6 +906,18 @@ body.light-theme .arch-flow {
 
 .roadmap-list strong {
   color: var(--text-main);
+}
+
+@media (hover: none) {
+  .flip-hint::after {
+    content: ' (Tap)';
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner {
+    transition: none;
+  }
 }
 
 /* GRIDS */
