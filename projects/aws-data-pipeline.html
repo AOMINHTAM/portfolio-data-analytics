@@ -236,19 +236,19 @@
             </div>
             <div class="evidence-card">
               <a href="../images/aws/redshift_v5_ops_audit_table.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/redshift_v5_ops_audit_table.png" alt="Redshift ops.pipeline_ingestion_audit state transition ledger" width="1024" height="479" loading="lazy" />
+                <img src="../images/aws/redshift_v5_ops_audit_table.png" alt="Redshift ops.pipeline_ingestion_audit state transition ledger" width="1024" height="408" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>Audit Ledger:</strong> <code>ops.pipeline_ingestion_audit</code> logging <code>FAILED</code> (0-row guard) and recovery <code>SWAPPED &rarr; ARCHIVED &rarr; COMPLETED</code>.</div>
             </div>
             <div class="evidence-card">
               <a href="../images/aws/cloudwatch_v5_alarms_in_alarm.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/cloudwatch_v5_alarms_in_alarm.png" alt="AWS CloudWatch 4 alarms entering ALARM state on poison CSV isolation" width="1024" height="459" loading="lazy" />
+                <img src="../images/aws/cloudwatch_v5_alarms_in_alarm.png" alt="AWS CloudWatch 4 alarms entering ALARM state on poison CSV isolation" width="1024" height="412" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>Fault Isolation &amp; CloudWatch:</strong> Poison 0-row CSV moved to SQS DLQ after 3 retries, triggering CloudWatch <code>ALARM</code> state.</div>
             </div>
             <div class="evidence-card">
               <a href="../images/aws/gmail_v5_sns_dlq_alarm.png" target="_blank" rel="noopener noreferrer">
-                <img src="../images/aws/gmail_v5_sns_dlq_alarm.png" alt="Amazon SNS real-time email alert delivered to Gmail from DLQ alarm" width="1024" height="447" loading="lazy" />
+                <img src="../images/aws/gmail_v5_sns_dlq_alarm.png" alt="Amazon SNS real-time email alert delivered to Gmail from DLQ alarm" width="727" height="292" loading="lazy" />
               </a>
               <div class="evidence-caption"><strong>SNS Alert Delivery:</strong> Real-time incident notification delivered to Gmail via <code>PipelineAlertTopicPolicy</code> before DLQ Redrive recovery.</div>
             </div>
