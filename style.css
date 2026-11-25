@@ -156,12 +156,14 @@ body {
   color: var(--amber-main);
 }
 
-.theme-toggle {
+.theme-toggle,
+.lang-toggle {
   background-color: var(--btn-subtle-bg);
   border: 1px solid var(--border);
   color: var(--amber-main);
   padding: 6px 14px;
   border-radius: 20px;
+  font-family: var(--font);
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
@@ -169,7 +171,24 @@ body {
   transition: var(--transition);
 }
 
-.theme-toggle:hover {
+.lang-toggle {
+  padding: 6px 11px;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lang-toggle .lang-opt.is-active {
+  color: var(--amber-main);
+}
+
+.lang-toggle .lang-sep {
+  opacity: 0.4;
+}
+
+.theme-toggle:hover,
+.lang-toggle:hover {
   border-color: var(--amber-main);
   box-shadow: 0 0 10px var(--amber-glow);
 }
@@ -1696,6 +1715,14 @@ body.light-theme .project-thumb:hover {
 }
 
 @media (max-width: 520px) {
+  .nav-actions {
+    gap: 6px;
+  }
+  .theme-toggle,
+  .lang-toggle {
+    padding: 6px 9px;
+    font-size: 0.7rem;
+  }
   .contact-grid {
     grid-template-columns: 1fr;
   }
