@@ -730,7 +730,11 @@ body:not(.light-theme) .btn-amber {
 .card::before,
 .contact-card::before,
 .snapshot-frame::before,
-.pipeline-pulse-card::before {
+.pipeline-pulse-card::before,
+.scope-box::before,
+.detail-figure::before,
+.evidence-card::before,
+.case-nav-link::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -749,7 +753,11 @@ body:not(.light-theme) .btn-amber {
 body.light-theme .card::before,
 body.light-theme .contact-card::before,
 body.light-theme .snapshot-frame::before,
-body.light-theme .pipeline-pulse-card::before {
+body.light-theme .pipeline-pulse-card::before,
+body.light-theme .scope-box::before,
+body.light-theme .detail-figure::before,
+body.light-theme .evidence-card::before,
+body.light-theme .case-nav-link::before {
   background: radial-gradient(
     320px circle at var(--mx, 50%) var(--my, 50%),
     rgba(180, 83, 9, 0.075),
@@ -760,7 +768,11 @@ body.light-theme .pipeline-pulse-card::before {
 .card > *,
 .contact-card > *,
 .snapshot-frame > *,
-.pipeline-pulse-card > * {
+.pipeline-pulse-card > *,
+.scope-box > *,
+.detail-figure > *,
+.evidence-card > *,
+.case-nav-link > * {
   position: relative;
   z-index: 1;
 }
@@ -769,7 +781,11 @@ body.light-theme .pipeline-pulse-card::before {
   .card:hover::before,
   .contact-card:hover::before,
   .snapshot-frame:hover::before,
-  .pipeline-pulse-card:hover::before {
+  .pipeline-pulse-card:hover::before,
+  .scope-box:hover::before,
+  .detail-figure:hover::before,
+  .evidence-card:hover::before,
+  .case-nav-link:hover::before {
     opacity: 1;
   }
 }
@@ -931,6 +947,7 @@ body:not(.light-theme) .filter-btn.active {
 }
 
 .arch-flow {
+  position: relative;
   background-color: var(--bg-alt);
   border: 1px solid var(--border);
   border-left: 3px solid var(--amber-main);
@@ -942,6 +959,7 @@ body:not(.light-theme) .filter-btn.active {
   color: var(--amber-light);
   overflow-x: auto;
   line-height: 1.6;
+  box-shadow: inset 3px 0 18px -10px var(--amber-glow);
 }
 
 body.light-theme .arch-flow {
@@ -1401,12 +1419,19 @@ code {
 
 /* DATASET & SCOPE BOX */
 .scope-box {
+  position: relative;
+  overflow: hidden;
   background-color: var(--bg-alt);
   border: 1px solid var(--border);
   border-left: 3px solid var(--amber-main);
   border-radius: 10px;
   padding: 18px 22px;
   margin-bottom: 24px;
+  transition: var(--transition);
+}
+
+.scope-box:hover {
+  border-color: var(--border-focus);
 }
 
 .scope-grid {
@@ -1428,11 +1453,18 @@ code {
 
 /* ARCHITECTURE FIGURES & EVIDENCE GALLERY */
 .detail-figure {
+  position: relative;
+  overflow: hidden;
   margin: 20px 0 24px 0;
   background-color: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
+  transition: var(--transition);
+}
+
+.detail-figure:hover {
+  border-color: var(--border-focus);
 }
 
 .detail-figure img {
@@ -1441,6 +1473,11 @@ code {
   border-radius: 8px;
   display: block;
   cursor: zoom-in;
+  transition: transform 0.35s ease;
+}
+
+.detail-figure:hover img {
+  transform: scale(1.012);
 }
 
 .detail-figure figcaption {
@@ -1458,6 +1495,8 @@ code {
 }
 
 .evidence-card {
+  position: relative;
+  overflow: hidden;
   background-color: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -1467,6 +1506,7 @@ code {
 
 .evidence-card:hover {
   border-color: var(--amber-main);
+  transform: translateY(-2px);
 }
 
 .evidence-card img {
@@ -1475,6 +1515,11 @@ code {
   border-radius: 6px;
   display: block;
   cursor: zoom-in;
+  transition: transform 0.35s ease;
+}
+
+.evidence-card:hover img {
+  transform: scale(1.02);
 }
 
 .evidence-caption {
@@ -1921,6 +1966,8 @@ body.light-theme .project-thumb:hover {
 }
 
 .case-nav-link {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -2252,4 +2299,36 @@ html.js-anim .reveal-item.reveal-done {
   .timeline-item::after {
     transition: none !important;
   }
+}
+
+/* --- CASE STUDY AMBIENT CYBER GRID HEADER --- */
+body.is-case-study main.section {
+  position: relative;
+}
+
+body.is-case-study main.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 440px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(245, 158, 11, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+}
+
+body.light-theme.is-case-study main.section::before {
+  background-image:
+    linear-gradient(to right, rgba(180, 83, 9, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 83, 9, 0.05) 1px, transparent 1px);
+}
+
+body.is-case-study main.section > .container {
+  position: relative;
+  z-index: 1;
 }

@@ -883,13 +883,26 @@ let updateScrollProgress = function () {};
     currentLang === "vi" ? applyLanguage("vi", false) : Promise.resolve();
 })();
 
-// --- 12. TYPEWRITER TEXT REVEAL & SNAPSHOT COUNT-UP (HOMEPAGE) ---
+// --- 12. TYPEWRITER TEXT REVEAL & SNAPSHOT COUNT-UP (HOMEPAGE & CASE STUDIES) ---
 (function initTextAnimations() {
   const heroDesc = document.querySelector(".hero-desc");
   const subHeadline = document.querySelector(".sub-headline");
   const sectionTitles = document.querySelectorAll(".section-title");
   const snapshotBox = document.querySelector(".snapshot-metrics");
-  if (!heroDesc && !subHeadline && !sectionTitles.length && !snapshotBox) return;
+  const detailBadge = document.querySelector(".detail-header .project-badge");
+  const detailTitle = document.querySelector(".detail-header h1");
+  const detailHeadings = document.querySelectorAll(".detail-block h2");
+  if (
+    !heroDesc &&
+    !subHeadline &&
+    !sectionTitles.length &&
+    !snapshotBox &&
+    !detailBadge &&
+    !detailTitle &&
+    !detailHeadings.length
+  ) {
+    return;
+  }
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const activeTypewriters = new Map();
@@ -913,9 +926,13 @@ let updateScrollProgress = function () {};
 
   function cancelAllAnimations() {
     Array.from(activeTypewriters.keys()).forEach(cancelTypewriter);
-    document.querySelectorAll(".hero-title .accent-text, .hero-desc, .sub-headline").forEach((el) => {
-      el.style.visibility = "";
-    });
+    document
+      .querySelectorAll(
+        ".hero-title .accent-text, .hero-desc, .sub-headline, .detail-header .project-badge, .detail-header h1"
+      )
+      .forEach((el) => {
+        el.style.visibility = "";
+      });
     activeMetrics.forEach((rafId) => cancelAnimationFrame(rafId));
     activeMetrics.clear();
   }
@@ -1046,6 +1063,40 @@ let updateScrollProgress = function () {};
     runStep(0);
   }
 
+  function runCaseHeaderTypewriter() {
+    if (reducedMotion || (!detailBadge && !detailTitle)) return;
+    const steps = [];
+
+    if (detailBadge) {
+      steps.push({ el: detailBadge, charDelay: 14, chunkSize: 2, keepCursorMs: 0 });
+    }
+    if (detailTitle) {
+      steps.push({ el: detailTitle, charDelay: 22, chunkSize: 1, keepCursorMs: 700 });
+    }
+
+    steps.forEach((step, idx) => {
+      if (idx > 0) step.el.style.visibility = "hidden";
+    });
+
+    function runStep(index) {
+      if (index >= steps.length) return;
+      const step = steps[index];
+      typeElement(step.el, {
+        charDelay: step.charDelay,
+        chunkSize: step.chunkSize,
+        keepCursorMs: step.keepCursorMs,
+        onDone: () => runStep(index + 1),
+      });
+    }
+
+    runStep(0);
+  }
+
+  function runPageHeaderTypewriter() {
+    runHeroTypewriter();
+    runCaseHeaderTypewriter();
+  }
+
   function animateSnapshotStats() {
     if (!snapshotBox || reducedMotion || snapshotBox.dataset.twDone === "1") return;
     snapshotBox.dataset.twDone = "1";
@@ -1114,18 +1165,35 @@ let updateScrollProgress = function () {};
       );
       sectionTitles.forEach((titleEl) => titleObserver.observe(titleEl));
     }
+
+    if (detailHeadings.length) {
+      const detailHeadingObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const h2El = entry.target;
+            if (h2El.dataset.twDone === "1") return;
+            h2El.dataset.twDone = "1";
+            detailHeadingObserver.unobserve(h2El);
+            typeElement(h2El, { charDelay: 22, chunkSize: 1, keepCursorMs: 550 });
+          });
+        },
+        { threshold: 0.25, rootMargin: "0px 0px -24px 0px" }
+      );
+      detailHeadings.forEach((h2El) => detailHeadingObserver.observe(h2El));
+    }
   }
 
   function startEntryAnimations() {
     const ready = window.__i18nReadyPromise || Promise.resolve();
     ready.finally(() => {
-      runHeroTypewriter();
+      runPageHeaderTypewriter();
       observeViewportAnimations();
     });
   }
 
   window.__cancelTextAnimations = cancelAllAnimations;
-  window.__replayHeroTypewriter = runHeroTypewriter;
+  window.__replayHeroTypewriter = runPageHeaderTypewriter;
 
   if (window.__preloaderDone) {
     startEntryAnimations();
@@ -1138,11 +1206,16 @@ let updateScrollProgress = function () {};
 (function initAmbientMotion() {
   const hoverFine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isCaseStudy = Boolean(document.querySelector(".detail-header"));
+
+  if (isCaseStudy) {
+    document.body.classList.add("is-case-study");
+  }
 
   // Mouse-tracking radial amber spotlight on cards
   if (hoverFine && !reducedMotion) {
     const spotlightTargets = document.querySelectorAll(
-      ".card, .contact-card, .snapshot-frame, .pipeline-pulse-card"
+      ".card, .contact-card, .snapshot-frame, .pipeline-pulse-card, .scope-box, .detail-figure, .evidence-card, .case-nav-link"
     );
     spotlightTargets.forEach((card) => {
       card.addEventListener(
@@ -1157,24 +1230,32 @@ let updateScrollProgress = function () {};
     });
   }
 
-  // Staggered scroll reveal for homepage cards & timeline
+  // Staggered scroll reveal for homepage & case study blocks
   const hasHomeSections = document.querySelectorAll("section[id]").length > 0;
-  if (!hasHomeSections || reducedMotion || typeof IntersectionObserver !== "function") {
+  if ((!hasHomeSections && !isCaseStudy) || reducedMotion || typeof IntersectionObserver !== "function") {
     return;
   }
 
   document.documentElement.classList.add("js-anim");
 
-  const revealGroups = [
-    { selector: "#about .card-body", step: 0 },
-    { selector: "#experience .timeline-item", step: 90 },
-    { selector: "#architecture .pipeline-pulse-card", step: 0 },
-    { selector: "#architecture .skill-card", step: 75 },
-    { selector: "#projects .project-card:not(.is-hidden)", step: 75 },
-    { selector: "#certifications .cert-card", step: 85 },
-    { selector: "#roadmap .flip-card", step: 80 },
-    { selector: "#contact .contact-card", step: 65 },
-  ];
+  const revealGroups = hasHomeSections
+    ? [
+        { selector: "#about .card-body", step: 0 },
+        { selector: "#experience .timeline-item", step: 90 },
+        { selector: "#architecture .pipeline-pulse-card", step: 0 },
+        { selector: "#architecture .skill-card", step: 75 },
+        { selector: "#projects .project-card:not(.is-hidden)", step: 75 },
+        { selector: "#certifications .cert-card", step: 85 },
+        { selector: "#roadmap .flip-card", step: 80 },
+        { selector: "#contact .contact-card", step: 65 },
+      ]
+    : [
+        { selector: ".detail-header .detail-meta span", step: 55 },
+        { selector: ".detail-card .detail-block", step: 0 },
+        { selector: ".scope-box .scope-item", step: 65 },
+        { selector: ".evidence-grid .evidence-card", step: 80 },
+        { selector: ".case-nav .case-nav-link", step: 80 },
+      ];
 
   const targets = [];
   revealGroups.forEach((group) => {
@@ -1203,7 +1284,7 @@ let updateScrollProgress = function () {};
           }, delay + 540);
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -28px 0px" }
+      { threshold: isCaseStudy ? 0.01 : 0.1, rootMargin: "0px 0px -24px 0px" }
     );
 
     targets.forEach((el) => revealObserver.observe(el));
