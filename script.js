@@ -1,4 +1,39 @@
-// --- 0. GA4 CUSTOM EVENT HELPER (SAFE NO-OP IF BLOCKED) ---
+// --- 0. ENTRY PRELOADER (HOMEPAGE) ---
+(function initPreloader() {
+  const preloader = document.getElementById("pagePreloader");
+  if (!preloader) return;
+
+  const minDisplayMs = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? 0
+    : 750;
+  const startTime = Date.now();
+  let dismissed = false;
+
+  function dismissPreloader() {
+    if (dismissed) return;
+    dismissed = true;
+    const elapsed = Date.now() - startTime;
+    const waitMs = Math.max(0, minDisplayMs - elapsed);
+
+    setTimeout(() => {
+      preloader.classList.add("is-done");
+      preloader.setAttribute("aria-hidden", "true");
+      setTimeout(() => {
+        if (preloader.parentNode) preloader.remove();
+      }, 420);
+    }, waitMs);
+  }
+
+  if (document.readyState === "complete") {
+    dismissPreloader();
+  } else {
+    window.addEventListener("load", dismissPreloader, { once: true });
+    // Safety fallback so slow third-party resources never trap visitors
+    setTimeout(dismissPreloader, 1800);
+  }
+})();
+
+// --- 0.5 GA4 CUSTOM EVENT HELPER (SAFE NO-OP IF BLOCKED) ---
 function trackEvent(eventName, params) {
   if (typeof window.gtag === "function") {
     try {
@@ -87,32 +122,52 @@ function copyEmail(triggerEl) {
   }
 }
 
-// --- 3. SCROLLSPY: HIGHLIGHT ACTIVE NAV LINK ON SCROLL ---
+// --- 3. SCROLLSPY: HIGHLIGHT ACTIVE NAV LINK & SYNC URL HASH ON SCROLL ---
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav-links a");
 
-function setActiveNav(sectionId) {
-  if (!navLinks.length) return;
-  navLinks.forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("href") === `#${sectionId}`);
-  });
+function syncUrlHash(sectionId) {
+  if (!window.history || typeof window.history.replaceState !== "function") return;
+  const targetHash = sectionId ? `#${sectionId}` : "";
+  const hasTrailingEmptyHash = targetHash === "" && window.location.href.endsWith("#");
+  if (window.location.hash === targetHash && !hasTrailingEmptyHash) return;
+  try {
+    const cleanBase = `${window.location.pathname}${window.location.search}`;
+    window.history.replaceState(null, "", targetHash ? `${cleanBase}${targetHash}` : cleanBase);
+  } catch (_) {
+    // Ignore history errors on restricted protocols (e.g. file://)
+  }
 }
 
-function updateScrollSpy() {
+function setActiveNav(sectionId, options) {
+  const syncUrl = Boolean(options && options.syncUrl);
+  if (navLinks.length) {
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${sectionId}`);
+    });
+  }
+  if (syncUrl) {
+    const hashId = options && "hashId" in options ? options.hashId : sectionId;
+    syncUrlHash(hashId);
+  }
+}
+
+function updateScrollSpy(options) {
   if (!sections.length || !navLinks.length) return;
+  const syncUrl = Boolean(options && options.syncUrl);
   const scrollY = window.scrollY || window.pageYOffset;
   const firstSectionTop = sections[0].offsetTop - 140;
   const atBottom =
     window.innerHeight + scrollY >= document.documentElement.scrollHeight - 40;
 
   if (scrollY < firstSectionTop) {
-    setActiveNav("about");
+    setActiveNav("about", { syncUrl, hashId: "" });
     return;
   }
 
   if (atBottom) {
     const lastId = sections[sections.length - 1].getAttribute("id");
-    if (lastId) setActiveNav(lastId);
+    if (lastId) setActiveNav(lastId, { syncUrl });
     return;
   }
 
@@ -122,20 +177,22 @@ function updateScrollSpy() {
     const sectionId = current.getAttribute("id");
 
     if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-      setActiveNav(sectionId);
+      setActiveNav(sectionId, { syncUrl });
     }
   });
 }
 
-window.addEventListener("scroll", updateScrollSpy, { passive: true });
-window.addEventListener("load", updateScrollSpy);
-updateScrollSpy();
+window.addEventListener("scroll", () => updateScrollSpy({ syncUrl: true }), { passive: true });
+window.addEventListener("load", () => updateScrollSpy({ syncUrl: true }));
+updateScrollSpy({ syncUrl: false });
 
-// Also reset nav to ABOUT ME when clicking navbar logo at top
+// Also reset nav to ABOUT ME and clear URL hash when clicking navbar logo at top
 const navLogo = document.querySelector(".navbar .logo");
 if (navLogo && navLogo.getAttribute("href") === "#") {
-  navLogo.addEventListener("click", () => {
-    setActiveNav("about");
+  navLogo.addEventListener("click", (e) => {
+    e.preventDefault();
+    setActiveNav("about", { syncUrl: true, hashId: "" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
@@ -313,7 +370,7 @@ let updateScrollProgress = function () {};
   updateVisibility();
 
   btn.addEventListener("click", () => {
-    setActiveNav("about");
+    setActiveNav("about", { syncUrl: true, hashId: "" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();

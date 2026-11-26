@@ -1,3 +1,134 @@
+/* --- 0. ENTRY PRELOADER --- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.preloader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.preloader-badge {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid var(--amber-main);
+  background: rgba(245, 158, 11, 0.1);
+  box-shadow: 0 0 28px var(--amber-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseAmber 1.8s ease-in-out infinite;
+}
+
+.preloader-logo {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.04em;
+}
+
+.preloader-logo span {
+  color: var(--amber-main);
+}
+
+.preloader-brand {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.preloader-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--amber-main);
+}
+
+.preloader-dots span {
+  display: inline-block;
+  margin-left: 2px;
+  animation: preloaderDot 1.2s infinite ease-in-out;
+  opacity: 0.25;
+}
+
+.preloader-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.preloader-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes preloaderDot {
+  0%, 80%, 100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.preloader-bar {
+  width: 180px;
+  height: 3px;
+  border-radius: 999px;
+  background-color: var(--border);
+  overflow: hidden;
+}
+
+.preloader-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber-warm), var(--amber-main), var(--amber-light));
+  transform-origin: left center;
+  animation: preloaderProgress 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes preloaderProgress {
+  0% {
+    transform: scaleX(0.08);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader,
+  .preloader-badge,
+  .preloader-dots span,
+  .preloader-bar-fill {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 /* --- 1. RESET & VARIABLES (DARK THEME - DEFAULT) --- */
 :root {
   --bg-deep: #0f1015;        /* Đen than chì carbon ấm */

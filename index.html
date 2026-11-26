@@ -137,6 +137,35 @@
   </script>
 </head>
 <body>
+  <!-- 0. ENTRY PRELOADER -->
+  <div id="pagePreloader" class="preloader" role="status" aria-live="polite" aria-label="Loading portfolio">
+    <div class="preloader-inner">
+      <div class="preloader-badge">
+        <span class="preloader-logo">AT<span>.</span></span>
+      </div>
+      <div class="preloader-brand">AO MINH TÂM &bull; PORTFOLIO</div>
+      <div class="preloader-text">
+        <span class="preloader-label">Loading</span><span class="preloader-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span>
+      </div>
+      <div class="preloader-bar" aria-hidden="true">
+        <div class="preloader-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+  <noscript><style>#pagePreloader{display:none!important;}</style></noscript>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.body.classList.add("light-theme");
+        }
+        if (localStorage.getItem("lang") === "vi") {
+          var lbl = document.querySelector("#pagePreloader .preloader-label");
+          if (lbl) lbl.textContent = "Đang tải";
+        }
+      } catch (_) {}
+    })();
+  </script>
 
   <!-- 1. NAVIGATION BAR -->
   <nav class="navbar">

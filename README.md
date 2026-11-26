@@ -18,7 +18,7 @@ Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at H
 
 ## 🛠️ Architecture & Features
 
-* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme with Dark/Light modes), JavaScript (ES6+).
+* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme with Dark/Light modes & entry loading splash screen), JavaScript (ES6+ with ScrollSpy active nav & `history.replaceState` URL hash syncing).
 * **Bilingual Support (EN / VI):** Dynamic `EN / VI` language switcher in the navbar (`i18n/common.js`, `i18n/home.js`, and 9 page-scoped modules in `i18n/projects/`) persisting preference in `localStorage` across the homepage and all 9 case studies.
 * **Dual-Track HR Navigation, Resume & 3D Roadmap:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired to interactive category filters, public 1-page PDF resume (`assets/Ao-Minh-Tam-Resume.pdf`), **Education & Activities** (HCMUNRE + AWS First Cloud Journey), and a **Career Roadmap** section featuring interactive 3D flip cards (`3 / 5 / 10 Years`). Defaults to **4 Featured Flagship Projects** (2 DE + 2 DA) with an expand toggle (`Show All 9 Projects`).
 * **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), methodological formulas/denominators, embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
