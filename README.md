@@ -1,8 +1,9 @@
-# 🌐 Ao Minh Tâm — Data Analytics & Data Engineering Portfolio
+# 🌐 Ao Minh Tâm — Data & Analytics Engineering Portfolio
 
-Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at HCMUNRE, open to **Data Analyst & Data Engineer Intern** roles), showcasing **Data Engineering** (AWS CloudFormation IaC, Event-Driven ELT V5.0.1, Snowflake, dbt, Airflow 3) and **Data Analytics** case studies (RFM, Conversion Funnels, Cohort Retention, Sankey Flows, Market Basket, Pareto ABC).
+Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at HCMUNRE, open to **Data Intern** roles with a strong passion for **Analytics Engineering**), showcasing **Data Engineering** (AWS CloudFormation IaC, Event-Driven ELT V5.0.1, Snowflake, dbt, Airflow 3) and **Data Analytics** case studies (RFM, Conversion Funnels, Cohort Retention, Sankey Flows, Market Basket, Pareto ABC).
 
 🔗 **Live Website:** https://aominhtam-portfolio.vercel.app/  
+📄 **Public Resume (PDF):** [assets/Ao-Minh-Tam-Resume.pdf](assets/Ao-Minh-Tam-Resume.pdf)  
 💼 **LinkedIn:** https://www.linkedin.com/in/ao-minh-tam/  
 👤 **GitHub Profile:** https://github.com/AOMINHTAM
 
@@ -17,8 +18,9 @@ Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at H
 
 ## 🛠️ Architecture & Features
 
-* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme), JavaScript (ES6+).
-* **Dual-Track HR Navigation & Featured Layout:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired to interactive category filters; defaults to **4 Featured Flagship Projects** (2 DE + 2 DA) with an expand toggle (`Show All 9 Projects`), two-tier card bullets (**Business Outcome → Technical Implementation → Measurement**), and Skill Matrix grouped by proficiency tier (**Hands-on** vs. **Working Knowledge**).
+* **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom "Cyber Amber" Theme with Dark/Light modes), JavaScript (ES6+).
+* **Bilingual Support (EN / VI):** Dynamic `EN / VI` language switcher in the navbar (`i18n/common.js`, `i18n/home.js`, and 9 page-scoped modules in `i18n/projects/`) persisting preference in `localStorage` across the homepage and all 9 case studies.
+* **Dual-Track HR Navigation, Resume & 3D Roadmap:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired to interactive category filters, public 1-page PDF resume (`assets/Ao-Minh-Tam-Resume.pdf`), **Education & Activities** (HCMUNRE + AWS First Cloud Journey), and a **Career Roadmap** section featuring interactive 3D flip cards (`3 / 5 / 10 Years`). Defaults to **4 Featured Flagship Projects** (2 DE + 2 DA) with an expand toggle (`Show All 9 Projects`).
 * **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), methodological formulas/denominators, embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
 * **Technical SEO, PWA & Analytics:** Configured `robots.txt`, `sitemap.xml`, `site.webmanifest`, `apple-touch-icon.png` (`180×180`), `icon-192.png` / `icon-512.png`, per-page Open Graph (`og:image` `1200x630` banner) & `canonical` tags, connected `@graph` JSON-LD schemas (`WebSite`, `ProfilePage`, `Person` with `hasCredential`, `CreativeWork`, `BreadcrumbList`), semantic `H1 → H2 → H3` headings, explicit `width`/`height` + `loading="lazy"` on diagrams, GA4 (`G-VRB4RENV7J`) across all pages, and a floating Back-to-Top control.
 * **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
