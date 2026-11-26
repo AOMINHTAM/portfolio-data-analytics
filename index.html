@@ -316,6 +316,41 @@
   <section id="architecture" class="section">
     <div class="container">
       <h2 class="section-title">TECHNICAL SKILLS</h2>
+      <div class="pipeline-pulse-card" aria-label="Event-Driven ELT Pipeline Flow">
+        <div class="pipeline-pulse-head">
+          <span class="pipeline-pulse-status">
+            <span class="pulse-dot"></span>
+            <span class="pipeline-pulse-title">LIVE ELT FLOW &bull; EVENT-DRIVEN ARCHITECTURE</span>
+          </span>
+          <a href="projects/aws-data-pipeline.html" class="pipeline-pulse-link">Inspect V5.0.1 &rarr;</a>
+        </div>
+        <div class="pipeline-track" role="list">
+          <div class="pipeline-node" role="listitem">
+            <span class="pipeline-node-tag">INGEST</span>
+            <strong>Amazon S3</strong>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"><span class="pipeline-packet"></span></div>
+          <div class="pipeline-node" role="listitem">
+            <span class="pipeline-node-tag">QUEUE</span>
+            <strong>SQS + DLQ</strong>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"><span class="pipeline-packet"></span></div>
+          <div class="pipeline-node" role="listitem">
+            <span class="pipeline-node-tag">TRIGGER</span>
+            <strong>Airflow 3</strong>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"><span class="pipeline-packet"></span></div>
+          <div class="pipeline-node" role="listitem">
+            <span class="pipeline-node-tag">LOAD</span>
+            <strong>Redshift</strong>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"><span class="pipeline-packet"></span></div>
+          <div class="pipeline-node" role="listitem">
+            <span class="pipeline-node-tag">MODEL</span>
+            <strong>dbt Marts</strong>
+          </div>
+        </div>
+      </div>
       <div class="grid-3">
         <div class="card skill-card">
           <h3>Data Analytics &amp; BI</h3>

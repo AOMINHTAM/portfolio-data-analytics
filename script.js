@@ -130,7 +130,37 @@ function copyEmail(triggerEl) {
 
 // --- 3. SCROLLSPY: HIGHLIGHT ACTIVE NAV LINK & SYNC URL HASH ON SCROLL ---
 const sections = document.querySelectorAll("section[id]");
+const navLinksList = document.querySelector(".nav-links");
 const navLinks = document.querySelectorAll(".nav-links a");
+let navIndicator = null;
+
+if (navLinksList && navLinks.length) {
+  navIndicator = document.createElement("span");
+  navIndicator.className = "nav-indicator";
+  navIndicator.setAttribute("aria-hidden", "true");
+  navLinksList.appendChild(navIndicator);
+}
+
+function updateNavIndicator() {
+  if (!navIndicator || !navLinksList) return;
+  const activeLink = navLinksList.querySelector("a.active");
+  if (!activeLink || window.innerWidth <= 900) {
+    navIndicator.classList.remove("is-ready");
+    return;
+  }
+  const width = activeLink.offsetWidth;
+  const left = activeLink.offsetLeft;
+  if (width <= 0) return;
+  navIndicator.style.width = `${width}px`;
+  navIndicator.style.transform = `translateX(${left}px)`;
+  navIndicator.classList.add("is-ready");
+}
+
+window.__updateNavIndicator = updateNavIndicator;
+window.addEventListener("resize", updateNavIndicator, { passive: true });
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(updateNavIndicator).catch(() => {});
+}
 
 function syncUrlHash(sectionId) {
   if (!window.history || typeof window.history.replaceState !== "function") return;
@@ -151,6 +181,7 @@ function setActiveNav(sectionId, options) {
     navLinks.forEach((link) => {
       link.classList.toggle("active", link.getAttribute("href") === `#${sectionId}`);
     });
+    updateNavIndicator();
   }
   if (syncUrl) {
     const hashId = options && "hashId" in options ? options.hashId : sectionId;
@@ -213,7 +244,7 @@ const projectsIntro = document.getElementById("projectsIntro");
 let currentFilter = "all";
 let showAllProjects = false;
 
-function renderProjectsVisibility() {
+function renderProjectsVisibility(animateTransition) {
   if (!filterBtns.length || !projectCards.length) return;
 
   filterBtns.forEach((btn) => {
@@ -222,6 +253,7 @@ function renderProjectsVisibility() {
     btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
   });
 
+  let visibleIndex = 0;
   projectCards.forEach((card) => {
     const categories = (card.getAttribute("data-categories") || "").split(/\s+/);
     const isFeatured = card.getAttribute("data-featured") === "true";
@@ -234,6 +266,16 @@ function renderProjectsVisibility() {
     }
 
     card.classList.toggle("is-hidden", !shouldShow);
+
+    if (shouldShow && animateTransition) {
+      card.classList.remove("reveal-item", "is-revealed", "reveal-done", "is-filter-enter");
+      void card.offsetWidth;
+      card.style.setProperty("--filter-delay", `${Math.min(visibleIndex * 45, 270)}ms`);
+      card.classList.add("is-filter-enter");
+      visibleIndex += 1;
+    } else if (!shouldShow) {
+      card.classList.remove("is-filter-enter");
+    }
   });
 
   if (toggleProjectsWrap && toggleProjectsBtn) {
@@ -289,7 +331,7 @@ function renderProjectsVisibility() {
 
 function applyProjectFilter(selectedFilter) {
   currentFilter = selectedFilter || "all";
-  renderProjectsVisibility();
+  renderProjectsVisibility(true);
   if (typeof updateScrollProgress === "function") updateScrollProgress();
 }
 
@@ -313,7 +355,7 @@ if (filterBtns.length && projectCards.length) {
   if (toggleProjectsBtn) {
     toggleProjectsBtn.addEventListener("click", () => {
       showAllProjects = !showAllProjects;
-      renderProjectsVisibility();
+      renderProjectsVisibility(true);
       if (typeof updateScrollProgress === "function") updateScrollProgress();
       trackEvent("toggle_all_projects", {
         state: showAllProjects ? "expanded" : "collapsed",
@@ -321,7 +363,7 @@ if (filterBtns.length && projectCards.length) {
     });
   }
 
-  renderProjectsVisibility();
+  renderProjectsVisibility(false);
 }
 
 // --- 5. SCROLL READING PROGRESS BAR (ALL PAGES) ---
@@ -634,6 +676,8 @@ let updateScrollProgress = function () {};
     ".timeline-date",
     ".timeline-role",
     ".timeline-desc",
+    ".pipeline-pulse-title",
+    ".pipeline-pulse-link",
     ".skill-card .card-sub",
     ".skill-tier-label",
     ".skill-applied",
@@ -810,6 +854,9 @@ let updateScrollProgress = function () {};
     }
 
     syncExtraDynamicText(currentLang);
+    if (typeof window.__updateNavIndicator === "function") {
+      window.__updateNavIndicator();
+    }
     if (typeof updateScrollProgress === "function") updateScrollProgress();
     if (isUserAction) {
       if (typeof window.__replayHeroTypewriter === "function") {
@@ -1084,5 +1131,87 @@ let updateScrollProgress = function () {};
     startEntryAnimations();
   } else {
     window.addEventListener("portfolio:preloader-done", startEntryAnimations, { once: true });
+  }
+})();
+
+// --- 13. MOUSE SPOTLIGHT GLOW & SCROLL REVEAL STAGGER ---
+(function initAmbientMotion() {
+  const hoverFine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Mouse-tracking radial amber spotlight on cards
+  if (hoverFine && !reducedMotion) {
+    const spotlightTargets = document.querySelectorAll(
+      ".card, .contact-card, .snapshot-frame, .pipeline-pulse-card"
+    );
+    spotlightTargets.forEach((card) => {
+      card.addEventListener(
+        "pointermove",
+        (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${(e.clientX - rect.left).toFixed(1)}px`);
+          card.style.setProperty("--my", `${(e.clientY - rect.top).toFixed(1)}px`);
+        },
+        { passive: true }
+      );
+    });
+  }
+
+  // Staggered scroll reveal for homepage cards & timeline
+  const hasHomeSections = document.querySelectorAll("section[id]").length > 0;
+  if (!hasHomeSections || reducedMotion || typeof IntersectionObserver !== "function") {
+    return;
+  }
+
+  document.documentElement.classList.add("js-anim");
+
+  const revealGroups = [
+    { selector: "#about .card-body", step: 0 },
+    { selector: "#experience .timeline-item", step: 90 },
+    { selector: "#architecture .pipeline-pulse-card", step: 0 },
+    { selector: "#architecture .skill-card", step: 75 },
+    { selector: "#projects .project-card:not(.is-hidden)", step: 75 },
+    { selector: "#certifications .cert-card", step: 85 },
+    { selector: "#roadmap .flip-card", step: 80 },
+    { selector: "#contact .contact-card", step: 65 },
+  ];
+
+  const targets = [];
+  revealGroups.forEach((group) => {
+    document.querySelectorAll(group.selector).forEach((el, idx) => {
+      const delay = Math.min(idx * group.step, 260);
+      el.classList.add("reveal-item");
+      el.style.setProperty("--reveal-delay", `${delay}ms`);
+      el.dataset.revealDelay = String(delay);
+      targets.push(el);
+    });
+  });
+
+  if (!targets.length) return;
+
+  function beginObserving() {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          revealObserver.unobserve(el);
+          el.classList.add("is-revealed");
+          const delay = Number(el.dataset.revealDelay || "0");
+          setTimeout(() => {
+            el.classList.add("reveal-done");
+          }, delay + 540);
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -28px 0px" }
+    );
+
+    targets.forEach((el) => revealObserver.observe(el));
+  }
+
+  if (window.__preloaderDone) {
+    beginObserving();
+  } else {
+    window.addEventListener("portfolio:preloader-done", beginObserving, { once: true });
   }
 })();

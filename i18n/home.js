@@ -58,6 +58,9 @@ window.__I18N_VI__.home = {
     "Thực hành các mẫu kiến trúc AWS cốt lõi (S3, SQS, IAM, CloudFormation, Redshift) và áp dụng tiêu chuẩn kỹ thuật của FCJ để xây dựng ELT pipeline hướng sự kiện, đảm bảo idempotency cho 99.441 đơn hàng Olist.",
 
   // Technical Skills
+  "LIVE ELT FLOW &bull; EVENT-DRIVEN ARCHITECTURE":
+    "LUỒNG ELT TRỰC QUAN &bull; KIẾN TRÚC HƯỚNG SỰ KIỆN",
+  "Inspect V5.0.1 &rarr;": "Xem kiến trúc V5.0.1 &rarr;",
   "Data Analytics &amp; BI": "Phân tích Dữ liệu &amp; BI",
   "SQL, Python &amp; Storytelling": "SQL, Python &amp; Trực quan hóa",
   "Cloud &amp; Data Warehousing": "Cloud &amp; Data Warehousing",
