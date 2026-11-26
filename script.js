@@ -195,15 +195,28 @@ if (document.fonts && document.fonts.ready) {
 
 function syncUrlHash(sectionId) {
   if (!window.history || typeof window.history.replaceState !== "function") return;
+  let pathname = window.location.pathname || "/";
+  if (window.location.protocol !== "file:" && pathname.endsWith("/index.html")) {
+    pathname = pathname.slice(0, -"index.html".length) || "/";
+  }
   const targetHash = sectionId ? `#${sectionId}` : "";
   const hasTrailingEmptyHash = targetHash === "" && window.location.href.endsWith("#");
-  if (window.location.hash === targetHash && !hasTrailingEmptyHash) return;
+  const needsCleanPath = window.location.pathname !== pathname;
+  if (window.location.hash === targetHash && !hasTrailingEmptyHash && !needsCleanPath) return;
   try {
-    const cleanBase = `${window.location.pathname}${window.location.search}`;
+    const cleanBase = `${pathname}${window.location.search}`;
     window.history.replaceState(null, "", targetHash ? `${cleanBase}${targetHash}` : cleanBase);
   } catch (_) {
     // Ignore history errors on restricted protocols (e.g. file://)
   }
+}
+
+// On HTTP/HTTPS, clean "../index.html" links on subpages to "../" so URLs never show /index.html#...
+if (window.location.protocol !== "file:") {
+  document.querySelectorAll('a[href^="../index.html"]').forEach((anchor) => {
+    const raw = anchor.getAttribute("href") || "";
+    anchor.setAttribute("href", raw.replace(/^\.\.\/index\.html/, "../"));
+  });
 }
 
 function setActiveNav(sectionId, options) {
@@ -1554,293 +1567,4 @@ let updateScrollProgress = function () {};
     buildOrRefreshToc();
     updateActiveToc();
   };
-})();
-
-// --- 16. QUICK COMMAND PALETTE (CTRL+K / CMD+K) ---
-(function initCommandPalette() {
-  const navActions = document.querySelector(".nav-actions");
-  if (!navActions || document.getElementById("cmdPaletteBtn")) return;
-
-  const isSubpage = /\/projects\/[^/]+?\.html$/i.test((window.location.pathname || "").replace(/\\/g, "/"));
-  const homePrefix = isSubpage ? "../index.html" : "";
-  const projPrefix = isSubpage ? "" : "projects/";
-  const resumeHref = isSubpage ? "../assets/Ao-Minh-Tam-Resume.pdf" : "assets/Ao-Minh-Tam-Resume.pdf";
-
-  const triggerBtn = document.createElement("button");
-  triggerBtn.id = "cmdPaletteBtn";
-  triggerBtn.className = "cmd-trigger";
-  triggerBtn.type = "button";
-  triggerBtn.setAttribute("aria-label", "Quick search and navigation (Ctrl+K)");
-  triggerBtn.innerHTML = '<span>⌘</span><kbd>Ctrl K</kbd>';
-  navActions.insertBefore(triggerBtn, navActions.firstChild);
-
-  const backdrop = document.createElement("div");
-  backdrop.id = "cmdPalette";
-  backdrop.className = "cmd-backdrop";
-  backdrop.setAttribute("role", "dialog");
-  backdrop.setAttribute("aria-modal", "true");
-  backdrop.setAttribute("aria-hidden", "true");
-  backdrop.innerHTML = `
-    <div class="cmd-modal">
-      <div class="cmd-search-wrap">
-        <span class="cmd-search-icon" aria-hidden="true">⌕</span>
-        <input type="text" class="cmd-input" autocomplete="off" spellcheck="false" />
-        <span class="cmd-esc">ESC</span>
-      </div>
-      <div class="cmd-list" role="listbox"></div>
-    </div>
-  `;
-  document.body.appendChild(backdrop);
-
-  const input = backdrop.querySelector(".cmd-input");
-  const listEl = backdrop.querySelector(".cmd-list");
-  let filteredItems = [];
-  let selectedIdx = 0;
-
-  function getCommands() {
-    const vi = currentLang === "vi";
-    return [
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: "AWS Event-Driven ELT Pipeline (V5.0.1)",
-        sub: "DE • CloudFormation, SQS, Airflow 3, Redshift, dbt",
-        action: () => { window.location.href = `${projPrefix}aws-data-pipeline.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Cloud ELT Snowflake, dbt & Airflow" : "Snowflake & dbt Cloud ELT Pipeline",
-        sub: "DE • Snowflake, Cosmos, Star Schema",
-        action: () => { window.location.href = `${projPrefix}data-pipeline.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Customer 360 & Phân khúc RFM" : "Customer 360 & RFM Segmentation",
-        sub: "DA • Python, Pandas, Squarify",
-        action: () => { window.location.href = `${projPrefix}rfm-segmentation.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Hiệu suất Sản phẩm & Phễu Chuyển đổi" : "Product Performance & Conversion Funnel",
-        sub: "DA • Plotly Funnel, Maven Fuzzy Factory",
-        action: () => { window.location.href = `${projPrefix}product-funnel.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Phân tích Cohort & Giữ chân Khách hàng" : "Cohort Retention Dynamics",
-        sub: "DA • Cohort Heatmaps, LTV",
-        action: () => { window.location.href = `${projPrefix}cohort-retention.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Hành trình Người dùng (Sankey)" : "User Journey Sankey Flows",
-        sub: "DA • Plotly Sankey DAG, 1.18M pageviews",
-        action: () => { window.location.href = `${projPrefix}user-journey-sankey.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Phân tích Giỏ hàng (Market Basket)" : "Market Basket Analysis (Apriori)",
-        sub: "DA • mlxtend, Lift 4.25",
-        action: () => { window.location.href = `${projPrefix}market-basket.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Lợi nhuận Khách hàng Pareto ABC" : "Customer Profitability Pareto ABC",
-        sub: "DA • IQR Audit, 500 VIP Budget",
-        action: () => { window.location.href = `${projPrefix}abc-inventory.html`; },
-      },
-      {
-        group: vi ? "Case Studies (9)" : "Case Studies (9)",
-        label: vi ? "Đóng góp Doanh thu Pareto 80/20" : "Pareto 80/20 Revenue Analysis",
-        sub: "DA • Net Revenue, Gross Margin",
-        action: () => { window.location.href = `${projPrefix}pareto-revenue.html`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Giới thiệu (About Me)" : "About Me",
-        sub: "#about",
-        action: () => { window.location.href = `${homePrefix}#about`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Học vấn & AWS FCJ" : "Education & Activities",
-        sub: "#experience",
-        action: () => { window.location.href = `${homePrefix}#experience`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Kỹ năng & Pipeline Flow" : "Tech Stack & Pipeline Flow",
-        sub: "#architecture",
-        action: () => { window.location.href = `${homePrefix}#architecture`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Dự án nổi bật" : "Featured Projects",
-        sub: "#projects",
-        action: () => { window.location.href = `${homePrefix}#projects`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Chứng chỉ & Đào tạo" : "Credentials & Training",
-        sub: "#certifications",
-        action: () => { window.location.href = `${homePrefix}#certifications`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Lộ trình 3 / 5 / 10 năm" : "Career Roadmap",
-        sub: "#roadmap",
-        action: () => { window.location.href = `${homePrefix}#roadmap`; },
-      },
-      {
-        group: vi ? "Điều hướng" : "Navigation",
-        label: vi ? "Liên hệ (Contact)" : "Get in Touch",
-        sub: "#contact",
-        action: () => { window.location.href = `${homePrefix}#contact`; },
-      },
-      {
-        group: vi ? "Thao tác nhanh" : "Quick Actions",
-        label: vi ? "Mở CV (Resume PDF)" : "Open Resume (PDF)",
-        sub: "Ao-Minh-Tam-Resume.pdf",
-        action: () => { window.open(resumeHref, "_blank", "noopener,noreferrer"); },
-      },
-      {
-        group: vi ? "Thao tác nhanh" : "Quick Actions",
-        label: vi ? "Sao chép Email (aominhtam@gmail.com)" : "Copy Email (aominhtam@gmail.com)",
-        sub: vi ? "Chép vào clipboard" : "Copy to clipboard",
-        action: () => { copyEmail(null); },
-      },
-      {
-        group: vi ? "Thao tác nhanh" : "Quick Actions",
-        label: vi ? "Đổi Giao diện Sáng / Tối" : "Toggle Dark / Light Theme",
-        sub: "Theme",
-        action: () => { if (themeBtn) themeBtn.click(); },
-      },
-      {
-        group: vi ? "Thao tác nhanh" : "Quick Actions",
-        label: vi ? "Chuyển ngôn ngữ (EN / VI)" : "Switch Language (EN / VI)",
-        sub: "i18n",
-        action: () => {
-          const lb = document.getElementById("langBtn");
-          if (lb) lb.click();
-        },
-      },
-    ];
-  }
-
-  function renderList() {
-    const q = (input.value || "").trim().toLowerCase();
-    const all = getCommands();
-    filteredItems = q
-      ? all.filter(
-          (item) =>
-            item.label.toLowerCase().includes(q) ||
-            item.sub.toLowerCase().includes(q) ||
-            item.group.toLowerCase().includes(q)
-        )
-      : all;
-
-    if (selectedIdx >= filteredItems.length) selectedIdx = 0;
-    listEl.innerHTML = "";
-
-    if (!filteredItems.length) {
-      const empty = document.createElement("div");
-      empty.className = "cmd-empty";
-      empty.textContent = currentLang === "vi" ? "Không tìm thấy kết quả phù hợp." : "No matching commands found.";
-      listEl.appendChild(empty);
-      return;
-    }
-
-    let lastGroup = "";
-    filteredItems.forEach((item, idx) => {
-      if (item.group !== lastGroup) {
-        lastGroup = item.group;
-        const grp = document.createElement("div");
-        grp.className = "cmd-group-label";
-        grp.textContent = lastGroup;
-        listEl.appendChild(grp);
-      }
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = `cmd-item${idx === selectedIdx ? " is-selected" : ""}`;
-      btn.setAttribute("role", "option");
-      btn.setAttribute("aria-selected", idx === selectedIdx ? "true" : "false");
-      btn.innerHTML = `<span>${item.label}</span><span class="cmd-item-sub">${item.sub}</span>`;
-      btn.addEventListener("click", () => {
-        closePalette();
-        item.action();
-      });
-      btn.addEventListener("mouseenter", () => {
-        selectedIdx = idx;
-        syncSelected();
-      });
-      listEl.appendChild(btn);
-    });
-  }
-
-  function syncSelected() {
-    const btns = listEl.querySelectorAll(".cmd-item");
-    btns.forEach((b, i) => {
-      const active = i === selectedIdx;
-      b.classList.toggle("is-selected", active);
-      b.setAttribute("aria-selected", active ? "true" : "false");
-      if (active) b.scrollIntoView({ block: "nearest" });
-    });
-  }
-
-  function openPalette() {
-    input.value = "";
-    input.placeholder =
-      currentLang === "vi"
-        ? "Tìm nhanh 9 Case Study, mục lục, CV, Copy Email..."
-        : "Jump to 9 Case Studies, sections, CV, Copy Email...";
-    selectedIdx = 0;
-    renderList();
-    backdrop.classList.add("is-open");
-    backdrop.setAttribute("aria-hidden", "false");
-    setTimeout(() => input.focus(), 20);
-  }
-
-  function closePalette() {
-    if (!backdrop.classList.contains("is-open")) return;
-    backdrop.classList.remove("is-open");
-    backdrop.setAttribute("aria-hidden", "true");
-  }
-
-  triggerBtn.addEventListener("click", openPalette);
-  backdrop.addEventListener("click", (e) => {
-    if (e.target === backdrop) closePalette();
-  });
-  input.addEventListener("input", () => {
-    selectedIdx = 0;
-    renderList();
-  });
-
-  input.addEventListener("keydown", (e) => {
-    if (!filteredItems.length) return;
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      selectedIdx = (selectedIdx + 1) % filteredItems.length;
-      syncSelected();
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      selectedIdx = (selectedIdx - 1 + filteredItems.length) % filteredItems.length;
-      syncSelected();
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      const chosen = filteredItems[selectedIdx];
-      if (chosen) {
-        closePalette();
-        chosen.action();
-      }
-    }
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-      e.preventDefault();
-      if (backdrop.classList.contains("is-open")) closePalette();
-      else openPalette();
-    } else if (e.key === "Escape" && backdrop.classList.contains("is-open")) {
-      closePalette();
-    }
-  });
 })();
