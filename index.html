@@ -474,9 +474,9 @@
             <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • V5.0.1 (OCT – NOV 2026)</div>
             <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)&nbsp;↗</a></h3>
             <ul class="project-bullets">
-              <li><strong>Business Impact:</strong> Eliminated idle compute waste and reduced ingestion latency across <strong>99,441 Olist orders</strong> (~120 MB) by replacing fixed cron polling with an event-driven S3 &rarr; SQS (<code>20s</code> Long Poll) &rarr; Airflow 3 (<code>AssetWatcher</code>, CloudFormation IaC) pipeline—resulting in <strong>zero empty runs</strong> and <strong>$0</strong> idle compute.</li>
-              <li><strong>Data Reliability:</strong> Protected revenue and order reporting from double-counting and silent data loss during retries via CSV header/empty-stage guards, Two-Phase atomic Redshift swaps, audit ledger tracking, and DLQ-backed (<code>4</code> CloudWatch Alarms + SNS) idempotent recovery.</li>
-              <li><strong>Warehouse &amp; Testing:</strong> Avoided full-table warehouse rebuilds and optimized analytical query patterns with incremental dbt Star Schema marts (Redshift <code>DISTKEY</code>/<code>SORTKEY</code>), safeguarded by <strong>11 dbt schema tests</strong> (<code>5.0.0</code> E2E), <code>21/21</code> Python unit tests, 3 DAG tests, and offline <code>dbt parse</code> in CI.</li>
+              <li><strong>Business Impact:</strong> Replaced cron polling across <strong>99,441 Olist orders</strong> (~120 MB) with event-driven S3 &rarr; SQS (<code>20s</code> Long Poll) &rarr; Airflow 3 (<code>AssetWatcher</code>, CloudFormation IaC), achieving <strong>zero empty runs</strong> and <strong>$0</strong> idle compute.</li>
+              <li><strong>Data Reliability:</strong> Prevented duplicate revenue/order counts via CSV header &amp; empty-stage guards, Two-Phase atomic Redshift swaps, audit ledger tracking, and DLQ (<code>4</code> CloudWatch Alarms + SNS) idempotent recovery.</li>
+              <li><strong>Warehouse &amp; Testing:</strong> Built incremental dbt Star Schema marts (<code>DISTKEY</code>/<code>SORTKEY</code>) verified by <strong>11 dbt tests</strong> (<code>5.0.0</code> E2E), <code>21/21</code> Python unit tests, 3 DAG tests, and offline <code>dbt parse</code> CI.</li>
             </ul>
             <div class="tech-tags">
               <span>AWS CloudFormation</span>
@@ -509,9 +509,9 @@
             <div class="project-badge">CLOUD ELT • DATA ENGINEERING • JUN 2026</div>
             <h3><a href="https://github.com/AOMINHTAM/dbt-snowflake-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Automated End-to-End Cloud ELT Pipeline (Snowflake &amp; dbt)&nbsp;↗</a></h3>
             <ul class="project-bullets">
-              <li><strong>Business Outcome:</strong> Replaced manual SQL scripts with a reproducible containerized ELT workflow producing clean, BI-ready Kimball dimensional tables on Snowflake TPC-H data.</li>
-              <li><strong>Technical Implementation:</strong> Modeled Medallion Staging (<code>stg_tpch_orders</code>) and pre-joined Star Schema marts (<code>fct_orders</code>) using modular dbt SQL and <code>dbt_utils</code> to reduce repetitive BI joins.</li>
-              <li><strong>Verification &amp; Orchestration:</strong> Integrated Astronomer Cosmos inside an isolated <code>dbt_venv</code> to generate dynamic Airflow task groups and run automated primary/foreign-key schema tests.</li>
+              <li><strong>Business Outcome:</strong> Replaced manual SQL scripts with a containerized ELT workflow producing clean, BI-ready Kimball dimensional tables on Snowflake TPC-H data.</li>
+              <li><strong>Technical Implementation:</strong> Modeled Medallion Staging (<code>stg_tpch_orders</code>) and pre-joined Star Schema marts (<code>fct_orders</code>) with modular dbt SQL and <code>dbt_utils</code>.</li>
+              <li><strong>Verification &amp; Orchestration:</strong> Integrated Astronomer Cosmos in an isolated <code>dbt_venv</code> for dynamic Airflow task groups and automated PK/FK schema tests.</li>
             </ul>
             <div class="tech-tags">
               <span>Snowflake</span>
@@ -543,9 +543,9 @@
             <div class="project-badge">CUSTOMER INTELLIGENCE • DATA ANALYTICS • SEP 2026</div>
             <h3><a href="https://github.com/AOMINHTAM/customer-rfm-segmentation-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Customer 360 &amp; Dynamic RFM Segmentation Analysis&nbsp;↗</a></h3>
             <ul class="project-bullets">
-              <li><strong>Business Outcome:</strong> Found that top 2 tiers (<strong>&lt;29%</strong> of 17,415 customers) contribute <strong>&gt;53%</strong> of revenue ($3.45M+), while <strong>833</strong> churn-risk <em>Cant-Lose</em> accounts hold <strong>10.0%</strong> historical sales ($653k).</li>
-              <li><strong>Technical Method:</strong> Segmented <strong>51,290</strong> line-items (25,728 distinct <code>OrderID</code>s, 2020–2023 simulated dataset) into 8 RFM tiers via <code>pd.qcut</code> (snapshot <code>2024-01-01</code>) and built Customer 360 demographic profiles.</li>
-              <li><strong>Action &amp; Measurement:</strong> Proposed a 70/30 win-back budget pilot and dormant outreach suppression, evaluated via 90-day repeat purchase rate, retention, and incremental revenue.</li>
+              <li><strong>Business Outcome:</strong> Top 2 tiers (<strong>&lt;29%</strong> of 17,415 customers) drive <strong>&gt;53%</strong> of revenue ($3.45M+), while <strong>833</strong> churn-risk <em>Can't-Lose</em> accounts hold <strong>10.0%</strong> historical sales ($653k).</li>
+              <li><strong>Technical Method:</strong> Segmented <strong>51,290</strong> line-items (25,728 <code>OrderID</code>s, 2020–2023 simulated) into 8 RFM tiers via <code>pd.qcut</code> (<code>2024-01-01</code> snapshot) with Customer 360 profiles.</li>
+              <li><strong>Action &amp; Measurement:</strong> Proposed a 70/30 win-back pilot and dormant outreach suppression, tracked via 90-day repeat purchase, retention, and incremental revenue.</li>
             </ul>
             <div class="tech-tags">
               <span>Python</span>
@@ -576,8 +576,8 @@
             <div class="project-badge">CONVERSION DIAGNOSTICS • DATA ANALYTICS • SEP 2026</div>
             <h3><a href="https://github.com/AOMINHTAM/product-conversion-funnel-analysis" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Product Performance &amp; Conversion Funnel Analysis&nbsp;↗</a></h3>
             <ul class="project-bullets">
-              <li><strong>Business Outcome:</strong> Pinpointed why <em>Love Bear</em> attracts only <strong>10.0%</strong> of catalog views despite converting <strong>55.6%</strong> PDP-to-Cart (vs. <em>Mr. Fuzzy</em> at 62.2% / 43.0%), alongside a ~<strong>66%</strong> cart-to-order drop-off bottleneck.</li>
-              <li><strong>Technical Method:</strong> Built sequential unique-session Plotly funnels (<code>/products</code> &rarr; PDP &rarr; <code>/cart</code> &rarr; <code>/thank-you-for-your-order</code>) across <strong>261,231</strong> catalog sessions (472,871 total sessions; 32,313 orders) and computed Net Revenue After Refunds.</li>
+              <li><strong>Business Outcome:</strong> <em>Love Bear</em> captures only <strong>10.0%</strong> of catalog views despite <strong>55.6%</strong> PDP-to-Cart conversion (vs. <em>Mr. Fuzzy</em> 62.2% / 43.0%), alongside a ~<strong>66%</strong> cart-to-order drop-off.</li>
+              <li><strong>Technical Method:</strong> Built sequential unique-session Plotly funnels across <strong>261,231</strong> catalog sessions (472,871 total; 32,313 orders) and computed Net Revenue After Refunds.</li>
               <li><strong>Action &amp; Measurement:</strong> Proposed A/B tests for <em>Love Bear</em> cross-sell placement and 1h/24h cart-recovery reminders, tracked via Cart-to-Order completion and Net Revenue per Session.</li>
             </ul>
             <div class="tech-tags">
