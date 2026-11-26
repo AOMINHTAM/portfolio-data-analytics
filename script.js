@@ -1,11 +1,15 @@
 // --- 0. ENTRY PRELOADER (HOMEPAGE) ---
 (function initPreloader() {
   const preloader = document.getElementById("pagePreloader");
-  if (!preloader) return;
+  if (!preloader) {
+    window.__preloaderDone = true;
+    return;
+  }
 
+  window.__preloaderDone = false;
   const minDisplayMs = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ? 0
-    : 750;
+    : 1200;
   const startTime = Date.now();
   let dismissed = false;
 
@@ -18,6 +22,8 @@
     setTimeout(() => {
       preloader.classList.add("is-done");
       preloader.setAttribute("aria-hidden", "true");
+      window.__preloaderDone = true;
+      window.dispatchEvent(new CustomEvent("portfolio:preloader-done"));
       setTimeout(() => {
         if (preloader.parentNode) preloader.remove();
       }, 420);
@@ -29,7 +35,7 @@
   } else {
     window.addEventListener("load", dismissPreloader, { once: true });
     // Safety fallback so slow third-party resources never trap visitors
-    setTimeout(dismissPreloader, 1800);
+    setTimeout(dismissPreloader, 2400);
   }
 })();
 
@@ -778,6 +784,10 @@ let updateScrollProgress = function () {};
         document.title = titles[pageId];
       }
 
+      if (typeof window.__cancelTextAnimations === "function") {
+        window.__cancelTextAnimations();
+      }
+
       targets.forEach((el) => {
         const orig = originalEn.get(el);
         const tr = map.get(canonHtml(orig));
@@ -786,6 +796,10 @@ let updateScrollProgress = function () {};
         }
       });
     } else {
+      if (typeof window.__cancelTextAnimations === "function") {
+        window.__cancelTextAnimations();
+      }
+
       document.title = originalTitle;
       targets.forEach((el) => {
         const orig = originalEn.get(el);
@@ -798,6 +812,9 @@ let updateScrollProgress = function () {};
     syncExtraDynamicText(currentLang);
     if (typeof updateScrollProgress === "function") updateScrollProgress();
     if (isUserAction) {
+      if (typeof window.__replayHeroTypewriter === "function") {
+        window.__replayHeroTypewriter();
+      }
       trackEvent("switch_language", { language: currentLang, page: pageId });
     }
   }
@@ -807,8 +824,265 @@ let updateScrollProgress = function () {};
     applyLanguage(next, true);
   });
 
+  // Cache pristine English HTML synchronously before any text animations mutate DOM
+  collectTargets().forEach((el) => {
+    if (!originalEn.has(el)) {
+      originalEn.set(el, el.innerHTML);
+    }
+  });
+
   renderLangButton(currentLang);
-  if (currentLang === "vi") {
-    applyLanguage("vi", false);
+  window.__i18nReadyPromise =
+    currentLang === "vi" ? applyLanguage("vi", false) : Promise.resolve();
+})();
+
+// --- 12. TYPEWRITER TEXT REVEAL & SNAPSHOT COUNT-UP (HOMEPAGE) ---
+(function initTextAnimations() {
+  const heroDesc = document.querySelector(".hero-desc");
+  const subHeadline = document.querySelector(".sub-headline");
+  const sectionTitles = document.querySelectorAll(".section-title");
+  const snapshotBox = document.querySelector(".snapshot-metrics");
+  if (!heroDesc && !subHeadline && !sectionTitles.length && !snapshotBox) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const activeTypewriters = new Map();
+  const activeMetrics = new Set();
+
+  function cancelTypewriter(el) {
+    const job = activeTypewriters.get(el);
+    if (!job) return;
+    clearTimeout(job.timerId);
+    clearTimeout(job.fadeTimerId);
+    if (job.cursor && job.cursor.parentNode) {
+      job.cursor.remove();
+    }
+    if (typeof job.sourceHtml === "string") {
+      el.innerHTML = job.sourceHtml;
+    }
+    el.style.minHeight = "";
+    el.style.visibility = "";
+    activeTypewriters.delete(el);
+  }
+
+  function cancelAllAnimations() {
+    Array.from(activeTypewriters.keys()).forEach(cancelTypewriter);
+    document.querySelectorAll(".hero-title .accent-text, .hero-desc, .sub-headline").forEach((el) => {
+      el.style.visibility = "";
+    });
+    activeMetrics.forEach((rafId) => cancelAnimationFrame(rafId));
+    activeMetrics.clear();
+  }
+
+  function typeElement(el, opts) {
+    const options = opts || {};
+    const charDelay = options.charDelay || 28;
+    const chunkSize = options.chunkSize || 1;
+    const keepCursorMs = typeof options.keepCursorMs === "number" ? options.keepCursorMs : 600;
+    const onDone = options.onDone;
+
+    if (!el || reducedMotion) {
+      if (onDone) onDone();
+      return;
+    }
+
+    cancelTypewriter(el);
+
+    const sourceHtml = el.innerHTML;
+    const rectHeight = el.getBoundingClientRect().height;
+    if (rectHeight > 0) {
+      el.style.minHeight = `${Math.ceil(rectHeight)}px`;
+    }
+
+    const tpl = document.createElement("template");
+    tpl.innerHTML = sourceHtml;
+
+    const walker = document.createTreeWalker(tpl.content, NodeFilter.SHOW_TEXT);
+    const segments = [];
+    let currentNode = walker.nextNode();
+    while (currentNode) {
+      if (currentNode.nodeValue && /\S/.test(currentNode.nodeValue)) {
+        segments.push({ node: currentNode, text: currentNode.nodeValue });
+        currentNode.nodeValue = "";
+      }
+      currentNode = walker.nextNode();
+    }
+
+    if (!segments.length) {
+      el.style.minHeight = "";
+      if (onDone) onDone();
+      return;
+    }
+
+    el.innerHTML = "";
+    el.appendChild(tpl.content);
+    el.style.visibility = "";
+
+    const cursor = document.createElement("span");
+    cursor.className = "tw-cursor";
+    cursor.setAttribute("aria-hidden", "true");
+    segments[0].node.parentNode.insertBefore(cursor, segments[0].node.nextSibling);
+
+    const job = { timerId: null, fadeTimerId: null, cursor, sourceHtml };
+    activeTypewriters.set(el, job);
+
+    let segIdx = 0;
+    let charIdx = 0;
+
+    function tick() {
+      if (!activeTypewriters.has(el)) return;
+      const seg = segments[segIdx];
+      charIdx = Math.min(seg.text.length, charIdx + chunkSize);
+      seg.node.nodeValue = seg.text.slice(0, charIdx);
+
+      if (cursor.parentNode !== seg.node.parentNode || cursor.previousSibling !== seg.node) {
+        seg.node.parentNode.insertBefore(cursor, seg.node.nextSibling);
+      }
+
+      if (charIdx >= seg.text.length) {
+        segIdx += 1;
+        charIdx = 0;
+        if (segIdx >= segments.length) {
+          el.style.minHeight = "";
+          if (keepCursorMs <= 0) {
+            cursor.remove();
+            activeTypewriters.delete(el);
+          } else {
+            job.fadeTimerId = setTimeout(() => {
+              cursor.classList.add("is-fading");
+              job.fadeTimerId = setTimeout(() => {
+                if (cursor.parentNode) cursor.remove();
+                activeTypewriters.delete(el);
+              }, 360);
+            }, keepCursorMs);
+          }
+          if (onDone) onDone();
+          return;
+        }
+      }
+
+      job.timerId = setTimeout(tick, charDelay);
+    }
+
+    job.timerId = setTimeout(tick, charDelay);
+  }
+
+  function runHeroTypewriter() {
+    if (reducedMotion) return;
+    const accentName = document.querySelector(".hero-title .accent-text");
+    const steps = [];
+
+    if (subHeadline) {
+      steps.push({ el: subHeadline, charDelay: 16, chunkSize: 2, keepCursorMs: 0 });
+    }
+    if (accentName) {
+      steps.push({ el: accentName, charDelay: 38, chunkSize: 1, keepCursorMs: 0 });
+    }
+    if (heroDesc) {
+      steps.push({ el: heroDesc, charDelay: 14, chunkSize: 2, keepCursorMs: 750 });
+    }
+
+    steps.forEach((step, idx) => {
+      if (idx > 0) step.el.style.visibility = "hidden";
+    });
+
+    function runStep(index) {
+      if (index >= steps.length) return;
+      const step = steps[index];
+      typeElement(step.el, {
+        charDelay: step.charDelay,
+        chunkSize: step.chunkSize,
+        keepCursorMs: step.keepCursorMs,
+        onDone: () => runStep(index + 1),
+      });
+    }
+
+    runStep(0);
+  }
+
+  function animateSnapshotStats() {
+    if (!snapshotBox || reducedMotion || snapshotBox.dataset.twDone === "1") return;
+    snapshotBox.dataset.twDone = "1";
+
+    snapshotBox.querySelectorAll(".snapshot-stat strong").forEach((el) => {
+      const raw = el.textContent.trim();
+      const match = raw.match(/^(\d+(?:\.\d+)?)(.*)$/);
+      if (!match) {
+        typeElement(el, { charDelay: 55, chunkSize: 1, keepCursorMs: 400 });
+        return;
+      }
+
+      const target = parseFloat(match[1]);
+      const decimals = (match[1].split(".")[1] || "").length;
+      const suffix = match[2] || "";
+      const duration = 850;
+      const start = performance.now();
+
+      function frame(now) {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = progress >= 1 ? raw : `${current.toFixed(decimals)}${suffix}`;
+        if (progress < 1) {
+          const rafId = requestAnimationFrame(frame);
+          activeMetrics.add(rafId);
+        }
+      }
+
+      const rafId = requestAnimationFrame(frame);
+      activeMetrics.add(rafId);
+    });
+  }
+
+  function observeViewportAnimations() {
+    if (reducedMotion || typeof IntersectionObserver !== "function") return;
+
+    if (snapshotBox) {
+      const snapObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              snapObserver.unobserve(snapshotBox);
+              animateSnapshotStats();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      snapObserver.observe(snapshotBox);
+    }
+
+    if (sectionTitles.length) {
+      const titleObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const titleEl = entry.target;
+            if (titleEl.dataset.twDone === "1") return;
+            titleEl.dataset.twDone = "1";
+            titleObserver.unobserve(titleEl);
+            typeElement(titleEl, { charDelay: 32, chunkSize: 1, keepCursorMs: 650 });
+          });
+        },
+        { threshold: 0.35, rootMargin: "0px 0px -30px 0px" }
+      );
+      sectionTitles.forEach((titleEl) => titleObserver.observe(titleEl));
+    }
+  }
+
+  function startEntryAnimations() {
+    const ready = window.__i18nReadyPromise || Promise.resolve();
+    ready.finally(() => {
+      runHeroTypewriter();
+      observeViewportAnimations();
+    });
+  }
+
+  window.__cancelTextAnimations = cancelAllAnimations;
+  window.__replayHeroTypewriter = runHeroTypewriter;
+
+  if (window.__preloaderDone) {
+    startEntryAnimations();
+  } else {
+    window.addEventListener("portfolio:preloader-done", startEntryAnimations, { once: true });
   }
 })();

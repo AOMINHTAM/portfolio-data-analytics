@@ -107,7 +107,7 @@
   height: 100%;
   background: linear-gradient(90deg, var(--amber-warm), var(--amber-main), var(--amber-light));
   transform-origin: left center;
-  animation: preloaderProgress 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: preloaderProgress 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes preloaderProgress {
@@ -119,11 +119,40 @@
   }
 }
 
+/* --- TYPEWRITER / TERMINAL CURSOR --- */
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  background-color: var(--amber-main);
+  margin-left: 3px;
+  vertical-align: -0.14em;
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--amber-glow);
+  animation: twBlink 0.72s steps(2, start) infinite;
+}
+
+.tw-cursor.is-fading {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  animation: none;
+}
+
+@keyframes twBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .preloader,
   .preloader-badge,
   .preloader-dots span,
-  .preloader-bar-fill {
+  .preloader-bar-fill,
+  .tw-cursor {
     animation: none !important;
     transition: none !important;
   }
