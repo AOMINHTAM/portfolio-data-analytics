@@ -2,19 +2,21 @@ window.__I18N_VI__ = window.__I18N_VI__ || {};
 
 window.__I18N_VI__.home = {
   // Hero
-  "Open to Data Analyst &amp; Data Engineer Intern Roles":
-    "Sẵn sàng cho vị trí Thực tập sinh Data Analyst &amp; Data Engineer",
-  "DATA ANALYST | DATA ENGINEER": "DATA ANALYST | DATA ENGINEER",
+  "Open to Data Intern Roles &bull; Aspiring Analytics Engineer":
+    "Tìm cơ hội Thực tập Data &bull; Định hướng Analytics Engineer",
+  "DATA ANALYTICS &amp; ENGINEERING &bull; ASPIRING AE":
+    "DATA ANALYTICS &amp; ENGINEERING &bull; ĐỊNH HƯỚNG AE",
   'Hi there, I’m <br /> <span class="accent-text">Ao Minh Tâm</span>':
     'Xin chào, mình là <br /> <span class="accent-text">Ao Minh Tâm</span>',
-  "IT undergraduate focused on Data Analytics and Data Engineering. I use SQL, Python, Power BI, and modern cloud data tools to transform raw data into reliable datasets, actionable insights, and business recommendations.":
-    "Sinh viên CNTT định hướng Data Analytics và Data Engineering. Mình sử dụng SQL, Python, Power BI và các công cụ dữ liệu cloud hiện đại để biến dữ liệu thô thành bộ dữ liệu tin cậy, insight thực tiễn và đề xuất cho bài toán kinh doanh.",
+  "IT undergraduate open to Data roles with a strong passion for <strong>Analytics Engineering</strong>. I bridge cloud ELT pipelines and business analytics using SQL, Python, Power BI, AWS, dbt, and Airflow to deliver reliable, decision-ready datasets.":
+    "Sinh viên CNTT tìm kiếm cơ hội trong lĩnh vực Data với niềm đam mê dành cho <strong>Analytics Engineering</strong>. Mình kết nối cloud ELT pipeline và phân tích kinh doanh bằng SQL, Python, Power BI, AWS, dbt và Airflow để tạo ra các bộ dữ liệu tin cậy phục vụ ra quyết định.",
   "Explore DA Projects &rarr;": "Xem Dự án DA &rarr;",
   "Explore DE Projects &rarr;": "Xem Dự án DE &rarr;",
   "📋 Copy Email": "📋 Sao chép Email",
+  "Resume (PDF)": "Xem CV (PDF)",
   "📍 Ho Chi Minh City, Vietnam &bull; Updated Nov 2026":
     "📍 TP. Hồ Chí Minh, Việt Nam &bull; Cập nhật 11/2026",
-  "DATA ANALYST &bull; DATA ENGINEER": "DATA ANALYST &bull; DATA ENGINEER",
+  "DATA ANALYTICS &bull; ASPIRING AE": "DATA ANALYTICS &bull; ĐỊNH HƯỚNG AE",
   "Cloud ELT Pipelines": "Pipeline ELT trên Cloud",
   "Analytics Case Studies": "Case Study Phân tích",
   "Olist Orders Ingested": "Đơn hàng Olist đã nạp",
@@ -36,8 +38,8 @@ window.__I18N_VI__.home = {
     "Mình là <strong>sinh viên năm 3 ngành Công nghệ Thông tin</strong> tại Trường Đại học Tài nguyên và Môi trường TP.HCM (HCMUNRE), với định hướng tập trung vào <strong>Data Analytics</strong> và <strong>Data Engineering</strong>.",
   "I enjoy exploring data, identifying meaningful patterns, and building reliable data workflows that support business decision-making. Through hands-on personal projects, I have worked with <strong>SQL, Python, Power BI, AWS, Snowflake, Apache Airflow, and dbt</strong>, developing practical experience in data analysis, dimensional modeling, and cloud-based ELT pipelines.":
     "Mình thích khám phá dữ liệu, tìm ra các quy luật có giá trị và xây dựng luồng dữ liệu tin cậy phục vụ việc ra quyết định kinh doanh. Qua các dự án thực hành, mình đã làm việc với <strong>SQL, Python, Power BI, AWS, Snowflake, Apache Airflow và dbt</strong> để rèn luyện kỹ năng phân tích, mô hình hóa dữ liệu (dimensional modeling) và xây dựng cloud ELT pipeline.",
-  "I am currently seeking an opportunity to apply my technical skills, strengthen my analytical thinking, and grow as a <strong>Data Analyst or Data Engineer Intern</strong>.":
-    "Hiện tại, mình đang tìm kiếm cơ hội thực tập ở vị trí <strong>Data Analyst hoặc Data Engineer Intern</strong> để áp dụng kỹ năng kỹ thuật, rèn tư duy phân tích và học hỏi từ môi trường thực tế.",
+  "I am currently seeking an opportunity as a <strong>Data Analyst, Data Engineer, or Analytics Engineer Intern</strong>—eager to contribute to data workflows today while growing long-term toward <strong>Analytics Engineering</strong>.":
+    "Hiện tại, mình đang tìm kiếm cơ hội thực tập ở vị trí <strong>Data Analyst, Data Engineer hoặc Analytics Engineer Intern</strong>—sẵn sàng đóng góp vào luồng dữ liệu thực tế ngay hôm nay và phát triển dài hạn theo hướng <strong>Analytics Engineering</strong>.",
   "<strong>Languages:</strong> Native Vietnamese | Intermediate English.":
     "<strong>Ngôn ngữ:</strong> Tiếng Việt (Bản ngữ) | Tiếng Anh (Trung cấp - Đọc hiểu tài liệu kỹ thuật tốt).",
 
@@ -230,8 +232,8 @@ window.__I18N_VI__.home = {
     "Đóng góp lại qua việc <strong>chia sẻ tri thức mở</strong> và các case study thực tiễn, góp phần xây dựng cộng đồng dữ liệu Việt Nam ngày càng vững mạnh.",
 
   // Contact
-  "Open to Data Analyst and Data Engineer Intern opportunities, as well as data architecture and analytics discussions.":
-    "Sẵn sàng cho các cơ hội Thực tập sinh Data Analyst và Data Engineer, cũng như trao đổi về kiến trúc dữ liệu và phân tích kinh doanh.",
+  "Open to Data Intern roles (DA / DE / Analytics Engineering), as well as discussions on dbt modeling, cloud ELT, and business analytics.":
+    "Sẵn sàng cho các vị trí Thực tập sinh Data (DA / DE / Analytics Engineering), cũng như trao đổi về dbt modeling, cloud ELT và phân tích kinh doanh.",
   "Send Email": "Gửi Email",
   "Copy Email": "Sao chép Email",
   "Copy address to clipboard": "Sao chép địa chỉ vào bộ nhớ tạm",

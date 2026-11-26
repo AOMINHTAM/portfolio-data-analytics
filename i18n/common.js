@@ -1,7 +1,7 @@
 window.__I18N_VI__ = window.__I18N_VI__ || {};
 
 window.__I18N_VI__.titles = {
-  home: "Ao Minh Tâm | Portfolio Data Analyst & Data Engineer",
+  home: "Ao Minh Tâm | Portfolio Data & Analytics Engineer",
   "aws-data-pipeline": "Pipeline Dữ liệu AWS Event-Driven (V5) | Ao Minh Tâm",
   "data-pipeline": "Cloud ELT Snowflake, dbt & Airflow | Ao Minh Tâm",
   "rfm-segmentation": "Phân tích Customer 360 & Phân khúc RFM | Ao Minh Tâm",
@@ -29,6 +29,7 @@ window.__I18N_VI__.common = {
   "&larr; Previous Case Study": "&larr; Case Study Trước",
   "Next Case Study &rarr;": "Case Study Tiếp theo &rarr;",
   "View Repository on GitHub &rarr;": "Xem Mã nguồn trên GitHub &rarr;",
+  "Last Updated: Nov 26, 2026": "Cập nhật lần cuối: 26/11/2026",
   "Last Updated: Nov 25, 2026": "Cập nhật lần cuối: 25/11/2026",
   "Last Updated: Nov 22, 2026": "Cập nhật lần cuối: 22/11/2026",
   "Last Updated: Nov 21, 2026": "Cập nhật lần cuối: 21/11/2026",

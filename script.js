@@ -476,6 +476,11 @@ let updateScrollProgress = function () {};
       return;
     }
 
+    if (href.endsWith(".pdf")) {
+      trackEvent("open_resume", { location: detectLinkLocation(anchor) });
+      return;
+    }
+
     // Contact & outbound profile clicks
     if (href.startsWith("mailto:")) {
       trackEvent("click_contact", {
@@ -555,6 +560,7 @@ let updateScrollProgress = function () {};
     ".hero-desc",
     ".cta-row a",
     ".cta-row button",
+    ".resume-link-text",
     ".location-tag",
     ".avatar-caption",
     ".snapshot-stat span",
