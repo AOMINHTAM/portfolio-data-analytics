@@ -2523,3 +2523,108 @@ body.light-theme .toast-banner {
   outline: 2px solid var(--amber-main);
   outline-offset: 2px;
 }
+
+/* --- 404 PAGE --- */
+.not-found-section {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+}
+
+.not-found-card {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 44px 32px;
+}
+
+.not-found-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+.not-found-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+
+/* --- PRINT STYLESHEET (HR PDF EXPORT) --- */
+@media print {
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body,
+  .section,
+  .section-alt,
+  .card,
+  .detail-card,
+  .scope-box,
+  .detail-figure,
+  .evidence-card,
+  .pipeline-pulse-card,
+  .pipeline-node,
+  .pipeline-detail-bar,
+  .arch-flow,
+  .hypothesis-note {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  .navbar,
+  .scroll-progress-track,
+  .back-to-top,
+  .toast-banner,
+  .preloader,
+  .lightbox-backdrop,
+  .nav-menu-btn,
+  .case-toc,
+  .pipeline-packet,
+  .tw-cursor,
+  .flip-hint,
+  .projects-toggle-wrap,
+  .project-filters,
+  .hero::before,
+  .hero::after,
+  body.is-case-study main.section::before {
+    display: none !important;
+  }
+
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .section {
+    padding: 20px 0 !important;
+  }
+
+  .card,
+  .detail-card,
+  .timeline-item,
+  .project-card,
+  .cert-card,
+  .detail-figure,
+  .evidence-card,
+  .scope-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: #92400e !important;
+    text-decoration: underline;
+  }
+}

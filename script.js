@@ -790,10 +790,19 @@ let updateScrollProgress = function () {};
   navActions.insertBefore(langBtn, navActions.firstChild);
 
   const path = (window.location.pathname || "").replace(/\\/g, "/");
-  const projMatch = path.match(/\/projects\/([^/]+?)\.html$/i);
-  const pageId = projMatch ? projMatch[1] : "home";
-  const i18nBase = projMatch ? "../i18n" : "i18n";
-  const pageScriptPath = projMatch ? `${i18nBase}/projects/${pageId}.js` : `${i18nBase}/${pageId}.js`;
+  const isNotFound = Boolean(document.querySelector(".not-found-card"));
+  const projMatch = !isNotFound && path.match(/\/projects\/([^/]+?)\.html$/i);
+  const pageId = isNotFound ? "notfound" : projMatch ? projMatch[1] : "home";
+  const i18nBase = isNotFound
+    ? window.location.protocol === "file:" ? "i18n" : "/i18n"
+    : projMatch
+      ? "../i18n"
+      : "i18n";
+  const pageScriptPath = isNotFound
+    ? `${i18nBase}/common.js`
+    : projMatch
+      ? `${i18nBase}/projects/${pageId}.js`
+      : `${i18nBase}/${pageId}.js`;
 
   const SELECTORS = [
     "nav .nav-links a",
@@ -858,6 +867,7 @@ let updateScrollProgress = function () {};
     ".detail-card .project-actions a",
     ".case-nav-dir",
     ".case-nav-title",
+    ".not-found-desc",
     "table th",
     "table td",
   ];

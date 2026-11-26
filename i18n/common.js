@@ -2,6 +2,7 @@ window.__I18N_VI__ = window.__I18N_VI__ || {};
 
 window.__I18N_VI__.titles = {
   home: "Ao Minh Tâm | Portfolio Data & Analytics Engineer",
+  notfound: "404 — Không tìm thấy trang | Ao Minh Tâm",
   "aws-data-pipeline": "Pipeline Dữ liệu AWS Event-Driven (V5) | Ao Minh Tâm",
   "data-pipeline": "Cloud ELT Snowflake, dbt & Airflow | Ao Minh Tâm",
   "rfm-segmentation": "Phân tích Customer 360 & Phân khúc RFM | Ao Minh Tâm",
@@ -48,4 +49,12 @@ window.__I18N_VI__.common = {
   "Market Basket &amp; Apriori": "Phân tích Giỏ hàng &amp; Apriori",
   "Pareto ABC Profitability": "Phân khúc Lợi nhuận Pareto ABC",
   "Pareto 80/20 Revenue Analysis": "Phân tích Doanh thu Pareto 80/20",
+
+  // 404 Page
+  "HOME": "TRANG CHỦ",
+  "HTTP 404 &bull; ROUTE NOT FOUND": "HTTP 404 &bull; KHÔNG TÌM THẤY TRANG",
+  "This page could not be found.": "Không tìm thấy trang này.",
+  "The link you followed may be outdated or misspelled. You can return to the main portfolio or jump directly to the 9 Data Engineering &amp; Analytics case studies.":
+    "Đường dẫn bạn truy cập có thể đã cũ hoặc bị gõ nhầm. Bạn có thể quay về trang chủ portfolio hoặc xem trực tiếp 9 case study Data Engineering &amp; Analytics.",
+  "Explore Projects &rarr;": "Xem Các Dự Án &rarr;",
 };
