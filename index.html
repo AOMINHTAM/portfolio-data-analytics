@@ -158,10 +158,25 @@
       try {
         if (localStorage.getItem("theme") === "light") {
           document.body.classList.add("light-theme");
+          var themeMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeMeta) themeMeta.setAttribute("content", "#f8fafc");
         }
         if (localStorage.getItem("lang") === "vi") {
           var lbl = document.querySelector("#pagePreloader .preloader-label");
           if (lbl) lbl.textContent = "Đang tải";
+        }
+        var hasHash = Boolean(window.location.hash && window.location.hash !== "#");
+        var navEntries = window.performance && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")
+          : [];
+        var isReload = navEntries.length && navEntries[0].type === "reload";
+        var seenInSession = sessionStorage.getItem("portfolio_preloader_seen") === "1";
+        if (hasHash || (seenInSession && !isReload)) {
+          var pre = document.getElementById("pagePreloader");
+          if (pre) pre.style.display = "none";
+          window.__skipPreloader = true;
+        } else {
+          sessionStorage.setItem("portfolio_preloader_seen", "1");
         }
       } catch (_) {}
     })();

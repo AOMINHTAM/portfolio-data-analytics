@@ -1,7 +1,8 @@
 // --- 0. ENTRY PRELOADER (HOMEPAGE) ---
 (function initPreloader() {
   const preloader = document.getElementById("pagePreloader");
-  if (!preloader) {
+  if (!preloader || window.__skipPreloader) {
+    if (preloader && preloader.parentNode) preloader.remove();
     window.__preloaderDone = true;
     return;
   }
@@ -86,10 +87,18 @@ function syncThemeButtonLabel() {
   }
 }
 
+function syncThemeColorMeta(isLight) {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute("content", isLight ? "#f8fafc" : "#0f1015");
+  }
+}
+
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'light') {
   document.body.classList.add('light-theme');
 }
+syncThemeColorMeta(savedTheme === 'light');
 syncThemeButtonLabel();
 
 if (themeBtn) {
@@ -97,6 +106,7 @@ if (themeBtn) {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
 
+    syncThemeColorMeta(isLight);
     syncThemeButtonLabel();
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     showToast(

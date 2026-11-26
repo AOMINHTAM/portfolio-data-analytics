@@ -23,7 +23,7 @@ Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at H
 * **Dual-Track HR Navigation, Resume & 3D Roadmap:** Hero track shortcuts (`Explore DA Projects` / `Explore DE Projects`) wired to interactive category filters, public 1-page PDF resume (`assets/Ao-Minh-Tam-Resume.pdf`), **Education & Activities** (HCMUNRE + AWS First Cloud Journey), and a **Career Roadmap** section featuring interactive 3D flip cards (`3 / 5 / 10 Years`). Defaults to **4 Featured Flagship Projects** (2 DE + 2 DA) with an expand toggle (`Show All 9 Projects`).
 * **Transparent Case Studies:** Every project details its `Dataset & Scope` (source, exact row count, date range, simulated vs. public nature), methodological formulas/denominators, embedded AWS V5.0.1 architecture diagrams & live evidence (`images/aws/`), and explicit separation between observed insights and A/B test hypotheses.
 * **Technical SEO, PWA & Analytics:** Configured `robots.txt`, `sitemap.xml`, `site.webmanifest`, `apple-touch-icon.png` (`180×180`), `icon-192.png` / `icon-512.png`, per-page Open Graph (`og:image` `1200x630` banner) & `canonical` tags, connected `@graph` JSON-LD schemas (`WebSite`, `ProfilePage`, `Person` with `hasCredential`, `CreativeWork`, `BreadcrumbList`), semantic `H1 → H2 → H3` headings, explicit `width`/`height` + `loading="lazy"` on diagrams, GA4 (`G-VRB4RENV7J`) across all pages, and a floating Back-to-Top control.
-* **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub.
+* **Hosting & Deployment:** Continuous Deployment (CI/CD) via Vercel connected to GitHub (`vercel.json` `/index.html` → `/` canonical redirect, asset caching & security headers).
 
 ---
 

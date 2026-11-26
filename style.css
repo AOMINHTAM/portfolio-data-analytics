@@ -2517,3 +2517,9 @@ body.light-theme .toast-banner {
     justify-content: center;
   }
 }
+
+/* --- KEYBOARD ACCESSIBILITY FOCUS RING --- */
+:is(a, button, [tabindex="0"]):focus-visible {
+  outline: 2px solid var(--amber-main);
+  outline-offset: 2px;
+}
