@@ -273,6 +273,7 @@ html.is-theme-transitioning .sim-card,
 html.is-theme-transitioning .lineage-card,
 html.is-theme-transitioning .compare-card,
 html.is-theme-transitioning .finops-card,
+html.is-theme-transitioning .funnel-sim-card,
 html.is-theme-transitioning .telemetry-bar {
   transition: none !important;
 }
@@ -2656,7 +2657,11 @@ body.light-theme .toast-banner {
   .project-filters,
   .sim-controls,
   .finops-slider-row,
+  .funnel-controls-grid,
+  .funnel-assumption-row,
+  .skill-filter-banner,
   .telemetry-bar,
+  .cheat-backdrop,
   .compare-range,
   .compare-divider,
   .hero::before,
@@ -2691,9 +2696,14 @@ body.light-theme .toast-banner {
   .sim-card,
   .lineage-card,
   .compare-card,
-  .finops-card {
+  .finops-card,
+  .funnel-sim-card {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  body::after {
+    display: none !important;
   }
 
   a {
@@ -3406,12 +3416,374 @@ body.is-xray-mode .telemetry-xray-btn {
     }
 
     .detail-figure img,
-    .evidence-card img,
-    .stat-card {
+    .evidence-card img {
       animation: cssScrollZoom linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 26%;
     }
+  }
+}
+
+/* --- SVG FILM GRAIN OVERLAY (DARK MODE HARDWARE FINISH) --- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+body.light-theme::after {
+  display: none;
+}
+
+/* --- HERO STAT MINI SPARKLINES --- */
+.stat-sparkline {
+  display: block;
+  width: 100%;
+  height: 22px;
+  margin-top: 6px;
+  overflow: visible;
+}
+
+.stat-spark-line {
+  fill: none;
+  stroke: var(--amber-main);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.72;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease;
+}
+
+.stat-spark-area {
+  fill: rgba(245, 158, 11, 0.12);
+}
+
+.stat-spark-dot {
+  fill: var(--amber-light);
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.snapshot-stat:hover .stat-spark-line,
+.snapshot-stat:focus-within .stat-spark-line {
+  opacity: 1;
+  stroke-width: 2;
+}
+
+.snapshot-stat:hover .stat-spark-dot,
+.snapshot-stat:focus-within .stat-spark-dot {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+/* --- SKILL -> PROJECT CROSS-FILTER --- */
+.skill-card .tech-tags span {
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+
+.skill-card .tech-tags span:hover,
+.skill-card .tech-tags span.is-skill-selected {
+  border-color: var(--amber-main);
+  color: var(--amber-light);
+  background-color: rgba(245, 158, 11, 0.14);
+  transform: translateY(-1px);
+}
+
+body.light-theme .skill-card .tech-tags span:hover,
+body.light-theme .skill-card .tech-tags span.is-skill-selected {
+  color: #92400e;
+  background-color: rgba(180, 83, 9, 0.12);
+}
+
+.skill-filter-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  font-size: 0.86rem;
+  color: var(--text-main);
+}
+
+body.light-theme .skill-filter-banner {
+  background-color: rgba(180, 83, 9, 0.08);
+  border-color: rgba(180, 83, 9, 0.35);
+}
+
+.project-card.is-skill-match {
+  border-color: var(--amber-main) !important;
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.16);
+}
+
+.project-card.is-skill-dimmed {
+  opacity: 0.34;
+  transition: opacity 0.22s ease;
+}
+
+.project-card.is-skill-dimmed:hover {
+  opacity: 0.82;
+}
+
+/* --- DA WHAT-IF FUNNEL SIMULATOR --- */
+.funnel-sim-card {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin: 22px 0 26px;
+}
+
+.funnel-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.funnel-control-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.funnel-control-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  margin-bottom: 8px;
+}
+
+.funnel-control-head label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.funnel-val-pill {
+  font-family: monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--amber-main);
+  font-size: 0.8rem;
+}
+
+.funnel-range-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.funnel-assumption-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.funnel-assumption-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.funnel-aov-group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.funnel-viz-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.funnel-sku-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.funnel-sku-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.funnel-step-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.funnel-step-meta strong {
+  color: var(--text-main);
+  font-family: monospace;
+}
+
+.finops-fill--green {
+  background: linear-gradient(90deg, #059669, #10b981);
+}
+
+.funnel-outcome-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.funnel-out-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.funnel-out-value {
+  font-family: monospace;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-main);
+}
+
+.funnel-out-accent {
+  color: var(--amber-main);
+}
+
+.funnel-out-green {
+  color: var(--green-accent);
+}
+
+/* --- VIM KEYBOARD CHEAT SHEET MODAL --- */
+.cheat-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  background-color: rgba(8, 9, 14, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.cheat-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cheat-dialog {
+  width: min(480px, 100%);
+  background-color: var(--bg-card);
+  border: 1px solid var(--amber-main);
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.cheat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.cheat-head h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.cheat-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.cheat-close:hover {
+  border-color: var(--amber-main);
+  color: var(--amber-main);
+}
+
+.cheat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cheat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cheat-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cheat-keys {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.cheat-keys kbd {
+  font-family: monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-main);
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 7px;
+}
+
+@media (max-width: 720px) {
+  .funnel-controls-grid,
+  .funnel-viz-grid,
+  .funnel-outcome-bar {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -151,6 +151,98 @@
             </a>
             <figcaption>Sequential Unique-Session Conversion Funnel: Mr. Fuzzy vs. Love Bear from Catalog (/products) to Order Confirmation (/thank-you-for-your-order). Click image to zoom.</figcaption>
           </figure>
+
+          <!-- Interactive DA Sensitivity & What-If Simulator -->
+          <div class="funnel-sim-card" id="funnelWhatIfSimulator" aria-label="Interactive Product Conversion Sensitivity Simulator">
+            <div class="sim-header">
+              <div>
+                <span class="sim-eyebrow">SENSITIVITY ANALYSIS &bull; WHAT-IF SIMULATOR</span>
+                <h3 class="sim-title">Simulate Checkout Recovery &amp; Love Bear Exposure</h3>
+              </div>
+              <span class="sim-pill sim-pill--ok" id="funnelDeltaBadge">Delta: +0 orders</span>
+            </div>
+
+            <div class="funnel-controls-grid">
+              <div class="funnel-control-box">
+                <div class="funnel-control-head">
+                  <label for="funnelDropoffRange">Target Cart-to-Order Drop-off</label>
+                  <strong class="funnel-val-pill" id="funnelDropoffVal">66% (Baseline)</strong>
+                </div>
+                <input type="range" class="finops-range" id="funnelDropoffRange" min="45" max="66" step="1" value="66" />
+                <div class="funnel-range-scale"><span>45% (Best Case)</span><span>55% (Target)</span><span>66% (Current)</span></div>
+              </div>
+
+              <div class="funnel-control-box">
+                <div class="funnel-control-head">
+                  <label for="funnelLoveRange">Boost Love Bear Catalog Share</label>
+                  <strong class="funnel-val-pill" id="funnelLoveVal">+0% pts (10.0%)</strong>
+                </div>
+                <input type="range" class="finops-range" id="funnelLoveRange" min="0" max="15" step="1" value="0" />
+                <div class="funnel-range-scale"><span>+0% (Current 10%)</span><span>+10% (20%)</span><span>+15% (25%)</span></div>
+              </div>
+            </div>
+
+            <div class="funnel-assumption-row">
+              <span class="funnel-assumption-label">Assumed Net Rev / Order (Model Input):</span>
+              <div class="funnel-aov-group" role="group" aria-label="Assumed net revenue per order">
+                <button type="button" class="finops-preset" data-funnel-aov="40">$40</button>
+                <button type="button" class="finops-preset is-active" data-funnel-aov="50">$50</button>
+                <button type="button" class="finops-preset" data-funnel-aov="60">$60</button>
+              </div>
+            </div>
+
+            <div class="funnel-viz-grid">
+              <div class="funnel-sku-card">
+                <div class="funnel-sku-title">The Original Mr. Fuzzy</div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>PDP Views</span><strong id="fuzzyPdpText">162,525 (62.2%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--amber" id="fuzzyPdpBar" style="width: 100%;"></div></div>
+                </div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>Cart Adds</span><strong id="fuzzyCartText">69,957 (43.0%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--amber" id="fuzzyCartBar" style="width: 43%;"></div></div>
+                </div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>Orders Confirmed</span><strong id="fuzzyOrderText">23,861 (34.1%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--green" id="fuzzyOrderBar" style="width: 14.7%;"></div></div>
+                </div>
+              </div>
+
+              <div class="funnel-sku-card">
+                <div class="funnel-sku-title">The Forever Love Bear</div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>PDP Views</span><strong id="lovePdpText">26,033 (10.0%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--amber" id="lovePdpBar" style="width: 16%;"></div></div>
+                </div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>Cart Adds</span><strong id="loveCartText">14,485 (55.6%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--amber" id="loveCartBar" style="width: 8.9%;"></div></div>
+                </div>
+                <div class="funnel-bar-step">
+                  <div class="funnel-step-meta"><span>Orders Confirmed</span><strong id="loveOrderText">4,803 (33.2%)</strong></div>
+                  <div class="finops-track"><div class="finops-fill finops-fill--green" id="loveOrderBar" style="width: 3%;"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="funnel-outcome-bar" id="funnelOutcomeBar">
+              <div>
+                <span class="funnel-out-label">Projected Combined Orders</span>
+                <strong class="funnel-out-value" id="funnelTotalOrders">28,664</strong>
+              </div>
+              <div>
+                <span class="funnel-out-label">Incremental Orders Gained</span>
+                <strong class="funnel-out-value funnel-out-accent" id="funnelIncOrders">+0</strong>
+              </div>
+              <div>
+                <span class="funnel-out-label">Modeled Net Revenue Lift</span>
+                <strong class="funnel-out-value funnel-out-green" id="funnelRevLift">+$0</strong>
+              </div>
+            </div>
+            <div class="finops-disclaimer">
+              Anchored to verified catalog denominators (261,231 sessions; Love Bear 55.6% PDP&rarr;Cart; Mr. Fuzzy 43.0% PDP&rarr;Cart). Revenue lift multiplies simulated incremental orders by the selected Net/Order assumption.
+            </div>
+          </div>
           <ul>
             <li><strong>The "Love Bear" Paradox:</strong>
               <ul>

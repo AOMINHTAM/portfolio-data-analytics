@@ -474,6 +474,9 @@ function renderProjectsVisibility(animateTransition) {
 }
 
 function applyProjectFilter(selectedFilter) {
+  if (typeof window.__clearSkillCrossFilter === "function") {
+    window.__clearSkillCrossFilter();
+  }
   currentFilter = selectedFilter || "all";
   renderProjectsVisibility(true);
   if (typeof updateScrollProgress === "function") updateScrollProgress();
@@ -498,6 +501,9 @@ if (filterBtns.length && projectCards.length) {
 
   if (toggleProjectsBtn) {
     toggleProjectsBtn.addEventListener("click", () => {
+      if (typeof window.__clearSkillCrossFilter === "function") {
+        window.__clearSkillCrossFilter();
+      }
       showAllProjects = !showAllProjects;
       renderProjectsVisibility(true);
       if (typeof updateScrollProgress === "function") updateScrollProgress();
@@ -972,6 +978,12 @@ let updateScrollProgress = function () {};
     ".finops-bar-label",
     ".finops-alert",
     ".finops-disclaimer",
+    ".funnel-control-head label",
+    ".funnel-range-scale span",
+    ".funnel-assumption-label",
+    ".funnel-sku-title",
+    ".funnel-step-meta span",
+    ".funnel-out-label",
   ];
 
   const _tmpl = document.createElement("template");
@@ -1118,6 +1130,9 @@ let updateScrollProgress = function () {};
     }
     if (typeof window.__refreshGlobalWidgets === "function") {
       window.__refreshGlobalWidgets();
+    }
+    if (typeof window.__refreshFunnelWidget === "function") {
+      window.__refreshFunnelWidget();
     }
     if (typeof updateScrollProgress === "function") updateScrollProgress();
     if (isUserAction) {
@@ -2485,6 +2500,7 @@ let updateScrollProgress = function () {};
       <span class="telemetry-item" id="telemetryPerf">DOM: --</span>
       <span aria-hidden="true">|</span>
       <button type="button" class="telemetry-xray-btn" id="telemetryXrayBtn" aria-pressed="false">[Shift+X: Schema]</button>
+      <button type="button" class="telemetry-xray-btn" id="telemetryKeysBtn">[?: Keys]</button>
     `;
     footerContent.appendChild(bar);
 
@@ -2492,6 +2508,7 @@ let updateScrollProgress = function () {};
     const ciEl = document.getElementById("telemetryCi");
     const perfEl = document.getElementById("telemetryPerf");
     const xrayBtn = document.getElementById("telemetryXrayBtn");
+    const keysBtn = document.getElementById("telemetryKeysBtn");
 
     function updateClock() {
       if (!clockEl) return;
@@ -2617,8 +2634,18 @@ let updateScrollProgress = function () {};
     });
 
     function renderXrayBtnText() {
-      if (!xrayBtn) return;
-      xrayBtn.textContent = isVi() ? "[Shift+X: Sơ đồ bảng]" : "[Shift+X: Schema]";
+      if (xrayBtn) {
+        xrayBtn.textContent = isVi() ? "[Shift+X: Sơ đồ bảng]" : "[Shift+X: Schema]";
+      }
+      if (keysBtn) {
+        keysBtn.textContent = isVi() ? "[?: Phím tắt]" : "[?: Keys]";
+      }
+    }
+
+    if (keysBtn) {
+      keysBtn.addEventListener("click", () => {
+        if (typeof window.__openCheatSheet === "function") window.__openCheatSheet();
+      });
     }
 
     refreshTelemetryText = () => {
@@ -2630,5 +2657,430 @@ let updateScrollProgress = function () {};
 
   window.__refreshGlobalWidgets = function () {
     if (typeof refreshTelemetryText === "function") refreshTelemetryText();
+    if (typeof window.__refreshSkillCrossFilter === "function") window.__refreshSkillCrossFilter();
+    if (typeof window.__refreshCheatSheet === "function") window.__refreshCheatSheet();
   };
+})();
+
+// --- 19. HERO SPARKLINES, SKILL CROSS-FILTER, DA FUNNEL WHAT-IF & VIM NAVIGATION ---
+(function initCraftAndDaInteractive() {
+  const isVi = () => document.documentElement.lang === "vi";
+
+  // 19a. Mini Grafana-style SVG Sparklines on Hero Snapshot Cards
+  (function initHeroSparklines() {
+    const cards = document.querySelectorAll(".snapshot-stat");
+    if (!cards.length) return;
+
+    const SERIES = [
+      [18, 16, 14, 11, 8, 5],
+      [17, 15, 13, 10, 7, 4],
+      [19, 15, 13, 14, 9, 3],
+      [18, 15, 12, 9, 6, 4],
+    ];
+
+    cards.forEach((card, idx) => {
+      if (card.querySelector(".stat-sparkline")) return;
+      const pts = SERIES[idx % SERIES.length];
+      const w = 88;
+      const step = w / (pts.length - 1);
+      const coords = pts.map((y, i) => [Number((i * step).toFixed(1)), y]);
+      const polyStr = coords.map(([x, y]) => `${x},${y}`).join(" ");
+      const areaStr = `0,22 ${polyStr} ${w},22`;
+      const dots = coords
+        .map(([x, y]) => `<circle class="stat-spark-dot" cx="${x}" cy="${y}" r="1.9" />`)
+        .join("");
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "stat-sparkline");
+      svg.setAttribute("viewBox", "0 0 88 22");
+      svg.setAttribute("aria-hidden", "true");
+      svg.innerHTML = `<polygon class="stat-spark-area" points="${areaStr}" /><polyline class="stat-spark-line" points="${polyStr}" />${dots}`;
+      card.appendChild(svg);
+    });
+  })();
+
+  // 19b. Skill -> Project Cross-Filter on Homepage
+  (function initSkillProjectCrossFilter() {
+    const skillTags = document.querySelectorAll(".skill-card .tech-tags span");
+    const projectsList = document.querySelector(".projects-list");
+    const cards = Array.from(document.querySelectorAll(".project-card"));
+    if (!skillTags.length || !projectsList || !cards.length) return;
+
+    const banner = document.createElement("div");
+    banner.id = "skillFilterBanner";
+    banner.className = "skill-filter-banner";
+    banner.hidden = true;
+    projectsList.parentNode.insertBefore(banner, projectsList);
+
+    const SKILL_MATCHERS = [
+      { test: "python", tokens: ["python"] },
+      { test: "sql", tokens: ["sql", "redshift", "snowflake", "dbt"] },
+      { test: "plotly", tokens: ["plotly", "seaborn", "matplotlib"] },
+      { test: "power bi", tokens: ["bi csvs", "star schema", "self-serve bi"] },
+      { test: "apriori", tokens: ["apriori", "mlxtend"] },
+      { test: "s3", tokens: ["s3"] },
+      { test: "sqs", tokens: ["sqs"] },
+      { test: "redshift", tokens: ["redshift"] },
+      { test: "cloudformation", tokens: ["cloudformation"] },
+      { test: "cloudwatch", tokens: ["cloudwatch", "sns"] },
+      { test: "snowflake", tokens: ["snowflake"] },
+      { test: "airflow", tokens: ["airflow"] },
+      { test: "dbt", tokens: ["dbt"] },
+      { test: "star schema", tokens: ["star schema", "fct_orders"] },
+      { test: "docker", tokens: ["docker"] },
+      { test: "github actions", tokens: ["21/21 unit tests", "cloudformation"] },
+      { test: "unit testing", tokens: ["21/21 unit tests"] },
+    ];
+
+    let activeTagEl = null;
+    let activeTagLabel = "";
+    let lastMatchCount = 0;
+
+    function resolveTokens(labelLower) {
+      const hit = SKILL_MATCHERS.find((m) => labelLower.includes(m.test));
+      return hit ? hit.tokens : [labelLower];
+    }
+
+    function renderBanner() {
+      if (!activeTagEl) {
+        banner.hidden = true;
+        banner.innerHTML = "";
+        return;
+      }
+      const vi = isVi();
+      banner.hidden = false;
+      banner.innerHTML = vi
+        ? `<span>Đang làm nổi bật theo kỹ năng: <strong>${activeTagLabel}</strong> (${lastMatchCount} dự án)</span><button type="button" class="telemetry-xray-btn" id="clearSkillFilterBtn">Xóa lọc &times;</button>`
+        : `<span>Cross-filtering by skill: <strong>${activeTagLabel}</strong> (${lastMatchCount} matches)</span><button type="button" class="telemetry-xray-btn" id="clearSkillFilterBtn">Clear &times;</button>`;
+      const clearBtn = document.getElementById("clearSkillFilterBtn");
+      if (clearBtn) {
+        clearBtn.addEventListener("click", clearCrossFilter);
+      }
+    }
+
+    function clearCrossFilter() {
+      activeTagEl = null;
+      activeTagLabel = "";
+      lastMatchCount = 0;
+      skillTags.forEach((s) => s.classList.remove("is-skill-selected"));
+      cards.forEach((c) => c.classList.remove("is-skill-match", "is-skill-dimmed"));
+      renderBanner();
+    }
+
+    window.__clearSkillCrossFilter = clearCrossFilter;
+    window.__refreshSkillCrossFilter = renderBanner;
+
+    function handleTagActivate(tagEl) {
+      if (activeTagEl === tagEl) {
+        clearCrossFilter();
+        return;
+      }
+
+      const label = tagEl.textContent.trim();
+      const tokens = resolveTokens(label.toLowerCase());
+      const matched = cards.filter((card) => {
+        const hay = card.textContent.toLowerCase();
+        return tokens.some((tk) => hay.includes(tk));
+      });
+
+      if (!matched.length) {
+        if (typeof showToast === "function") {
+          showToast(
+            isVi()
+              ? `${label}: Đã áp dụng trong thực hành phân tích dữ liệu (repo hiện tại tập trung SQL/Python).`
+              : `${label}: Working knowledge applied in tabular audits (repos showcase SQL/Python/dbt).`
+          );
+        }
+        return;
+      }
+
+      activeTagEl = tagEl;
+      activeTagLabel = label;
+      lastMatchCount = matched.length;
+      skillTags.forEach((s) => s.classList.toggle("is-skill-selected", s === tagEl));
+
+      const needsAllShown = matched.some((c) => c.getAttribute("data-featured") !== "true");
+      if (currentFilter !== "all" || (needsAllShown && !showAllProjects)) {
+        currentFilter = "all";
+        if (needsAllShown) showAllProjects = true;
+        renderProjectsVisibility(false);
+      }
+
+      const matchedSet = new Set(matched);
+      cards.forEach((card) => {
+        const isHit = matchedSet.has(card);
+        card.classList.toggle("is-skill-match", isHit);
+        card.classList.toggle("is-skill-dimmed", !isHit);
+      });
+
+      renderBanner();
+      const target = document.getElementById("projects");
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.scrollY - 78;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+      trackEvent("skill_cross_filter", { skill: label, matches: matched.length });
+    }
+
+    skillTags.forEach((tagEl) => {
+      tagEl.setAttribute("role", "button");
+      tagEl.setAttribute("tabindex", "0");
+      tagEl.addEventListener("click", () => handleTagActivate(tagEl));
+      tagEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleTagActivate(tagEl);
+        }
+      });
+    });
+  })();
+
+  // 19c. Interactive DA Funnel What-If Simulator (projects/product-funnel.html)
+  (function initFunnelWhatIfSimulator() {
+    const root = document.getElementById("funnelWhatIfSimulator");
+    const dropRange = document.getElementById("funnelDropoffRange");
+    const loveRange = document.getElementById("funnelLoveRange");
+    if (!root || !dropRange || !loveRange) return;
+
+    const CATALOG_SESSIONS = 261231;
+    const FUZZY_PDP = 162525;
+    const FUZZY_CART = 69957;
+    const FUZZY_CART_TO_ORDER = 23861 / 69957;
+    const LOVE_BASE_SHARE = 26033 / CATALOG_SESSIONS;
+    const LOVE_PDP_TO_CART = 14485 / 26033;
+    const LOVE_CART_TO_ORDER = 4803 / 14485;
+    const BASE_TOTAL_ORDERS = 23861 + 4803;
+
+    let assumedAov = 50;
+    const aovBtns = Array.from(root.querySelectorAll("[data-funnel-aov]"));
+
+    const dropValEl = document.getElementById("funnelDropoffVal");
+    const loveValEl = document.getElementById("funnelLoveVal");
+    const deltaBadge = document.getElementById("funnelDeltaBadge");
+    const fuzzyPdpText = document.getElementById("fuzzyPdpText");
+    const fuzzyCartText = document.getElementById("fuzzyCartText");
+    const fuzzyOrderText = document.getElementById("fuzzyOrderText");
+    const fuzzyOrderBar = document.getElementById("fuzzyOrderBar");
+    const lovePdpText = document.getElementById("lovePdpText");
+    const lovePdpBar = document.getElementById("lovePdpBar");
+    const loveCartText = document.getElementById("loveCartText");
+    const loveCartBar = document.getElementById("loveCartBar");
+    const loveOrderText = document.getElementById("loveOrderText");
+    const loveOrderBar = document.getElementById("loveOrderBar");
+    const totalEl = document.getElementById("funnelTotalOrders");
+    const incEl = document.getElementById("funnelIncOrders");
+    const revEl = document.getElementById("funnelRevLift");
+
+    function fmtNum(n) {
+      return Number(n).toLocaleString("en-US");
+    }
+
+    function updateSimulation() {
+      const dropoff = Number(dropRange.value);
+      const loveLiftPts = Number(loveRange.value);
+      const vi = isVi();
+
+      const dropRecovery = Math.max(0, 66 - dropoff) / 100;
+      const fuzzyRate = FUZZY_CART_TO_ORDER + dropRecovery;
+      const fuzzyOrders = Math.round(FUZZY_CART * fuzzyRate);
+
+      const loveShare = LOVE_BASE_SHARE + loveLiftPts / 100;
+      const lovePdp = Math.round(CATALOG_SESSIONS * loveShare);
+      const loveCart = Math.round(lovePdp * LOVE_PDP_TO_CART);
+      const loveRate = LOVE_CART_TO_ORDER + dropRecovery;
+      const loveOrders = Math.round(loveCart * loveRate);
+
+      const simTotal = fuzzyOrders + loveOrders;
+      const incOrders = Math.max(0, simTotal - BASE_TOTAL_ORDERS);
+      const revLift = incOrders * assumedAov;
+
+      if (dropValEl) {
+        dropValEl.textContent =
+          dropoff === 66
+            ? vi ? "66% (Gốc)" : "66% (Baseline)"
+            : `${dropoff}%`;
+      }
+      if (loveValEl) {
+        loveValEl.textContent = `+${loveLiftPts}% pts (${(loveShare * 100).toFixed(1)}%)`;
+      }
+      if (deltaBadge) {
+        deltaBadge.textContent = vi ? `Tăng thêm: +${fmtNum(incOrders)} đơn` : `Delta: +${fmtNum(incOrders)} orders`;
+      }
+
+      if (fuzzyPdpText) fuzzyPdpText.textContent = `${fmtNum(FUZZY_PDP)} (62.2%)`;
+      if (fuzzyCartText) fuzzyCartText.textContent = `${fmtNum(FUZZY_CART)} (43.0%)`;
+      if (fuzzyOrderText) fuzzyOrderText.textContent = `${fmtNum(fuzzyOrders)} (${(fuzzyRate * 100).toFixed(1)}%)`;
+      if (fuzzyOrderBar) fuzzyOrderBar.style.width = `${Math.min(100, (fuzzyOrders / FUZZY_PDP) * 100).toFixed(1)}%`;
+
+      if (lovePdpText) lovePdpText.textContent = `${fmtNum(lovePdp)} (${(loveShare * 100).toFixed(1)}%)`;
+      if (lovePdpBar) lovePdpBar.style.width = `${Math.min(100, (lovePdp / FUZZY_PDP) * 100).toFixed(1)}%`;
+      if (loveCartText) loveCartText.textContent = `${fmtNum(loveCart)} (55.6%)`;
+      if (loveCartBar) loveCartBar.style.width = `${Math.min(100, (loveCart / FUZZY_PDP) * 100).toFixed(1)}%`;
+      if (loveOrderText) loveOrderText.textContent = `${fmtNum(loveOrders)} (${(loveRate * 100).toFixed(1)}%)`;
+      if (loveOrderBar) loveOrderBar.style.width = `${Math.min(100, (loveOrders / FUZZY_PDP) * 100).toFixed(1)}%`;
+
+      if (totalEl) totalEl.textContent = fmtNum(simTotal);
+      if (incEl) incEl.textContent = `+${fmtNum(incOrders)}`;
+      if (revEl) revEl.textContent = `+$${fmtNum(revLift)}`;
+    }
+
+    dropRange.addEventListener("input", updateSimulation);
+    loveRange.addEventListener("input", updateSimulation);
+    aovBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        assumedAov = Number(btn.getAttribute("data-funnel-aov")) || 50;
+        aovBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
+        updateSimulation();
+        trackEvent("funnel_aov_select", { aov: assumedAov });
+      });
+    });
+
+    updateSimulation();
+    window.__refreshFunnelWidget = updateSimulation;
+  })();
+
+  // 19d. Vim-Style Section Navigation (j / k / gg / G) & ? Cheat Sheet Modal
+  (function initVimNavigation() {
+    let modal = null;
+
+    function buildCheatModal() {
+      if (modal) return modal;
+      modal = document.createElement("div");
+      modal.id = "shortcutCheatModal";
+      modal.className = "cheat-backdrop";
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      modal.setAttribute("aria-labelledby", "cheatModalTitle");
+      modal.innerHTML = '<div class="cheat-dialog"><div class="cheat-head"><h3 id="cheatModalTitle">Keyboard Shortcuts</h3><button type="button" class="cheat-close" id="cheatCloseBtn">&times;</button></div><div class="cheat-list" id="cheatModalList"></div></div>';
+      document.body.appendChild(modal);
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeCheat();
+      });
+      const closeBtn = document.getElementById("cheatCloseBtn");
+      if (closeBtn) closeBtn.addEventListener("click", closeCheat);
+      renderCheatContent();
+      return modal;
+    }
+
+    function renderCheatContent() {
+      if (!modal) return;
+      const vi = isVi();
+      const titleEl = document.getElementById("cheatModalTitle");
+      const listEl = document.getElementById("cheatModalList");
+      if (titleEl) titleEl.textContent = vi ? "Phím tắt Điều hướng (Vim & Dev)" : "Keyboard Shortcuts (Vim & Dev)";
+      if (!listEl) return;
+
+      const rows = vi
+        ? [
+            [["j", "k"], "Nhảy xuống / lên từng mục trang"],
+            [["g", "g"], "Cuộn nhanh lên đầu trang"],
+            [["Shift", "G"], "Cuộn nhanh xuống cuối trang"],
+            [["Shift", "X"], "Bật / tắt chế độ Schema X-Ray Overlay"],
+            [["&larr;", "&rarr;"], "Chuyển ảnh khi đang mở Lightbox"],
+            [["?"], "Mở / đóng bảng hướng dẫn phím tắt"],
+            [["Esc"], "Đóng hộp thoại hoặc ảnh đang phóng to"],
+          ]
+        : [
+            [["j", "k"], "Jump to next / previous page section"],
+            [["g", "g"], "Scroll to top of page"],
+            [["Shift", "G"], "Jump to bottom of page"],
+            [["Shift", "X"], "Toggle Schema X-Ray blueprint overlay"],
+            [["&larr;", "&rarr;"], "Previous / Next image in Lightbox"],
+            [["?"], "Toggle this shortcuts cheat sheet"],
+            [["Esc"], "Close modal or enlarged diagram"],
+          ];
+
+      listEl.innerHTML = rows
+        .map(
+          ([keys, desc]) =>
+            `<div class="cheat-row"><span>${desc}</span><span class="cheat-keys">${keys
+              .map((k) => `<kbd>${k}</kbd>`)
+              .join("")}</span></div>`
+        )
+        .join("");
+    }
+
+    function openCheat() {
+      buildCheatModal();
+      renderCheatContent();
+      modal.classList.add("is-open");
+    }
+
+    function closeCheat() {
+      if (modal) modal.classList.remove("is-open");
+    }
+
+    window.__openCheatSheet = openCheat;
+    window.__refreshCheatSheet = renderCheatContent;
+
+    function getStops() {
+      const els = Array.from(document.querySelectorAll("header.hero, section[id], .detail-header, .detail-block, footer"));
+      return els.filter((el) => el.offsetParent !== null && !el.closest(".is-hidden"));
+    }
+
+    function jumpSection(dir) {
+      const stops = getStops();
+      if (!stops.length) return;
+      const navOffset = 86;
+      const curY = window.scrollY + navOffset + 8;
+
+      if (dir > 0) {
+        const next = stops.find((el) => el.getBoundingClientRect().top + window.scrollY > curY);
+        if (next) {
+          window.scrollTo({ top: next.getBoundingClientRect().top + window.scrollY - navOffset, behavior: "smooth" });
+        }
+      } else {
+        const prev = [...stops].reverse().find((el) => el.getBoundingClientRect().top + window.scrollY < curY - 24);
+        if (prev) {
+          window.scrollTo({ top: Math.max(0, prev.getBoundingClientRect().top + window.scrollY - navOffset), behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    }
+
+    let lastGTime = 0;
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const active = document.activeElement;
+      const tag = (active && active.tagName) || "";
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || active?.isContentEditable) return;
+
+      if (e.key === "Escape" && modal && modal.classList.contains("is-open")) {
+        e.preventDefault();
+        closeCheat();
+        return;
+      }
+
+      if (e.key === "?") {
+        e.preventDefault();
+        if (modal && modal.classList.contains("is-open")) closeCheat();
+        else openCheat();
+        return;
+      }
+
+      if (document.querySelector(".lightbox-backdrop.is-open")) return;
+
+      if (e.key === "j" && !e.shiftKey) {
+        e.preventDefault();
+        jumpSection(1);
+      } else if (e.key === "k" && !e.shiftKey) {
+        e.preventDefault();
+        jumpSection(-1);
+      } else if (e.key === "g" && !e.shiftKey) {
+        const now = Date.now();
+        if (now - lastGTime < 650) {
+          e.preventDefault();
+          lastGTime = 0;
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          lastGTime = now;
+        }
+      } else if (e.key === "G" && e.shiftKey) {
+        e.preventDefault();
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+      }
+    });
+  })();
 })();

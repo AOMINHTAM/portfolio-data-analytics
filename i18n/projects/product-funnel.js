@@ -63,4 +63,28 @@ window.__I18N_VI__["product-funnel"] = {
     "<strong>Định nghĩa Mẫu số &amp; Phễu (Đã xác minh trong Code):</strong> Mỗi bước đếm số <code>website_session_id</code> đã khử trùng (<code>groupby.max()</code>) đi tuần tự từ trang <code>/products</code> (<strong>261.231</strong> phiên): <em>Mr. Fuzzy</em> (<strong>162.525</strong> PDP &rarr; <strong>69.957</strong> Giỏ hàng &rarr; <strong>23.861</strong> Xác nhận đơn, tỷ lệ Cart-to-Order 34,1%) so với <em>Love Bear</em> (<strong>26.033</strong> PDP &rarr; <strong>14.485</strong> Giỏ hàng &rarr; <strong>4.803</strong> Xác nhận đơn, tỷ lệ Cart-to-Order 33,2%). Các phiên vào thẳng PDP không qua <code>/products</code> nằm ngoài phễu này, và hoàn tiền được khấu trừ riêng trong Doanh thu Ròng SKU thay vì xóa khỏi luồng clickstream.",
   "<strong>Validation Plan:</strong> All UX and recovery changes should be evaluated via A/B testing measuring <strong>Cart-to-Order Completion Rate</strong>, <strong>Net Revenue per Session</strong>, and <strong>Refund Rate</strong> (monitoring quality controls on higher-refund items such as <em>Birthday Sugar Panda</em>).":
     "<strong>Kế hoạch Kiểm chứng:</strong> Mọi thay đổi về UX và nhắc giỏ hàng cần được đánh giá qua A/B testing đo lường <strong>Tỷ lệ Hoàn tất Giỏ hàng &rarr; Đặt đơn</strong>, <strong>Doanh thu Ròng mỗi Phiên</strong> và <strong>Tỷ lệ Hoàn tiền</strong> (giám sát kiểm soát chất lượng đối với các SKU có tỷ lệ hoàn cao như <em>Birthday Sugar Panda</em>).",
+
+  "SENSITIVITY ANALYSIS &bull; WHAT-IF SIMULATOR":
+    "PHÂN TÍCH ĐỘ NHẠY &bull; MÔ PHỎNG GIẢ ĐỊNH (WHAT-IF)",
+  "Simulate Checkout Recovery &amp; Love Bear Exposure":
+    "Giả lập Cải thiện Thanh toán &amp; Độ phủ Love Bear",
+  "Target Cart-to-Order Drop-off": "Tỷ lệ Rơi rụng Giỏ hàng → Đặt đơn Mục tiêu",
+  "Boost Love Bear Catalog Share": "Tăng Tỷ lệ Xem Danh mục cho Love Bear",
+  "45% (Best Case)": "45% (Tối ưu)",
+  "55% (Target)": "55% (Mục tiêu)",
+  "66% (Current)": "66% (Hiện tại)",
+  "+0% (Current 10%)": "+0% (Hiện tại 10%)",
+  "+10% (20%)": "+10% (20%)",
+  "+15% (25%)": "+15% (25%)",
+  "Assumed Net Rev / Order (Model Input):": "Doanh thu Ròng Giả định / Đơn (Tham số):",
+  "The Original Mr. Fuzzy": "The Original Mr. Fuzzy",
+  "The Forever Love Bear": "The Forever Love Bear",
+  "PDP Views": "Lượt xem PDP",
+  "Cart Adds": "Thêm vào Giỏ",
+  "Orders Confirmed": "Đơn Xác nhận",
+  "Projected Combined Orders": "Tổng Đơn hàng Dự phóng",
+  "Incremental Orders Gained": "Số Đơn Tăng thêm",
+  "Modeled Net Revenue Lift": "Doanh thu Ròng Tăng thêm (Ước tính)",
+  "Anchored to verified catalog denominators (261,231 sessions; Love Bear 55.6% PDP&rarr;Cart; Mr. Fuzzy 43.0% PDP&rarr;Cart). Revenue lift multiplies simulated incremental orders by the selected Net/Order assumption.":
+    "Neo theo mẫu số đã xác minh từ dataset (261.231 phiên; Love Bear 55,6% PDP&rarr;Giỏ; Mr. Fuzzy 43,0% PDP&rarr;Giỏ). Mức tăng doanh thu bằng số đơn tăng thêm nhân với giả định Doanh thu Ròng/Đơn đã chọn.",
 };
