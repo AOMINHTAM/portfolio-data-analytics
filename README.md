@@ -4,7 +4,6 @@ Personal portfolio website of **Ao Minh Tâm** (Third-Year IT Undergraduate at H
 
 🔗 **Live Website:** https://aominhtam-portfolio.vercel.app/  
 📄 **Public Resume (PDF):** [assets/Ao-Minh-Tam-Resume.pdf](assets/Ao-Minh-Tam-Resume.pdf)  
-📝 **Changelog & Shortcuts:** [docs/CHANGELOG.md](docs/CHANGELOG.md)  
 💼 **LinkedIn:** https://www.linkedin.com/in/ao-minh-tam/  
 👤 **GitHub Profile:** https://github.com/AOMINHTAM
 
