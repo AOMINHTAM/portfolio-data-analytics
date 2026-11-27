@@ -70,7 +70,7 @@
         "url": "https://aominhtam-portfolio.vercel.app/",
         "name": "Ao Minh Tâm | Data & Analytics Engineer Portfolio",
         "isPartOf": { "@id": "https://aominhtam-portfolio.vercel.app/#website" },
-        "dateModified": "2026-11-26",
+        "dateModified": "2026-11-27",
         "mainEntity": { "@id": "https://aominhtam-portfolio.vercel.app/#person" }
       },
       {
@@ -474,9 +474,9 @@
             <div class="project-badge">FLAGSHIP PIPELINE • DATA ENGINEERING • V5.0.1 (OCT – NOV 2026)</div>
             <h3><a href="https://github.com/AOMINHTAM/aws-data-pipeline" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">AWS E-Commerce Modern Data Pipeline (Event-Driven ELT)&nbsp;↗</a></h3>
             <ul class="project-bullets">
-              <li><strong>Business Impact:</strong> Replaced cron polling across <strong>99,441 Olist orders</strong> (~120 MB) with event-driven S3 &rarr; SQS (<code>20s</code> Long Poll) &rarr; Airflow 3 (<code>AssetWatcher</code>, CloudFormation IaC), achieving <strong>zero empty runs</strong> and <strong>$0</strong> idle compute.</li>
-              <li><strong>Data Reliability:</strong> Prevented duplicate revenue/order counts via CSV header &amp; empty-stage guards, Two-Phase atomic Redshift swaps, audit ledger tracking, and DLQ (<code>4</code> CloudWatch Alarms + SNS) idempotent recovery.</li>
-              <li><strong>Warehouse &amp; Testing:</strong> Built incremental dbt Star Schema marts (<code>DISTKEY</code>/<code>SORTKEY</code>) verified by <strong>11 dbt tests</strong> (<code>5.0.0</code> E2E), <code>21/21</code> Python unit tests, 3 DAG tests, and offline <code>dbt parse</code> CI.</li>
+              <li><strong>Business Pain-Point:</strong> Fragmented marketplace CSVs (9 tables, <strong>99,441 orders</strong>), late review/delivery updates, and per-order <code>customer_id</code> resets distort revenue, retention LTV, and SLA tracking—while cron polling wastes compute on empty runs.</li>
+              <li><strong>Business-Ready Output:</strong> Built an event-driven S3 &rarr; SQS &rarr; Airflow 3 &rarr; Redshift &rarr; dbt pipeline delivering <strong>3 Star Schema marts</strong> &amp; <strong>4 BI CSVs (~56 MB)</strong> for accurate revenue, <code>customer_unique_id</code> LTV, and <code>delivery_status</code> reporting.</li>
+              <li><strong>Reliability &amp; FinOps:</strong> Cut idle compute to <strong>$0</strong> (zero empty runs) and blocked duplicate/partial loads via Two-Phase atomic swaps, DLQ + SNS alerting, <strong>11 dbt tests</strong> (<code>5.0.0</code> E2E), and <code>21/21</code> unit tests.</li>
             </ul>
             <div class="tech-tags">
               <span>AWS CloudFormation</span>
@@ -905,7 +905,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container footer-content">
-      <p class="footer-updated">Last Updated: Nov 26, 2026</p>
+      <p class="footer-updated">Last Updated: Nov 27, 2026</p>
       <p>&copy; 2026 Ao Minh Tâm. Designed with Cyber Amber Aesthetic.</p>
     </div>
   </footer>

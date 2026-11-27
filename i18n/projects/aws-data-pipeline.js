@@ -12,8 +12,8 @@ window.__I18N_VI__["aws-data-pipeline"] = {
   "<strong>Stack:</strong> AWS (CloudFormation, S3, SQS + DLQ, CloudWatch, SNS, Redshift Serverless, IAM), Apache Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker":
     "<strong>Công nghệ:</strong> AWS (CloudFormation, S3, SQS + DLQ, CloudWatch, SNS, Redshift Serverless, IAM), Apache Airflow 3 (Astro CLI, Cosmos), dbt Core, Docker",
 
-  "1. Dataset, Scope &amp; Engineering Objectives":
-    "1. Tập dữ liệu, Phạm vi &amp; Mục tiêu Kỹ thuật",
+  "1. Business Pain-Points, Dataset &amp; Objectives":
+    "1. Bài toán Kinh doanh, Dữ liệu &amp; Mục tiêu",
   "<strong>Project Type</strong> Personal Cloud Engineering Project (AWS First Cloud Journey Standard)":
     "<strong>Loại dự án</strong> Dự án Cloud Engineering Cá nhân (Chuẩn AWS First Cloud Journey)",
   "<strong>Dataset Source</strong> Olist Brazilian E-Commerce Public Dataset (Kaggle, ~120 MB across 9 CSVs)":
@@ -23,8 +23,36 @@ window.__I18N_VI__["aws-data-pipeline"] = {
   "<strong>Verification Status</strong> <code>5.0.0</code> live-verified E2E on AWS; <code>5.0.1</code> hardened (21/21 unit tests &amp; CI pass)":
     "<strong>Trạng thái kiểm thử</strong> Bản <code>5.0.0</code> đã xác minh E2E trực tiếp trên AWS; bản <code>5.0.1</code> đã gia cố (21/21 unit tests &amp; CI đạt)",
 
-  "Scheduled batch polling pipelines waste warehouse compute on empty runs and risk data loss when partial loads fail or malformed files enter a queue. The goal of this project was to evolve a manual batch ETL prototype (<strong>V2</strong>) into a reproducible, fault-tolerant, push-based CloudOps platform (<strong>V5.0.1</strong>) while keeping idle AWS compute cost at <strong>$0</strong>.":
-    "Các pipeline chạy batch theo lịch cố định (cron polling) thường lãng phí tài nguyên warehouse cho những lần chạy rỗng và dễ rủi ro mất dữ liệu khi nạp dở dang hoặc gặp file lỗi trong hàng đợi. Mục tiêu của dự án là nâng cấp từ bản ETL thủ công (<strong>V2</strong>) lên nền tảng CloudOps hướng sự kiện, chịu lỗi cao và tái lập được bằng IaC (<strong>V5.0.1</strong>), đồng thời giữ chi phí AWS compute lúc nhàn rỗi ở mức <strong>$0</strong>.",
+  "In marketplace operations, raw transactional exports cannot be queried directly by Finance, Ops, or BI teams without breaking KPIs. Fixed batch polling wastes warehouse compute on empty runs, while naive reloads or multi-table joins introduce duplicate revenue, missed late updates, and miscounted repeat buyers. The goal was to turn a manual ETL prototype (<strong>V2</strong>) into an automated CloudOps platform (<strong>V5.0.1</strong>) delivering trustworthy Star Schema marts at <strong>$0</strong> idle compute.":
+    "Trong vận hành sàn thương mại điện tử, dữ liệu giao dịch thô không thể đưa thẳng cho Tài chính, Vận hành hay BI truy vấn vì dễ làm lệch KPI. Việc chạy cron theo lịch cố định gây lãng phí compute cho các lượt chạy rỗng, còn nạp đè đơn giản hoặc join nhiều bảng dễ gây tính trùng doanh thu, sót cập nhật muộn và đếm sai khách mua lại. Mục tiêu của dự án là nâng cấp bản ETL thủ công (<strong>V2</strong>) thành nền tảng CloudOps tự động (<strong>V5.0.1</strong>) cung cấp bảng Star Schema tin cậy với chi phí nhàn rỗi <strong>$0</strong>.",
+
+  "Business Pain-Point": "Bài toán Kinh doanh",
+  "Risk to Stakeholders (BI / Ops / Finance)": "Rủi ro với Bộ phận Liên quan (BI / Ops / Tài chính)",
+  "Engineering &amp; Modeling Fix": "Giải pháp Kỹ thuật &amp; Modeling",
+  "Business Value Delivered": "Giá trị Kinh doanh Mang lại",
+  "<strong>Fragmented Feeds &amp; Partial Load Failures</strong>": "<strong>Dữ liệu Phân mảnh &amp; Lỗi Nạp Dở dang</strong>",
+  "<code>TRUNCATE</code> + mid-load crashes or SQS retries cause missing orders or double-counted revenue on dashboards.":
+    "Lệnh <code>TRUNCATE</code> + lỗi giữa chừng hoặc SQS retry dễ gây mất đơn hàng hoặc tính trùng doanh thu trên dashboard.",
+  "Two-Phase <code>TEMP TABLE</code> swap + CSV header/empty-stage guards + <code>ops.pipeline_ingestion_audit</code> Safe ACK.":
+    "Hoán đổi <code>TEMP TABLE</code> hai pha + kiểm tra header CSV/bảng tạm rỗng + Safe ACK ghi nhận tại <code>ops.pipeline_ingestion_audit</code>.",
+  "<strong>Reconciled Revenue &amp; Order KPIs</strong> across 99,441 orders without manual backfills.":
+    "<strong>KPI Doanh thu &amp; Đơn hàng Đồng nhất</strong> trên 99.441 đơn mà không cần xử lý bù tay.",
+  "<strong>Late Updates &amp; Split Customer Identities</strong>": "<strong>Cập nhật Muộn &amp; Tách Danh tính Khách hàng</strong>",
+  "Reviews/deliveries arrive &gt;3 days late; Olist issues a new <code>customer_id</code> per order, hiding repeat buyers and inflating fan-out joins.":
+    "Đánh giá/giao hàng đến trễ &gt;3 ngày; Olist cấp <code>customer_id</code> mới cho mỗi đơn làm ẩn khách quay lại và gây nhân bản dòng khi join.",
+  "Multi-source incremental <code>fct_orders</code> (<code>affected_order_ids</code>) + 1:1 <code>dim_customers</code> with window LTV by <code>customer_unique_id</code>.":
+    "Bảng <code>fct_orders</code> incremental đa nguồn (<code>affected_order_ids</code>) + <code>dim_customers</code> 1:1 tính window LTV theo <code>customer_unique_id</code>.",
+  "<strong>Accurate Cohort LTV &amp; Retention</strong> (<code>total_orders</code>, <code>lifetime_spend</code>) ready for BI.":
+    "<strong>LTV &amp; Giữ chân Khách hàng Chính xác</strong> (<code>total_orders</code>, <code>lifetime_spend</code>) sẵn sàng cho BI.",
+  "<strong>Stale SLA Alerts &amp; Idle Cron Costs</strong>": "<strong>Chậm Cảnh báo SLA &amp; Lãng phí Cron</strong>",
+  "Fixed <code>*/5</code> polling burns warehouse budget when no files arrive, while silent poison CSVs stall <code>delivery_status</code> reporting.":
+    "Cron <code>*/5</code> đốt ngân sách warehouse khi không có file mới, còn file lỗi âm thầm làm nghẽn báo cáo <code>delivery_status</code>.",
+  "S3 &rarr; SQS (<code>20s</code> Long Poll) &rarr; Airflow 3 <code>AssetWatcher</code> + DLQ (<code>maxReceiveCount=3</code>) + 4 CloudWatch Alarms + SNS.":
+    "S3 &rarr; SQS (Long Poll <code>20s</code>) &rarr; Airflow 3 <code>AssetWatcher</code> + DLQ (<code>maxReceiveCount=3</code>) + 4 CloudWatch Alarms + SNS.",
+  "<strong>$0 Idle Compute</strong> (0 empty runs) + real-time email alerting before broken data hits BI.":
+    "<strong>$0 Chi phí Nhàn rỗi</strong> (0 lần chạy rỗng) + cảnh báo email tức thời trước khi dữ liệu lỗi lọt vào BI.",
+  "<strong>BI-Ready Business Outputs (<code>3 Gold Star Schema Marts</code> &rarr; <code>4 BI CSVs, ~56 MB</code>):</strong> Consolidates 9 raw marketplace tables into decision-ready datasets supporting <strong>Revenue &amp; Payment Reconciliation</strong>, <strong>Customer Lifetime Value &amp; Repeat Purchase Tracking</strong> (via <code>customer_unique_id</code>), and <strong>Order Fulfillment &amp; Delivery SLA Monitoring</strong> (via <code>delivery_status</code>).":
+    "<strong>Đầu ra Sẵn sàng cho BI (<code>3 Bảng Gold Star Schema</code> &rarr; <code>4 file BI CSV, ~56 MB</code>):</strong> Hợp nhất 9 bảng dữ liệu thô thành bộ dữ liệu chuẩn phục vụ <strong>Đối soát Doanh thu &amp; Thanh toán</strong>, <strong>Theo dõi Giá trị Vòng đời &amp; Mua lặp lại</strong> (qua <code>customer_unique_id</code>) và <strong>Giám sát SLA Giao hàng</strong> (qua <code>delivery_status</code>).",
 
   "2. V5.0.1 System Architecture &amp; Evolution (V2 &rarr; V4 &rarr; V5)":
     "2. Kiến trúc Hệ thống V5.0.1 &amp; Quá trình Tiến hóa (V2 &rarr; V4 &rarr; V5)",

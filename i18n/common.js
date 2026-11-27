@@ -30,6 +30,7 @@ window.__I18N_VI__.common = {
   "&larr; Previous Case Study": "&larr; Case Study Trước",
   "Next Case Study &rarr;": "Case Study Tiếp theo &rarr;",
   "View Repository on GitHub &rarr;": "Xem Mã nguồn trên GitHub &rarr;",
+  "Last Updated: Nov 27, 2026": "Cập nhật lần cuối: 27/11/2026",
   "Last Updated: Nov 26, 2026": "Cập nhật lần cuối: 26/11/2026",
   "Last Updated: Nov 25, 2026": "Cập nhật lần cuối: 25/11/2026",
   "Last Updated: Nov 22, 2026": "Cập nhật lần cuối: 22/11/2026",
