@@ -18,7 +18,7 @@ window.__I18N_VI__.home = {
     "📍 TP. Hồ Chí Minh, Việt Nam &bull; Cập nhật 11/2026",
   "DATA ANALYTICS &bull; ASPIRING AE": "DATA ANALYTICS &bull; ĐỊNH HƯỚNG AE",
   "Cloud ELT Pipelines": "Pipeline ELT trên Cloud",
-  "Analytics Case Studies": "Case Study Phân tích",
+  "Flagship Case Studies": "Dự án Trọng tâm",
   "Olist Orders Ingested": "Đơn hàng Olist đã nạp",
   "HCMUNRE Undergrad": "Sinh viên ĐH TN&amp;MT TP.HCM",
   "<strong>Core:</strong> SQL &bull; Python &bull; Power BI &bull; AWS &bull; Airflow 3 &bull; dbt":
@@ -77,7 +77,7 @@ window.__I18N_VI__.home = {
     "<strong>Áp dụng tại:</strong> Atomic Swaps hai pha, Audit Ledger Safe ACK, dbt Marts &amp; CI Pipeline 3 bước",
 
   // Project Filter & Buttons
-  "Featured / All (9)": "Tiêu biểu / Tất cả (9)",
+  "Featured (4)": "Tiêu biểu (4)",
   "Data Analyst (DA)": "Data Analyst (DA)",
   "Data Engineer (DE)": "Data Engineer (DE)",
   "Read Case Study &amp; Diagrams &rarr;": "Xem Case Study &amp; Sơ đồ &rarr;",

@@ -338,12 +338,12 @@ function renderProjectsVisibility(animateTransition) {
       toggleProjectsBtn.setAttribute("aria-expanded", showAllProjects ? "true" : "false");
       if (currentLang === "vi") {
         toggleProjectsBtn.innerHTML = showAllProjects
-          ? "Thu gọn còn 4 dự án tiêu biểu &uarr;"
-          : "Xem tất cả 9 dự án (+5 Case Study Phân tích) &darr;";
+          ? "Thu gọn còn 4 Dự án Trọng tâm &uarr;"
+          : "Xem thêm Các Phân tích Bổ sung &darr;";
       } else {
         toggleProjectsBtn.innerHTML = showAllProjects
-          ? "Show Featured Only (4) &uarr;"
-          : "Show All 9 Projects (+5 More Analytics Case Studies) &darr;";
+          ? "Show Flagships Only (4) &uarr;"
+          : "View Additional Analytics Modules &darr;";
       }
     } else {
       toggleProjectsWrap.classList.add("is-hidden");
@@ -354,13 +354,13 @@ function renderProjectsVisibility(animateTransition) {
     if (currentLang === "vi") {
       if (currentFilter === "all" && !showAllProjects) {
         projectsIntro.innerHTML =
-          "Đang hiển thị <strong>4 dự án tiêu biểu</strong> (2 DE + 2 DA). Mở rộng bên dưới để xem đủ 9 case study hoặc lọc theo vị trí.";
+          "Đang hiển thị <strong>4 dự án trọng tâm</strong> (2 DE + 2 DA). Lọc theo vị trí hoặc xem thêm các phân tích bổ sung bên dưới.";
       } else if (currentFilter === "all" && showAllProjects) {
         projectsIntro.innerHTML =
-          "Đang hiển thị <strong>toàn bộ 9 dự án</strong> (2 Data Engineering + 7 Data Analytics).";
+          "Đang hiển thị <strong>4 dự án trọng tâm</strong> cùng <strong>5 phân tích bổ sung</strong> về Vòng đời Khách hàng &amp; Phễu Chuyển đổi.";
       } else if (currentFilter === "da") {
         projectsIntro.innerHTML =
-          "Đang hiển thị <strong>7 dự án Data Analytics</strong> (Customer Intelligence, Phễu chuyển đổi, Retention &amp; Giỏ hàng).";
+          "Đang hiển thị các phân tích <strong>Data Analytics</strong> về Vòng đời Khách hàng, Phễu Chuyển đổi &amp; Giỏ hàng.";
       } else if (currentFilter === "de") {
         projectsIntro.innerHTML =
           "Đang hiển thị <strong>2 dự án Data Engineering</strong> (AWS Event-Driven ELT V5.0.1 &amp; Snowflake Cloud ELT).";
@@ -368,13 +368,13 @@ function renderProjectsVisibility(animateTransition) {
     } else {
       if (currentFilter === "all" && !showAllProjects) {
         projectsIntro.innerHTML =
-          "Showing <strong>4 featured flagship projects</strong> (2 DE + 2 DA). Expand below to view all 9 case studies or filter by role.";
+          "Showing <strong>4 flagship case studies</strong> (2 DE + 2 DA). Filter by role or view supporting analytics modules below.";
       } else if (currentFilter === "all" && showAllProjects) {
         projectsIntro.innerHTML =
-          "Showing <strong>all 9 portfolio projects</strong> (2 Data Engineering + 7 Data Analytics).";
+          "Showing <strong>4 flagship projects</strong> plus <strong>5 supporting analytics modules</strong> across Customer Lifecycle &amp; Funnel Diagnostics.";
       } else if (currentFilter === "da") {
         projectsIntro.innerHTML =
-          "Showing <strong>all 7 Data Analytics projects</strong> (Customer Intelligence, Conversion Funnels, Retention &amp; Basket Mining).";
+          "Showing <strong>Data Analytics</strong> studies across Customer Lifecycle &amp; E-Commerce Funnel Diagnostics.";
       } else if (currentFilter === "de") {
         projectsIntro.innerHTML =
           "Showing <strong>both Data Engineering projects</strong> (AWS Event-Driven ELT V5.0.1 &amp; Snowflake Cloud ELT).";
