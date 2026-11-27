@@ -3169,6 +3169,7 @@ body.light-theme .compare-pane--before {
   margin: 0;
   opacity: 0;
   cursor: ew-resize;
+  touch-action: none;
   z-index: 4;
 }
 

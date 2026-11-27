@@ -2230,11 +2230,41 @@ let updateScrollProgress = function () {};
     if (!stage || !range || !pctLabel) return;
 
     function syncSplit(val) {
-      const n = Math.min(92, Math.max(8, Number(val) || 50));
+      const parsed = Number(val);
+      const n = Math.round(Math.min(100, Math.max(0, Number.isFinite(parsed) ? parsed : 50)));
+      range.value = String(n);
       stage.style.setProperty("--split", `${n}%`);
       pctLabel.textContent = `${n}% / ${100 - n}%`;
     }
 
+    function updateFromPointer(clientX) {
+      const rect = stage.getBoundingClientRect();
+      if (!rect.width) return;
+      const pct = ((clientX - rect.left) / rect.width) * 100;
+      syncSplit(pct);
+    }
+
+    let dragging = false;
+    range.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      if (typeof range.setPointerCapture === "function") {
+        try {
+          range.setPointerCapture(e.pointerId);
+        } catch (_) {
+          // ignore if synthetic event
+        }
+      }
+      updateFromPointer(e.clientX);
+    });
+    range.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      updateFromPointer(e.clientX);
+    });
+    const stopDrag = () => {
+      dragging = false;
+    };
+    range.addEventListener("pointerup", stopDrag);
+    range.addEventListener("pointercancel", stopDrag);
     range.addEventListener("input", () => syncSplit(range.value));
     syncSplit(range.value);
   })();
