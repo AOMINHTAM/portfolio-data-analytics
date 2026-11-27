@@ -273,8 +273,7 @@ html.is-theme-transitioning .sim-card,
 html.is-theme-transitioning .lineage-card,
 html.is-theme-transitioning .compare-card,
 html.is-theme-transitioning .finops-card,
-html.is-theme-transitioning .funnel-sim-card,
-html.is-theme-transitioning .telemetry-bar {
+html.is-theme-transitioning .funnel-sim-card {
   transition: none !important;
 }
 
@@ -2660,7 +2659,6 @@ body.light-theme .toast-banner {
   .funnel-controls-grid,
   .funnel-assumption-row,
   .skill-filter-banner,
-  .telemetry-bar,
   .cheat-backdrop,
   .compare-range,
   .compare-divider,
@@ -3330,72 +3328,20 @@ body.light-theme .finops-alert {
   opacity: 0.85;
 }
 
-/* --- FOOTER LIVE TELEMETRY BAR --- */
-.telemetry-bar {
-  margin-top: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  font-family: monospace;
-  font-size: 0.73rem;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.telemetry-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.telemetry-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: var(--green-accent);
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
-}
-
-.telemetry-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.telemetry-link:hover {
-  color: var(--amber-main);
-  text-decoration: underline;
-}
-
-.telemetry-link.is-passing {
-  color: var(--green-accent);
-}
-
-.telemetry-link.is-failing {
-  color: var(--red-accent);
-}
-
-.telemetry-xray-btn {
+.skill-clear-btn {
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
   color: var(--text-muted);
   font-family: monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 3px 8px;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
-.telemetry-xray-btn:hover,
-body.is-xray-mode .telemetry-xray-btn {
+.skill-clear-btn:hover {
   border-color: var(--amber-main);
   color: var(--amber-main);
   background-color: rgba(245, 158, 11, 0.1);
@@ -3829,12 +3775,6 @@ body.light-theme.is-xray-mode [data-schema-label]::after {
   .finops-bar-meta {
     flex-direction: column;
     gap: 2px;
-  }
-
-  .telemetry-bar {
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 0.69rem;
   }
 }
 

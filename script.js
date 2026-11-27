@@ -2452,9 +2452,8 @@ let updateScrollProgress = function () {};
     };
   })();
 
-  // 18b. Live Telemetry Bar in Footer + 18c. Schema X-Ray Overlay (Shift + X)
-  let refreshTelemetryText = null;
-  (function initTelemetryAndXRay() {
+  // 18b. Schema X-Ray Overlay (Shift + X)
+  (function initSchemaXRay() {
     // Assign semantic dbt/DWH labels cleanly without crowding DOM
     const schemaPairs = [
       [".hero", "[MART: fct_candidate_profile]"],
@@ -2485,125 +2484,8 @@ let updateScrollProgress = function () {};
       }
     });
 
-    const footerContent = document.querySelector("footer .footer-content");
-    if (!footerContent || document.getElementById("telemetryBar")) return;
-
-    const bar = document.createElement("div");
-    bar.id = "telemetryBar";
-    bar.className = "telemetry-bar";
-    bar.setAttribute("aria-label", "Portfolio live telemetry");
-    bar.innerHTML = `
-      <span class="telemetry-item"><span class="telemetry-dot" aria-hidden="true"></span><span id="telemetryClock">HCMC &bull; --:-- ICT</span></span>
-      <span aria-hidden="true">|</span>
-      <a class="telemetry-link" id="telemetryCi" href="https://github.com/AOMINHTAM/aws-data-pipeline/actions" target="_blank" rel="noopener noreferrer">AWS CI: --</a>
-      <span aria-hidden="true">|</span>
-      <span class="telemetry-item" id="telemetryPerf">DOM: --</span>
-      <span aria-hidden="true">|</span>
-      <button type="button" class="telemetry-xray-btn" id="telemetryXrayBtn" aria-pressed="false">[Shift+X: Schema]</button>
-      <button type="button" class="telemetry-xray-btn" id="telemetryKeysBtn">[?: Keys]</button>
-    `;
-    footerContent.appendChild(bar);
-
-    const clockEl = document.getElementById("telemetryClock");
-    const ciEl = document.getElementById("telemetryCi");
-    const perfEl = document.getElementById("telemetryPerf");
-    const xrayBtn = document.getElementById("telemetryXrayBtn");
-    const keysBtn = document.getElementById("telemetryKeysBtn");
-
-    function updateClock() {
-      if (!clockEl) return;
-      try {
-        const hhmm = new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Ho_Chi_Minh",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }).format(new Date());
-        clockEl.textContent = `HCMC • ${hhmm} ICT`;
-      } catch (_) {
-        clockEl.textContent = "HCMC • ICT";
-      }
-    }
-    updateClock();
-    setInterval(updateClock, 15000);
-
-    let lastCiData = null;
-    function renderCiStatus() {
-      if (!ciEl) return;
-      const vi = isVi();
-      if (!lastCiData) {
-        ciEl.textContent = vi ? "AWS CI: GitHub Actions ↗" : "AWS CI: GitHub Actions ↗";
-        return;
-      }
-      const shaTag = lastCiData.sha ? ` (#${lastCiData.sha})` : "";
-      if (lastCiData.conclusion === "success") {
-        ciEl.textContent = (vi ? "AWS CI: Đạt" : "AWS CI: Passing") + shaTag;
-        ciEl.classList.add("is-passing");
-        ciEl.classList.remove("is-failing");
-      } else if (lastCiData.conclusion === "failure") {
-        ciEl.textContent = (vi ? "AWS CI: Lỗi" : "AWS CI: Failing") + shaTag;
-        ciEl.classList.add("is-failing");
-        ciEl.classList.remove("is-passing");
-      } else {
-        ciEl.textContent = (vi ? "AWS CI: Hoạt động" : "AWS CI: Active") + shaTag;
-      }
-    }
-
-    (function fetchGithubCi() {
-      const CACHE_KEY = "portfolio_aws_ci_v1";
-      const TTL_MS = 15 * 60 * 1000;
-      try {
-        const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "null");
-        if (cached && Date.now() - cached.ts < TTL_MS) {
-          lastCiData = cached;
-          renderCiStatus();
-          return;
-        }
-      } catch (_) {
-        // ignore storage restrictions
-      }
-
-      fetch("https://api.github.com/repos/AOMINHTAM/aws-data-pipeline/actions/runs?per_page=1", {
-        headers: { Accept: "application/vnd.github+json" },
-      })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          const run = data && Array.isArray(data.workflow_runs) ? data.workflow_runs[0] : null;
-          if (!run) return;
-          lastCiData = {
-            conclusion: run.conclusion || run.status || "completed",
-            sha: (run.head_sha || "").slice(0, 7),
-            ts: Date.now(),
-          };
-          try {
-            sessionStorage.setItem(CACHE_KEY, JSON.stringify(lastCiData));
-          } catch (_) {
-            // ignore storage errors
-          }
-          renderCiStatus();
-        })
-        .catch(() => {
-          renderCiStatus();
-        });
-    })();
-
-    function updatePerfMetric() {
-      if (!perfEl || typeof performance === "undefined" || typeof performance.getEntriesByType !== "function") {
-        return;
-      }
-      const nav = performance.getEntriesByType("navigation")[0];
-      if (!nav) return;
-      const ms = Math.round(nav.loadEventEnd > 0 ? nav.loadEventEnd : nav.domContentLoadedEventEnd);
-      if (ms > 0) {
-        perfEl.textContent = `Load: ${ms}ms`;
-      }
-    }
-    updatePerfMetric();
-    window.addEventListener("load", () => setTimeout(updatePerfMetric, 60));
-
     function toggleXRay() {
       const enabled = document.body.classList.toggle("is-xray-mode");
-      if (xrayBtn) xrayBtn.setAttribute("aria-pressed", String(enabled));
       if (typeof showToast === "function") {
         showToast(
           isVi()
@@ -2618,10 +2500,6 @@ let updateScrollProgress = function () {};
       trackEvent("toggle_schema_xray", { enabled });
     }
 
-    if (xrayBtn) {
-      xrayBtn.addEventListener("click", toggleXRay);
-    }
-
     document.addEventListener("keydown", (e) => {
       if (!e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key !== "X" && e.key !== "x") return;
@@ -2632,31 +2510,9 @@ let updateScrollProgress = function () {};
       e.preventDefault();
       toggleXRay();
     });
-
-    function renderXrayBtnText() {
-      if (xrayBtn) {
-        xrayBtn.textContent = isVi() ? "[Shift+X: Sơ đồ bảng]" : "[Shift+X: Schema]";
-      }
-      if (keysBtn) {
-        keysBtn.textContent = isVi() ? "[?: Phím tắt]" : "[?: Keys]";
-      }
-    }
-
-    if (keysBtn) {
-      keysBtn.addEventListener("click", () => {
-        if (typeof window.__openCheatSheet === "function") window.__openCheatSheet();
-      });
-    }
-
-    refreshTelemetryText = () => {
-      renderCiStatus();
-      renderXrayBtnText();
-    };
-    refreshTelemetryText();
   })();
 
   window.__refreshGlobalWidgets = function () {
-    if (typeof refreshTelemetryText === "function") refreshTelemetryText();
     if (typeof window.__refreshSkillCrossFilter === "function") window.__refreshSkillCrossFilter();
     if (typeof window.__refreshCheatSheet === "function") window.__refreshCheatSheet();
   };
@@ -2750,8 +2606,8 @@ let updateScrollProgress = function () {};
       const vi = isVi();
       banner.hidden = false;
       banner.innerHTML = vi
-        ? `<span>Đang làm nổi bật theo kỹ năng: <strong>${activeTagLabel}</strong> (${lastMatchCount} dự án)</span><button type="button" class="telemetry-xray-btn" id="clearSkillFilterBtn">Xóa lọc &times;</button>`
-        : `<span>Cross-filtering by skill: <strong>${activeTagLabel}</strong> (${lastMatchCount} matches)</span><button type="button" class="telemetry-xray-btn" id="clearSkillFilterBtn">Clear &times;</button>`;
+        ? `<span>Đang làm nổi bật theo kỹ năng: <strong>${activeTagLabel}</strong> (${lastMatchCount} dự án)</span><button type="button" class="skill-clear-btn" id="clearSkillFilterBtn">Xóa lọc &times;</button>`
+        : `<span>Cross-filtering by skill: <strong>${activeTagLabel}</strong> (${lastMatchCount} matches)</span><button type="button" class="skill-clear-btn" id="clearSkillFilterBtn">Clear &times;</button>`;
       const clearBtn = document.getElementById("clearSkillFilterBtn");
       if (clearBtn) {
         clearBtn.addEventListener("click", clearCrossFilter);
