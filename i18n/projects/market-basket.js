@@ -22,8 +22,8 @@ window.__I18N_VI__["market-basket"] = {
   "<strong>Time Range &amp; Currency</strong> Jan 2020 – Dec 2023 (4 Years) &bull; Simulated USD ($)":
     "<strong>Thời gian &amp; Tiền tệ</strong> 01/2020 – 12/2023 (4 năm) &bull; USD mô phỏng ($)",
 
-  "To explore opportunities for increasing Average Order Value (AOV), this analysis replaces generic cross-selling assumptions with Apriori association rule mining across deduplicated order baskets.":
-    "Để tìm cơ hội tăng Giá trị Đơn hàng Trung bình (AOV), phân tích này thay thế các giả định bán chéo cảm tính bằng khai phá luật kết hợp Apriori trên các giỏ hàng đã được khử trùng sản phẩm.",
+  "<strong>Business Pain-Point:</strong> Generic storewide discounts erode gross margin without guaranteeing larger baskets, while intuition-based cross-selling misses real buyer habits. This analysis replaces guesswork with Apriori association rule mining across deduplicated order baskets to design margin-conscious bundles that lift Average Order Value (AOV).":
+    "<strong>Bài toán Kinh doanh:</strong> Giảm giá đại trà toàn sàn làm xói mòn biên lợi nhuận gộp mà không chắc tăng kích thước giỏ hàng, trong khi bán chéo cảm tính bỏ lỡ thói quen mua thật. Phân tích này thay thế suy đoán bằng khai phá luật kết hợp Apriori trên giỏ hàng đã khử trùng để thiết kế các combo tối ưu biên lợi nhuận nhằm tăng Giá trị Đơn hàng Trung bình (AOV).",
   "Perform Exploratory Data Analysis (EDA) on basket size distributions and top-moving categories.":
     "Thực hiện Phân tích Khám phá (EDA) về phân bố kích thước giỏ hàng và các nhóm hàng bán chạy nhất.",
   "Apply the <strong>Apriori Algorithm</strong> to compute Support, Confidence, and Lift for co-occurring product combinations.":

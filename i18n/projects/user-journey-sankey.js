@@ -22,8 +22,8 @@ window.__I18N_VI__["user-journey-sankey"] = {
   "<strong>Time Range &amp; Currency</strong> Mar 2012 – Mar 2015 (3 Years) &bull; USD ($)":
     "<strong>Thời gian &amp; Tiền tệ</strong> 03/2012 – 03/2015 (3 năm) &bull; USD ($)",
 
-  "Standard aggregate bar charts failed to capture how traffic sources filtered into landing pages or the exact product transitions adopted by repeat buyers across multi-touch sessions.":
-    "Các biểu đồ cột tổng hợp thông thường không thể hiện được cách nguồn truy cập phân rẽ qua từng trang đích hay lộ trình chuyển đổi sản phẩm của khách mua lặp lại qua nhiều phiên.",
+  "<strong>Business Pain-Point:</strong> Rising acquisition spend loses ROI when aggregate channel KPIs hide <em>where</em> engaged visitors drop off (desktop vs. mobile) and <em>which</em> product sequences actually drive repeat purchases. Standard bar charts could not map these multi-touch transitions across 1.18M+ pageviews.":
+    "<strong>Bài toán Kinh doanh:</strong> Chi phí thu hút khách hàng bị giảm hiệu quả ROI khi các KPI tổng hợp theo kênh che khuất <em>điểm rơi</em> của người dùng đã tương tác (desktop so với mobile) và không chỉ ra <em>chuỗi sản phẩm</em> nào thực sự tạo đơn mua lại. Biểu đồ cột thông thường không thể mô phỏng các bước chuyển đa chạm này trên hơn 1,18 triệu lượt xem trang.",
   "Build an <strong>Acquisition Sankey Flow:</strong> <code>UTM Source &rarr; Device &rarr; Landing Page &rarr; Conversion / Drop-off</code>.":
     "Xây dựng <strong>Luồng Sankey Thu hút (Acquisition):</strong> <code>UTM Source &rarr; Thiết bị &rarr; Trang đích &rarr; Chuyển đổi / Rời bỏ</code>.",
   "Build a <strong>Retention Sankey Flow:</strong> <code>1st Purchase &rarr; 2nd Purchase &rarr; 3rd Purchase</code>.":

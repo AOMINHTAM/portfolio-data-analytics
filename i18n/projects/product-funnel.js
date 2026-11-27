@@ -22,8 +22,8 @@ window.__I18N_VI__["product-funnel"] = {
   "<strong>Time Range &amp; Currency</strong> Mar 2012 – Mar 2015 (3 Years) &bull; USD ($)":
     "<strong>Thời gian &amp; Tiền tệ</strong> 03/2012 – 03/2015 (3 năm) &bull; USD ($)",
 
-  "To investigate a drop-off gap between top-of-funnel site traffic and completed revenue, this analysis audits product-level conversion steps and refund risks across the browsing-to-purchase journey.":
-    "Để điều tra khoảng hụt chuyển đổi giữa lưu lượng đầu phễu và doanh thu hoàn tất, phân tích này kiểm toán từng bước chuyển đổi theo từng sản phẩm và rủi ro hoàn tiền xuyên suốt hành trình mua sắm.",
+  "<strong>Business Pain-Point:</strong> High top-of-funnel traffic masks checkout friction (~66% cart drop-off), under-exposed high-converting SKUs, and refund-heavy items inflating gross revenue. This analysis audits product-level conversion steps and post-refund net revenue to pinpoint where merchandising and checkout fixes can lift revenue without buying more traffic.":
+    "<strong>Bài toán Kinh doanh:</strong> Lưu lượng đầu phễu lớn đang che lấp điểm nghẽn thanh toán (~66% rơi rụng từ giỏ hàng), các SKU chuyển đổi cao bị ít hiển thị và những sản phẩm hoàn tiền nhiều làm phồng doanh thu gộp. Phân tích này kiểm toán từng bước chuyển đổi theo SKU và doanh thu ròng sau hoàn tiền để chỉ ra điểm cần tối ưu trưng bày và thanh toán mà không phải mua thêm traffic.",
   "Calculate <strong>Net Revenue After Refunds</strong> (<code>Gross Revenue - Refund Amount</code>) across all catalog items.":
     "Tính <strong>Doanh thu Ròng sau Hoàn tiền</strong> (<code>Gross Revenue - Refund Amount</code>) cho toàn bộ danh mục sản phẩm.",
   "Construct sequential session-based conversion funnels tracking unique sessions across milestones: <code>Catalog (/products)</code> &rarr; <code>Product Detail Page (PDP)</code> &rarr; <code>Cart (/cart)</code> &rarr; <code>Order Confirmation (/thank-you-for-your-order)</code>.":

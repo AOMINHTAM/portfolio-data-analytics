@@ -104,7 +104,7 @@
         
         <!-- Problem Statement -->
         <div class="detail-block">
-          <h2>1. Dataset, Scope &amp; Objectives</h2>
+          <h2>1. Business Pain-Points, Dataset &amp; Objectives</h2>
           <div class="scope-box">
             <div class="scope-grid">
               <div class="scope-item">
@@ -126,11 +126,40 @@
             </div>
           </div>
           <p>
-            In production environments, disparate source data often suffers from schema fragmentation, redundant records, and recurrent manual script execution. This leads to fragile operational reporting and inconsistent metrics across downstream consumers.
+            When business analysts and Finance teams query normalized transactional tables manually via ad-hoc SQL scripts, different reports end up using inconsistent join logic, breaking dashboards on schema drift, and delaying KPI refreshes. The goal was to replace fragile manual SQL with an automated, governed ELT platform delivering BI-ready Kimball Star Schema marts (<code>fct_orders</code>) on Snowflake.
           </p>
-          <p>
-            The objective of this project was to architect a fully automated, containerized cloud ELT platform decoupling Snowflake storage/compute from Apache Airflow orchestration, transforming raw TPC-H operational records into clean Kimball Star Schema Data Marts.
-          </p>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Business Pain-Point</th>
+                  <th>Risk to BI &amp; Stakeholders</th>
+                  <th>Engineering Solution</th>
+                  <th>Business Value Delivered</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Repeated Complex Joins &amp; Metric Drift</strong></td>
+                  <td>Analysts rewriting multi-table TPC-H joins produce conflicting revenue and order KPIs across reports.</td>
+                  <td>Medallion Staging (<code>stg_tpch_orders</code>) + pre-joined Kimball Star Schema mart (<code>fct_orders</code>) via dbt SQL &amp; <code>dbt_utils</code>.</td>
+                  <td><strong>Single Source of Truth</strong> enabling consistent self-serve BI reporting.</td>
+                </tr>
+                <tr>
+                  <td><strong>Manual SQL Refreshes &amp; Environment Drift</strong></td>
+                  <td>Scheduled reports stall or break when scripts run out of order or local Python/dbt versions diverge.</td>
+                  <td>Containerized Astro CLI + Airflow + Astronomer Cosmos inside an isolated <code>dbt_venv</code>.</td>
+                  <td><strong>Reproducible, Automated Refreshes</strong> with clear task-level lineage visibility.</td>
+                </tr>
+                <tr>
+                  <td><strong>Silent Broken Dashboards</strong></td>
+                  <td>Duplicate keys or missing foreign keys leak corrupt totals straight into executive dashboards.</td>
+                  <td>Automated <code>unique</code>, <code>not_null</code>, and PK/FK referential gates halting bad runs prior to exposure.</td>
+                  <td><strong>Trustworthy Data Before Reporting</strong>—bad data is blocked upstream.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- System Architecture -->

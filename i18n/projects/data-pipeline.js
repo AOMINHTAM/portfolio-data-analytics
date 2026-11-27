@@ -10,7 +10,7 @@ window.__I18N_VI__["data-pipeline"] = {
   "<strong>Stack:</strong> Snowflake Data Cloud, dbt Core, Apache Airflow, Astronomer Cosmos, Astro CLI, Docker, Python, SQL":
     "<strong>Công nghệ:</strong> Snowflake Data Cloud, dbt Core, Apache Airflow, Astronomer Cosmos, Astro CLI, Docker, Python, SQL",
 
-  "1. Dataset, Scope &amp; Objectives": "1. Tập dữ liệu, Phạm vi &amp; Mục tiêu",
+  "1. Business Pain-Points, Dataset &amp; Objectives": "1. Bài toán Kinh doanh, Dữ liệu &amp; Mục tiêu",
   "<strong>Project Type</strong> Personal Data Engineering Project (Cloud ELT Architecture)":
     "<strong>Loại dự án</strong> Dự án Data Engineering Cá nhân (Kiến trúc Cloud ELT)",
   "<strong>Dataset Source</strong> Snowflake Sample Data (TPC-H Benchmark Schema)":
@@ -20,10 +20,33 @@ window.__I18N_VI__["data-pipeline"] = {
   "<strong>Quality Scope</strong> Schema &amp; referential tests (<code>unique</code>, <code>not_null</code>, FK integrity)":
     "<strong>Phạm vi chất lượng</strong> Kiểm thử schema &amp; tham chiếu (<code>unique</code>, <code>not_null</code>, toàn vẹn khóa ngoại)",
 
-  "In production environments, disparate source data often suffers from schema fragmentation, redundant records, and recurrent manual script execution. This leads to fragile operational reporting and inconsistent metrics across downstream consumers.":
-    "Trong môi trường thực tế, dữ liệu nguồn phân tán thường gặp tình trạng phân mảnh schema, bản ghi dư thừa và phải chạy script thủ công lặp lại. Điều này khiến báo cáo vận hành dễ gãy và sai lệch chỉ số giữa các bộ phận sử dụng dữ liệu.",
-  "The objective of this project was to architect a fully automated, containerized cloud ELT platform decoupling Snowflake storage/compute from Apache Airflow orchestration, transforming raw TPC-H operational records into clean Kimball Star Schema Data Marts.":
-    "Mục tiêu của dự án là thiết kế nền tảng cloud ELT tự động hoàn toàn trong container, tách biệt lưu trữ/tính toán trên Snowflake với điều phối trên Apache Airflow, biến dữ liệu vận hành TPC-H thô thành các bảng Data Mart chuẩn Kimball Star Schema.",
+  "When business analysts and Finance teams query normalized transactional tables manually via ad-hoc SQL scripts, different reports end up using inconsistent join logic, breaking dashboards on schema drift, and delaying KPI refreshes. The goal was to replace fragile manual SQL with an automated, governed ELT platform delivering BI-ready Kimball Star Schema marts (<code>fct_orders</code>) on Snowflake.":
+    "Khi đội ngũ phân tích và Tài chính tự truy vấn các bảng giao dịch chuẩn hóa bằng script SQL rời rạc, các báo cáo dễ dùng logic join khác nhau, gãy dashboard khi đổi schema và chậm làm mới KPI. Mục tiêu của dự án là thay thế script thủ công dễ lỗi bằng nền tảng ELT tự động, có kiểm soát nhằm cung cấp bảng Kimball Star Schema sẵn sàng cho BI (<code>fct_orders</code>) trên Snowflake.",
+  "Business Pain-Point": "Bài toán Kinh doanh",
+  "Risk to BI &amp; Stakeholders": "Rủi ro với BI &amp; Các Bộ phận",
+  "Engineering Solution": "Giải pháp Kỹ thuật",
+  "Business Value Delivered": "Giá trị Kinh doanh Mang lại",
+  "<strong>Repeated Complex Joins &amp; Metric Drift</strong>": "<strong>Join Lặp Lại &amp; Sai lệch Chỉ số</strong>",
+  "Analysts rewriting multi-table TPC-H joins produce conflicting revenue and order KPIs across reports.":
+    "Chuyên viên viết lại phép join nhiều bảng TPC-H dễ tạo ra số liệu doanh thu và đơn hàng mâu thuẫn giữa các báo cáo.",
+  "Medallion Staging (<code>stg_tpch_orders</code>) + pre-joined Kimball Star Schema mart (<code>fct_orders</code>) via dbt SQL &amp; <code>dbt_utils</code>.":
+    "Medallion Staging (<code>stg_tpch_orders</code>) + bảng mart Kimball Star Schema nối sẵn (<code>fct_orders</code>) bằng dbt SQL &amp; <code>dbt_utils</code>.",
+  "<strong>Single Source of Truth</strong> enabling consistent self-serve BI reporting.":
+    "<strong>Nguồn Dữ liệu Chuẩn Duy nhất (SSOT)</strong> phục vụ báo cáo BI tự tra cứu đồng nhất.",
+  "<strong>Manual SQL Refreshes &amp; Environment Drift</strong>": "<strong>Chạy SQL Thủ công &amp; Lệch Môi trường</strong>",
+  "Scheduled reports stall or break when scripts run out of order or local Python/dbt versions diverge.":
+    "Báo cáo định kỳ bị nghẽn hoặc lỗi khi script chạy sai thứ tự hoặc lệch phiên bản Python/dbt.",
+  "Containerized Astro CLI + Airflow + Astronomer Cosmos inside an isolated <code>dbt_venv</code>.":
+    "Đóng gói Astro CLI + Airflow + Astronomer Cosmos trong môi trường <code>dbt_venv</code> độc lập.",
+  "<strong>Reproducible, Automated Refreshes</strong> with clear task-level lineage visibility.":
+    "<strong>Làm mới Tự động, Tái lập được</strong> với khả năng theo dõi lineage chi tiết từng task.",
+  "<strong>Silent Broken Dashboards</strong>": "<strong>Dashboard Hỏng Âm thầm</strong>",
+  "Duplicate keys or missing foreign keys leak corrupt totals straight into executive dashboards.":
+    "Khóa trùng lặp hoặc thiếu khóa ngoại làm số liệu sai lọt thẳng lên dashboard điều hành.",
+  "Automated <code>unique</code>, <code>not_null</code>, and PK/FK referential gates halting bad runs prior to exposure.":
+    "Cổng kiểm thử tự động <code>unique</code>, <code>not_null</code> và toàn vẹn khóa PK/FK chặn lượt chạy lỗi trước khi công bố.",
+  "<strong>Trustworthy Data Before Reporting</strong>—bad data is blocked upstream.":
+    "<strong>Dữ liệu Tin cậy Trước khi Báo cáo</strong>—dữ liệu lỗi bị chặn ngay từ đầu nguồn.",
 
   "2. System Architecture &amp; Workflow": "2. Kiến trúc Hệ thống &amp; Luồng Xử lý",
   "End-to-End Snowflake + dbt Core + Airflow (Astronomer Cosmos) Cloud ELT Architecture. (Click image to zoom)":
