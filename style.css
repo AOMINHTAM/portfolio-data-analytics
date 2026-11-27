@@ -657,6 +657,7 @@ body:not(.light-theme) .btn-amber {
   display: block;
   font-size: 1.05rem;
   font-weight: 800;
+  font-variant-numeric: tabular-nums;
   color: var(--amber-main);
   line-height: 1.25;
 }
@@ -2475,11 +2476,12 @@ body.is-case-study main.section > .container {
   left: 24px;
   bottom: 24px;
   z-index: 1800;
+  overflow: hidden;
   background-color: var(--bg-card);
   color: var(--text-main);
   border: 1px solid var(--amber-main);
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 10px 16px 12px;
   font-size: 0.82rem;
   font-weight: 600;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
@@ -2495,6 +2497,36 @@ body.is-case-study main.section > .container {
 .toast-banner.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.toast-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--amber-main), var(--amber-light));
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+
+.toast-banner.is-counting .toast-progress {
+  animation: toastCountdown 2.4s linear forwards;
+}
+
+@keyframes toastCountdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-progress {
+    animation: none !important;
+  }
 }
 
 .toast-dot {

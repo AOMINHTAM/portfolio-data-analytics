@@ -61,15 +61,20 @@ function showToast(message) {
     _toastEl.className = "toast-banner";
     _toastEl.setAttribute("role", "status");
     _toastEl.setAttribute("aria-live", "polite");
-    _toastEl.innerHTML = '<span class="toast-dot" aria-hidden="true"></span><span class="toast-msg"></span>';
+    _toastEl.innerHTML =
+      '<span class="toast-dot" aria-hidden="true"></span>' +
+      '<span class="toast-msg"></span>' +
+      '<span class="toast-progress" aria-hidden="true"></span>';
     document.body.appendChild(_toastEl);
   }
   const msgEl = _toastEl.querySelector(".toast-msg");
   if (msgEl) msgEl.textContent = message;
-  _toastEl.classList.add("is-visible");
+  _toastEl.classList.remove("is-counting");
+  void _toastEl.offsetWidth;
+  _toastEl.classList.add("is-visible", "is-counting");
   clearTimeout(_toastTimer);
   _toastTimer = setTimeout(() => {
-    if (_toastEl) _toastEl.classList.remove("is-visible");
+    if (_toastEl) _toastEl.classList.remove("is-visible", "is-counting");
   }, 2400);
 }
 
