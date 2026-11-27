@@ -177,4 +177,17 @@ window.__I18N_VI__["aws-data-pipeline"] = {
     "<strong>Lãng phí Compute Nhàn rỗi:</strong> Lịch cron <code>*/5</code> đốt credit warehouse cho các lượt chạy rỗng.",
   "<strong>Silent Failures:</strong> Poison 0-row feeds fail silently without DLQ or email alerts.":
     "<strong>Lỗi Âm thầm:</strong> File lỗi 0 dòng ngưng trệ lặng lẽ, không có DLQ hay cảnh báo email.",
+
+  "FINOPS &amp; SCALE SIMULATOR &bull; ILLUSTRATIVE MODEL":
+    "MÔ PHỎNG FINOPS &amp; QUY MÔ &bull; MÔ HÌNH ƯỚC TÍNH",
+  "Monthly Cost vs. Order Volume (<code>100K &rarr; 50M+</code>)":
+    "Chi phí Hàng tháng theo Sản lượng Đơn (<code>100K &rarr; 50M+</code>)",
+  "Event-Driven Serverless (S3 + SQS + Redshift RPU-s)":
+    "Serverless Hướng sự kiện (S3 + SQS + Redshift RPU-s)",
+  "Always-On 24/7 Cluster / */5 Cron Baseline":
+    "Cụm Cluster Chạy 24/7 / Cron */5 Truyền thống",
+  "<strong>System Design Threshold (50M+ rows/mo):</strong> Single-worker Python CSV header checks and monolithic <code>COPY</code> batches hit memory &amp; runtime bottlenecks at 50M+ scale. Recommended evolution: split Bronze ingest onto <strong>AWS Glue / EMR Spark</strong> writing partitioned <strong>Parquet / Iceberg</strong> on S3 before warehouse serving.":
+    "<strong>Ngưỡng Kiến trúc (50M+ dòng/tháng):</strong> Kiểm tra CSV đơn luồng bằng Python và các batch <code>COPY</code> lớn sẽ chạm giới hạn bộ nhớ &amp; thời gian ở quy mô 50M+. Hướng nâng cấp kiến trúc: tách tầng ingest Bronze sang <strong>AWS Glue / EMR Spark</strong> ghi file <strong>Parquet / Iceberg</strong> phân vùng trên S3 trước khi đưa vào warehouse.",
+  "Illustrative cost estimates assume Redshift Serverless on-demand RPU-seconds, SQS Free Tier (1M req/mo), and <code>dc2.large</code>-class 24/7 cluster comparisons (storage GB/mo &amp; NAT excluded).":
+    "Số liệu ước tính minh họa dựa trên mô hình trả phí theo giây RPU của Redshift Serverless, gói Free Tier SQS (1 triệu req/tháng) và cụm chạy 24/7 chuẩn <code>dc2.large</code> (chưa tính phí lưu trữ GB/tháng &amp; NAT).",
 };

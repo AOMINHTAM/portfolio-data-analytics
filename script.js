@@ -969,6 +969,9 @@ let updateScrollProgress = function () {};
     ".lineage-node--gold span",
     ".compare-badge",
     ".compare-list li",
+    ".finops-bar-label",
+    ".finops-alert",
+    ".finops-disclaimer",
   ];
 
   const _tmpl = document.createElement("template");
@@ -1112,6 +1115,9 @@ let updateScrollProgress = function () {};
     }
     if (typeof window.__refreshAwsWidgets === "function") {
       window.__refreshAwsWidgets();
+    }
+    if (typeof window.__refreshGlobalWidgets === "function") {
+      window.__refreshGlobalWidgets();
     }
     if (typeof updateScrollProgress === "function") updateScrollProgress();
     if (isUserAction) {
@@ -2269,8 +2275,360 @@ let updateScrollProgress = function () {};
     syncSplit(range.value);
   })();
 
+  // 17d. Interactive FinOps & Scale Cost Estimator
+  let refreshFinops = null;
+  (function initFinopsEstimator() {
+    const root = document.getElementById("finopsEstimator");
+    const range = document.getElementById("finopsRange");
+    const scaleBadge = document.getElementById("finopsScaleBadge");
+    const srvCost = document.getElementById("finopsServerlessCost");
+    const clsCost = document.getElementById("finopsClusterCost");
+    const srvBar = document.getElementById("finopsServerlessBar");
+    const clsBar = document.getElementById("finopsClusterBar");
+    const summaryEl = document.getElementById("finopsSummary");
+    const alertEl = document.getElementById("finopsArchAlert");
+    if (!root || !range || !scaleBadge || !srvCost || !clsCost || !srvBar || !clsBar || !summaryEl || !alertEl) {
+      return;
+    }
+
+    const TIERS = [
+      {
+        enBadge: "Scale: 100K orders/mo",
+        viBadge: "Quy mô: 100K đơn/tháng",
+        srvCost: "~$1.80",
+        clsCost: "~$180",
+        srvWidth: 3,
+        clsWidth: 25,
+        alert: false,
+        enSummary:
+          "Baseline Olist volume (~99.4K orders): Event-driven AssetWatcher triggers <strong>0 empty runs</strong> and Redshift pauses to <strong>$0 idle compute</strong> (~99% modeled savings vs. 24/7 cluster).",
+        viSummary:
+          "Quy mô Olist hiện tại (~99.4K đơn): AssetWatcher hướng sự kiện tạo <strong>0 lượt chạy rỗng</strong> và Redshift tự nghỉ ở mức <strong>$0 compute nhàn rỗi</strong> (tiết kiệm ~99% theo mô hình ước tính so với cluster 24/7).",
+      },
+      {
+        enBadge: "Scale: 1M orders/mo",
+        viBadge: "Quy mô: 1M đơn/tháng",
+        srvCost: "~$14",
+        clsCost: "~$180",
+        srvWidth: 6,
+        clsWidth: 25,
+        alert: false,
+        enSummary:
+          "10x Olist scale (1M orders/mo): Redshift Serverless scales for batch bursts then pauses to zero; SQS stays comfortably inside the AWS Free Tier (~92% modeled savings).",
+        viSummary:
+          "Quy mô gấp 10 lần (1M đơn/tháng): Redshift Serverless chỉ tính giây RPU lúc xử lý lô rồi tự ngắt về $0; SQS vẫn nằm gọn trong AWS Free Tier (tiết kiệm ~92% theo ước tính).",
+      },
+      {
+        enBadge: "Scale: 10M orders/mo",
+        viBadge: "Quy mô: 10M đơn/tháng",
+        srvCost: "~$95",
+        clsCost: "~$360",
+        srvWidth: 15,
+        clsWidth: 50,
+        alert: false,
+        enSummary:
+          "100x growth (10M orders/mo): Longer incremental <code>delete+insert</code> runs raise active RPU-seconds, yet still outperform a 24/7 multi-node provisioned warehouse (~74% modeled savings).",
+        viSummary:
+          "Tăng trưởng gấp 100 lần (10M đơn/tháng): Các nhịp incremental <code>delete+insert</code> kéo dài thời gian chạy RPU nhưng vẫn rẻ hơn nhiều so với warehouse chạy liên tục 24/7 (tiết kiệm ~74%).",
+      },
+      {
+        enBadge: "Scale: 50M+ orders/mo",
+        viBadge: "Quy mô: 50M+ đơn/tháng",
+        srvCost: "~$410",
+        clsCost: "~$720",
+        srvWidth: 57,
+        clsWidth: 100,
+        alert: true,
+        enSummary:
+          "500x+ hyper-scale (50M+ orders/mo): Monolithic Python CSV checks saturate single-worker RAM before Redshift COPY starts — triggers the architectural split below.",
+        viSummary:
+          "Siêu quy mô 500x+ (50M+ đơn/tháng): Kiểm tra CSV đơn luồng bằng Python bắt đầu chạm ngưỡng RAM trước khi vào Redshift COPY — kích hoạt cảnh báo tách tầng kiến trúc bên dưới.",
+      },
+    ];
+
+    const presetBtns = Array.from(root.querySelectorAll(".finops-preset[data-finops-idx]"));
+
+    function renderTier(idx, fromUser) {
+      const i = Math.min(TIERS.length - 1, Math.max(0, Number(idx) || 0));
+      const t = TIERS[i];
+      const vi = isVi();
+      range.value = String(i);
+      presetBtns.forEach((b) => {
+        b.classList.toggle("is-active", Number(b.dataset.finopsIdx) === i);
+      });
+      scaleBadge.textContent = vi ? t.viBadge : t.enBadge;
+      scaleBadge.classList.toggle("sim-pill--alarm", t.alert);
+      scaleBadge.classList.toggle("sim-pill--ok", !t.alert);
+      const unit = vi ? "/ tháng" : "/ mo";
+      srvCost.textContent = `${t.srvCost} ${unit}`;
+      clsCost.textContent = `${t.clsCost} ${unit}`;
+      srvBar.style.width = `${t.srvWidth}%`;
+      clsBar.style.width = `${t.clsWidth}%`;
+      summaryEl.innerHTML = vi ? t.viSummary : t.enSummary;
+      alertEl.hidden = !t.alert;
+      if (fromUser) {
+        trackEvent("finops_scale_select", { tier_index: i, label: t.enBadge });
+      }
+    }
+
+    range.addEventListener("input", () => renderTier(range.value, true));
+    presetBtns.forEach((btn) => {
+      btn.addEventListener("click", () => renderTier(btn.dataset.finopsIdx, true));
+    });
+
+    renderTier(range.value, false);
+    refreshFinops = () => renderTier(range.value, false);
+  })();
+
   window.__refreshAwsWidgets = function () {
     if (typeof refreshSimLang === "function") refreshSimLang();
     if (typeof refreshLineage === "function") refreshLineage();
+    if (typeof refreshFinops === "function") refreshFinops();
+  };
+})();
+
+// --- 18. DEVTOOLS CONSOLE EGG, LIVE TELEMETRY BAR & SCHEMA X-RAY OVERLAY ---
+(function initEngineerPolish() {
+  const isVi = () => document.documentElement.lang === "vi";
+  const inProjectsDir = /\/projects\/[^/]+\.html$/i.test((window.location.pathname || "").replace(/\\/g, "/"));
+  const resumeHref = inProjectsDir ? "../assets/Ao-Minh-Tam-Resume.pdf" : "assets/Ao-Minh-Tam-Resume.pdf";
+
+  // 18a. DevTools Console Banner & window.hireTam()
+  (function initDevToolsEgg() {
+    const profile = {
+      candidate: "Ao Minh Tam",
+      role: "Data Engineering / Data Analytics Intern",
+      university: "HCMUNRE (IT Year 3)",
+      flagship: "AWS Event-Driven ELT V5.0.1 (S3 -> SQS/DLQ -> Airflow 3 -> Redshift -> dbt)",
+      email: "aominhtam@gmail.com",
+      github: "https://github.com/AOMINHTAM",
+      quickAction: "Run window.hireTam() in this console to copy email & open CV PDF",
+    };
+
+    try {
+      console.log(
+        "%c AO MINH TAM // CYBER AMBER DATA PORTFOLIO %c  Tip: type hireTam() or press Shift + X for Schema Overlay",
+        "background:#f59e0b;color:#140c00;font-weight:800;padding:4px 8px;border-radius:4px;",
+        "color:#fbbf24;font-weight:600;font-family:monospace;"
+      );
+      console.log("%cProfile Telemetry:", "color:#9ca3af;font-weight:700;", profile);
+    } catch (_) {
+      // Ignore consoles without styling support
+    }
+
+    window.hireTam = function () {
+      const email = "aominhtam@gmail.com";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).catch(() => {});
+      }
+      window.open(resumeHref, "_blank", "noopener,noreferrer");
+      if (typeof showToast === "function") {
+        showToast(
+          isVi()
+            ? "Đã mở CV PDF & sao chép aominhtam@gmail.com!"
+            : "Opened CV PDF & copied aominhtam@gmail.com!"
+        );
+      }
+      return {
+        status: "ready_for_interview",
+        copiedEmail: email,
+        cvOpened: resumeHref,
+      };
+    };
+  })();
+
+  // 18b. Live Telemetry Bar in Footer + 18c. Schema X-Ray Overlay (Shift + X)
+  let refreshTelemetryText = null;
+  (function initTelemetryAndXRay() {
+    // Assign semantic dbt/DWH labels cleanly without crowding DOM
+    const schemaPairs = [
+      [".hero", "[MART: fct_candidate_profile]"],
+      ["#about", "[DIM: dim_summary]"],
+      ["#experience", "[DIM: dim_education_activities]"],
+      ["#architecture", "[STG: stg_tech_stack]"],
+      ["#projects", "[MART: fct_project_case_studies]"],
+      ["#certifications", "[DIM: dim_credentials]"],
+      ["#roadmap", "[SCD2: dim_career_roadmap]"],
+      ["#contact", "[EVENT: contact_cta_stream]"],
+      [".detail-header", "[MART: case_study_metadata]"],
+      [".scope-box", "[SRC: raw_dataset_scope]"],
+      ["#awsPipelineSimulator", "[STREAM: sqs_dlq_simulator]"],
+      ["#dbtLineageExplorer", "[DAG: dbt_lineage_graph]"],
+      ["#beforeAfterSlider", "[DIFF: bronze_vs_gold]"],
+      ["#finopsEstimator", "[FINOPS: rpu_scale_estimator]"],
+      [".case-nav", "[NAV: dim_case_study_links]"],
+    ];
+    schemaPairs.forEach(([sel, label]) => {
+      const el = document.querySelector(sel);
+      if (el && !el.hasAttribute("data-schema-label")) {
+        el.setAttribute("data-schema-label", label);
+      }
+    });
+    document.querySelectorAll(".detail-block").forEach((el, idx) => {
+      if (!el.hasAttribute("data-schema-label")) {
+        el.setAttribute("data-schema-label", `[MDL: section_${idx + 1}]`);
+      }
+    });
+
+    const footerContent = document.querySelector("footer .footer-content");
+    if (!footerContent || document.getElementById("telemetryBar")) return;
+
+    const bar = document.createElement("div");
+    bar.id = "telemetryBar";
+    bar.className = "telemetry-bar";
+    bar.setAttribute("aria-label", "Portfolio live telemetry");
+    bar.innerHTML = `
+      <span class="telemetry-item"><span class="telemetry-dot" aria-hidden="true"></span><span id="telemetryClock">HCMC &bull; --:-- ICT</span></span>
+      <span aria-hidden="true">|</span>
+      <a class="telemetry-link" id="telemetryCi" href="https://github.com/AOMINHTAM/aws-data-pipeline/actions" target="_blank" rel="noopener noreferrer">AWS CI: --</a>
+      <span aria-hidden="true">|</span>
+      <span class="telemetry-item" id="telemetryPerf">DOM: --</span>
+      <span aria-hidden="true">|</span>
+      <button type="button" class="telemetry-xray-btn" id="telemetryXrayBtn" aria-pressed="false">[Shift+X: Schema]</button>
+    `;
+    footerContent.appendChild(bar);
+
+    const clockEl = document.getElementById("telemetryClock");
+    const ciEl = document.getElementById("telemetryCi");
+    const perfEl = document.getElementById("telemetryPerf");
+    const xrayBtn = document.getElementById("telemetryXrayBtn");
+
+    function updateClock() {
+      if (!clockEl) return;
+      try {
+        const hhmm = new Intl.DateTimeFormat("en-GB", {
+          timeZone: "Asia/Ho_Chi_Minh",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }).format(new Date());
+        clockEl.textContent = `HCMC • ${hhmm} ICT`;
+      } catch (_) {
+        clockEl.textContent = "HCMC • ICT";
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 15000);
+
+    let lastCiData = null;
+    function renderCiStatus() {
+      if (!ciEl) return;
+      const vi = isVi();
+      if (!lastCiData) {
+        ciEl.textContent = vi ? "AWS CI: GitHub Actions ↗" : "AWS CI: GitHub Actions ↗";
+        return;
+      }
+      const shaTag = lastCiData.sha ? ` (#${lastCiData.sha})` : "";
+      if (lastCiData.conclusion === "success") {
+        ciEl.textContent = (vi ? "AWS CI: Đạt" : "AWS CI: Passing") + shaTag;
+        ciEl.classList.add("is-passing");
+        ciEl.classList.remove("is-failing");
+      } else if (lastCiData.conclusion === "failure") {
+        ciEl.textContent = (vi ? "AWS CI: Lỗi" : "AWS CI: Failing") + shaTag;
+        ciEl.classList.add("is-failing");
+        ciEl.classList.remove("is-passing");
+      } else {
+        ciEl.textContent = (vi ? "AWS CI: Hoạt động" : "AWS CI: Active") + shaTag;
+      }
+    }
+
+    (function fetchGithubCi() {
+      const CACHE_KEY = "portfolio_aws_ci_v1";
+      const TTL_MS = 15 * 60 * 1000;
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "null");
+        if (cached && Date.now() - cached.ts < TTL_MS) {
+          lastCiData = cached;
+          renderCiStatus();
+          return;
+        }
+      } catch (_) {
+        // ignore storage restrictions
+      }
+
+      fetch("https://api.github.com/repos/AOMINHTAM/aws-data-pipeline/actions/runs?per_page=1", {
+        headers: { Accept: "application/vnd.github+json" },
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          const run = data && Array.isArray(data.workflow_runs) ? data.workflow_runs[0] : null;
+          if (!run) return;
+          lastCiData = {
+            conclusion: run.conclusion || run.status || "completed",
+            sha: (run.head_sha || "").slice(0, 7),
+            ts: Date.now(),
+          };
+          try {
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify(lastCiData));
+          } catch (_) {
+            // ignore storage errors
+          }
+          renderCiStatus();
+        })
+        .catch(() => {
+          renderCiStatus();
+        });
+    })();
+
+    function updatePerfMetric() {
+      if (!perfEl || typeof performance === "undefined" || typeof performance.getEntriesByType !== "function") {
+        return;
+      }
+      const nav = performance.getEntriesByType("navigation")[0];
+      if (!nav) return;
+      const ms = Math.round(nav.loadEventEnd > 0 ? nav.loadEventEnd : nav.domContentLoadedEventEnd);
+      if (ms > 0) {
+        perfEl.textContent = `Load: ${ms}ms`;
+      }
+    }
+    updatePerfMetric();
+    window.addEventListener("load", () => setTimeout(updatePerfMetric, 60));
+
+    function toggleXRay() {
+      const enabled = document.body.classList.toggle("is-xray-mode");
+      if (xrayBtn) xrayBtn.setAttribute("aria-pressed", String(enabled));
+      if (typeof showToast === "function") {
+        showToast(
+          isVi()
+            ? enabled
+              ? "Chế độ Schema X-Ray: BẬT (Shift + X)"
+              : "Chế độ Schema X-Ray: TẮT"
+            : enabled
+              ? "Schema X-Ray Overlay: ON (Shift + X)"
+              : "Schema X-Ray Overlay: OFF"
+        );
+      }
+      trackEvent("toggle_schema_xray", { enabled });
+    }
+
+    if (xrayBtn) {
+      xrayBtn.addEventListener("click", toggleXRay);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (!e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key !== "X" && e.key !== "x") return;
+      const tag = (document.activeElement && document.activeElement.tagName) || "";
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || document.activeElement?.isContentEditable) {
+        return;
+      }
+      e.preventDefault();
+      toggleXRay();
+    });
+
+    function renderXrayBtnText() {
+      if (!xrayBtn) return;
+      xrayBtn.textContent = isVi() ? "[Shift+X: Sơ đồ bảng]" : "[Shift+X: Schema]";
+    }
+
+    refreshTelemetryText = () => {
+      renderCiStatus();
+      renderXrayBtnText();
+    };
+    refreshTelemetryText();
+  })();
+
+  window.__refreshGlobalWidgets = function () {
+    if (typeof refreshTelemetryText === "function") refreshTelemetryText();
   };
 })();

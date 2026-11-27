@@ -395,6 +395,60 @@
             </li>
             <li><strong>Transparent FinOps Mechanics:</strong> Idle compute stays at <strong>$0</strong> when local Astro stops polling (<code>astro dev stop</code>), because Redshift Serverless (4 RPUs) bills RPU-seconds only during active queries and <code>AssetWatcher</code> spawns <strong>0 empty DAG runs</strong>. SQS Long Polling (~104k requests/month if kept running 24/7) fits inside the 1M/month AWS Free Tier, backed by a $5/month AWS Budget alert (persistent S3/Redshift storage billed separately per GB/month).</li>
           </ul>
+
+          <!-- Interactive FinOps & Scale Cost Estimator -->
+          <div class="finops-card" id="finopsEstimator" aria-label="Interactive FinOps and Scale Cost Estimator">
+            <div class="sim-header">
+              <div>
+                <span class="sim-eyebrow">FINOPS &amp; SCALE SIMULATOR &bull; ILLUSTRATIVE MODEL</span>
+                <h3 class="sim-title">Monthly Cost vs. Order Volume (<code>100K &rarr; 50M+</code>)</h3>
+              </div>
+              <span class="sim-pill sim-pill--ok" id="finopsScaleBadge">Scale: 100K orders/mo</span>
+            </div>
+
+            <div class="finops-slider-row">
+              <div class="finops-presets" role="group" aria-label="Select monthly order scale preset">
+                <button type="button" class="finops-preset is-active" data-finops-idx="0">100K</button>
+                <button type="button" class="finops-preset" data-finops-idx="1">1M</button>
+                <button type="button" class="finops-preset" data-finops-idx="2">10M</button>
+                <button type="button" class="finops-preset" data-finops-idx="3">50M+</button>
+              </div>
+              <input type="range" class="finops-range" id="finopsRange" min="0" max="3" step="1" value="0" aria-label="Estimate monthly AWS cost across order volume tiers" />
+            </div>
+
+            <div class="finops-bars">
+              <div class="finops-bar-row">
+                <div class="finops-bar-meta">
+                  <span class="finops-bar-label">Event-Driven Serverless (S3 + SQS + Redshift RPU-s)</span>
+                  <strong class="finops-bar-val" id="finopsServerlessCost">~$1.80 / mo</strong>
+                </div>
+                <div class="finops-track">
+                  <div class="finops-fill finops-fill--amber" id="finopsServerlessBar" style="width: 3%;"></div>
+                </div>
+              </div>
+              <div class="finops-bar-row">
+                <div class="finops-bar-meta">
+                  <span class="finops-bar-label">Always-On 24/7 Cluster / */5 Cron Baseline</span>
+                  <strong class="finops-bar-val" id="finopsClusterCost">~$180 / mo</strong>
+                </div>
+                <div class="finops-track">
+                  <div class="finops-fill finops-fill--muted" id="finopsClusterBar" style="width: 25%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="finops-summary" id="finopsSummary">
+              Baseline Olist volume (~99.4K orders): Event-driven AssetWatcher triggers <strong>0 empty runs</strong> and Redshift pauses to <strong>$0 idle compute</strong> (~99% modeled savings vs. 24/7 cluster).
+            </div>
+
+            <div class="finops-alert" id="finopsArchAlert" hidden>
+              <strong>System Design Threshold (50M+ rows/mo):</strong> Single-worker Python CSV header checks and monolithic <code>COPY</code> batches hit memory &amp; runtime bottlenecks at 50M+ scale. Recommended evolution: split Bronze ingest onto <strong>AWS Glue / EMR Spark</strong> writing partitioned <strong>Parquet / Iceberg</strong> on S3 before warehouse serving.
+            </div>
+
+            <div class="finops-disclaimer">
+              Illustrative cost estimates assume Redshift Serverless on-demand RPU-seconds, SQS Free Tier (1M req/mo), and <code>dc2.large</code>-class 24/7 cluster comparisons (storage GB/mo &amp; NAT excluded).
+            </div>
+          </div>
         </div>
 
         <!-- Live AWS Evidence Gallery -->
