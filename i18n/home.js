@@ -14,8 +14,8 @@ window.__I18N_VI__.home = {
   "Explore DE Projects &rarr;": "Xem Dự án DE &rarr;",
   "📋 Copy Email": "📋 Sao chép Email",
   "Resume (PDF)": "Xem CV (PDF)",
-  "📍 Ho Chi Minh City, Vietnam &bull; Updated Nov 2026":
-    "📍 TP. Hồ Chí Minh, Việt Nam &bull; Cập nhật 11/2026",
+  "📍 Ho Chi Minh City, Vietnam &bull; 2026":
+    "📍 TP. Hồ Chí Minh, Việt Nam &bull; 2026",
   "DATA ANALYTICS &bull; ASPIRING AE": "DATA ANALYTICS &bull; ĐỊNH HƯỚNG AE",
   "Cloud ELT Pipelines": "Pipeline ELT trên Cloud",
   "Flagship Case Studies": "Dự án Trọng tâm",

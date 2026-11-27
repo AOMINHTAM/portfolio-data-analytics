@@ -167,13 +167,16 @@
           var lbl = document.querySelector("#pagePreloader .preloader-label");
           if (lbl) lbl.textContent = "Đang tải";
         }
-        var hasHash = Boolean(window.location.hash && window.location.hash !== "#");
         var navEntries = window.performance && performance.getEntriesByType
           ? performance.getEntriesByType("navigation")
           : [];
         var isReload = navEntries.length && navEntries[0].type === "reload";
         var seenInSession = sessionStorage.getItem("portfolio_preloader_seen") === "1";
-        if (hasHash || (seenInSession && !isReload)) {
+        var cameFromSubpage = Boolean(
+          document.referrer &&
+          document.referrer.indexOf(window.location.origin + "/projects/") === 0
+        );
+        if ((seenInSession || cameFromSubpage) && !isReload) {
           var pre = document.getElementById("pagePreloader");
           if (pre) pre.style.display = "none";
           window.__skipPreloader = true;
@@ -248,7 +251,7 @@
         </div>
 
         <div class="location-tag">
-          📍 Ho Chi Minh City, Vietnam &bull; Updated Nov 2026
+          📍 Ho Chi Minh City, Vietnam &bull; 2026
         </div>
       </div>
 
@@ -905,7 +908,6 @@
   <!-- FOOTER -->
   <footer>
     <div class="container footer-content">
-      <p class="footer-updated">Last Updated: Nov 27, 2026</p>
       <p>&copy; 2026 Ao Minh Tâm. Designed with Cyber Amber Aesthetic.</p>
     </div>
   </footer>
