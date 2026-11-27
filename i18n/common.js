@@ -48,9 +48,9 @@ window.__I18N_VI__.common = {
 
   // 404 Page
   "HOME": "TRANG CHỦ",
-  "HTTP 404 &bull; ROUTE NOT FOUND": "HTTP 404 &bull; KHÔNG TÌM THẤY TRANG",
-  "This page could not be found.": "Không tìm thấy trang này.",
-  "The link you followed may be outdated or misspelled. You can return to the main portfolio or jump directly to the 9 Data Engineering &amp; Analytics case studies.":
-    "Đường dẫn bạn truy cập có thể đã cũ hoặc bị gõ nhầm. Bạn có thể quay về trang chủ portfolio hoặc xem trực tiếp 9 case study Data Engineering &amp; Analytics.",
+  "HTTP 404 &bull; PARTITION NOT FOUND": "HTTP 404 &bull; KHÔNG TÌM THẤY PARTITION",
+  "Query returned 0 rows.": "Truy vấn trả về 0 dòng dữ liệu.",
+  "The requested route or S3 prefix does not exist in this portfolio catalog. Return to the main dashboard or jump directly to the flagship Data Engineering &amp; Analytics case studies.":
+    "Đường dẫn hoặc S3 prefix bạn truy cập không tồn tại trong danh mục portfolio. Bạn có thể quay về trang chủ hoặc xem trực tiếp các case study Data Engineering &amp; Analytics.",
   "Explore Projects &rarr;": "Xem Các Dự Án &rarr;",
 };

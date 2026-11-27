@@ -123,4 +123,58 @@ window.__I18N_VI__["aws-data-pipeline"] = {
   "<strong>SNS Alert Delivery:</strong> Real-time incident notification delivered to Gmail via <code>PipelineAlertTopicPolicy</code> before DLQ Redrive recovery.":
     "<strong>Cảnh báo SNS tức thời:</strong> Thông báo sự cố gửi thẳng về Gmail qua <code>PipelineAlertTopicPolicy</code> trước khi thực hiện DLQ Redrive khôi phục.",
   "LinkedIn Write-up ↗": "Bài phân tích trên LinkedIn ↗",
+
+  "INTERACTIVE SIMULATOR &bull; TEST V5.0.1 FAULT ISOLATION":
+    "MÔ PHỎNG TƯƠNG TÁC &bull; KIỂM THỬ CÔ LẬP LỖI V5.0.1",
+  "Break &amp; Recover the Pipeline": "Giả lập Sự cố &amp; Khôi phục Pipeline",
+  "&#9654; Push Valid Olist Batch": "&#9654; Chạy lô Olist hợp lệ",
+  "&#128165; Inject Corrupt File (Test DLQ)": "&#128165; Bơm file lỗi (Test DLQ)",
+  "&#8635; Redrive DLQ": "&#8635; Khôi phục DLQ",
+  "INGEST": "NẠP DỮ LIỆU",
+  "QUEUE": "HÀNG ĐỢI",
+  "TRIGGER": "KÍCH HOẠT",
+  "ATOMIC SWAP": "HOÁN ĐỔI AN TOÀN",
+  "MARTS &amp; ACK": "BẢNG MART &amp; ACK",
+  "MAX RETRIES = 3": "THỬ LẠI TỐI ĐA = 3",
+  "METRIC BREACH": "VƯỢT NGƯỠNG CHỈ SỐ",
+  "INCIDENT": "CẢNH BÁO SỰ CỐ",
+
+  "INTERACTIVE LINEAGE &bull; DBT DOCS STYLE":
+    "LINEAGE TƯƠNG TÁC &bull; PHONG CÁCH DBT DOCS",
+  "Trace Upstream Sources &amp; Downstream Business KPIs":
+    "Truy vết Nguồn Đầu vào &amp; Chỉ số Kinh doanh Đầu ra",
+  "Hover or click any node": "Rê chuột hoặc bấm vào bất kỳ node nào",
+  "BRONZE (<code>raw_data</code>)": "TẦNG BRONZE (<code>raw_data</code>)",
+  "SILVER (<code>public_staging</code>)": "TẦNG SILVER (<code>public_staging</code>)",
+  "GOLD MARTS &amp; KPIs": "TẦNG GOLD MARTS &amp; KPIs",
+  "Net Revenue &amp; Delivery SLA": "Doanh thu Ròng &amp; SLA Giao hàng",
+  "Cohort LTV (<code>customer_unique_id</code>)": "Giá trị Vòng đời Cohort (<code>customer_unique_id</code>)",
+  "Category &amp; Order Item Mix": "Cơ cấu Danh mục &amp; Sản phẩm",
+
+  "BEFORE / AFTER &bull; DRAG SLIDER TO COMPARE":
+    "TRƯỚC / SAU &bull; KÉO THANH TRƯỢT ĐỂ SO SÁNH",
+  "Raw Olist CSVs &amp; Cron vs. V5.0.1 Star Schema":
+    "CSV Thô &amp; Cron Cố định so với Star Schema V5.0.1",
+  "AFTER &bull; V5.0.1 GOLD STAR SCHEMA": "SAU &bull; GOLD STAR SCHEMA V5.0.1",
+  "BEFORE &bull; RAW CSVs &amp; BATCH CRON": "TRƯỚC &bull; FILE CSV THÔ &amp; CRON",
+  "<strong>Unified Star Schema:</strong> <code>3</code> Gold marts &amp; <code>4</code> BI CSVs (~56 MB) ready for instant BI.":
+    "<strong>Star Schema Thống nhất:</strong> <code>3</code> bảng Gold mart &amp; <code>4</code> file BI CSV (~56 MB) sẵn sàng kết nối BI tức thì.",
+  "<strong>True Repeat-Buyer LTV:</strong> Windowed <code>total_orders</code> &amp; <code>lifetime_spend</code> by <code>customer_unique_id</code>.":
+    "<strong>LTV Khách quay lại chính xác:</strong> Tính window <code>total_orders</code> &amp; <code>lifetime_spend</code> theo <code>customer_unique_id</code>.",
+  "<strong>Atomic Data Safety:</strong> Two-Phase <code>TEMP TABLE</code> swap + header &amp; 0-row guards.":
+    "<strong>An toàn Dữ liệu Nguyên tử:</strong> Hoán đổi 2 pha qua <code>TEMP TABLE</code> + bộ chặn sai header &amp; 0 dòng.",
+  "<strong>Event-Driven FinOps:</strong> S3 &rarr; SQS &rarr; Airflow 3 <code>AssetWatcher</code> (<strong>$0</strong> idle compute).":
+    "<strong>FinOps Hướng sự kiện:</strong> S3 &rarr; SQS &rarr; Airflow 3 <code>AssetWatcher</code> (<strong>$0</strong> compute nhàn rỗi).",
+  "<strong>Fault Isolation:</strong> SQS DLQ + <code>4</code> CloudWatch Alarms + SNS + <strong>11 dbt tests</strong>.":
+    "<strong>Cô lập Sự cố:</strong> SQS DLQ + <code>4</code> CloudWatch Alarms + SNS + <strong>11 dbt tests</strong>.",
+  "<strong>Fragmented Schema:</strong> <code>9</code> raw CSVs (~120 MB) requiring heavy manual joins per report.":
+    "<strong>Schema Phân mảnh:</strong> <code>9</code> file CSV thô (~120 MB) phải join thủ công nặng nề ở mỗi báo cáo.",
+  "<strong>Broken Retention KPI:</strong> Olist resets <code>customer_id</code> per order, hiding repeat buyers.":
+    "<strong>Sai lệch Retention KPI:</strong> Olist cấp lại <code>customer_id</code> sau mỗi đơn, che khuất khách hàng quay lại.",
+  "<strong>Partial-Load Risk:</strong> Unguarded <code>TRUNCATE</code> + <code>COPY</code> wipes tables if load fails mid-batch.":
+    "<strong>Rủi ro Nạp dở dang:</strong> <code>TRUNCATE</code> + <code>COPY</code> thiếu bảo vệ sẽ xóa trắng bảng nếu lỗi giữa lô.",
+  "<strong>Idle Compute Waste:</strong> Fixed <code>*/5</code> cron polling burns warehouse credits on empty runs.":
+    "<strong>Lãng phí Compute Nhàn rỗi:</strong> Lịch cron <code>*/5</code> đốt credit warehouse cho các lượt chạy rỗng.",
+  "<strong>Silent Failures:</strong> Poison 0-row feeds fail silently without DLQ or email alerts.":
+    "<strong>Lỗi Âm thầm:</strong> File lỗi 0 dòng ngưng trệ lặng lẽ, không có DLQ hay cảnh báo email.",
 };

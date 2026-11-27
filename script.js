@@ -107,19 +107,60 @@ syncThemeColorMeta(savedTheme === 'light');
 syncThemeButtonLabel();
 
 if (themeBtn) {
-  themeBtn.addEventListener('click', () => {
-    document.body.classList.toggle('light-theme');
-    const isLight = document.body.classList.contains('light-theme');
+  themeBtn.addEventListener('click', (e) => {
+    const applyThemeChange = () => {
+      document.body.classList.toggle('light-theme');
+      const isLight = document.body.classList.contains('light-theme');
 
-    syncThemeColorMeta(isLight);
-    syncThemeButtonLabel();
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    showToast(
-      currentLang === "vi"
-        ? isLight ? "Đã bật Giao diện Sáng" : "Đã bật Giao diện Tối"
-        : isLight ? "Switched to Light Theme" : "Switched to Dark Theme"
+      syncThemeColorMeta(isLight);
+      syncThemeButtonLabel();
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      showToast(
+        currentLang === "vi"
+          ? isLight ? "Đã bật Giao diện Sáng" : "Đã bật Giao diện Tối"
+          : isLight ? "Switched to Light Theme" : "Switched to Dark Theme"
+      );
+      trackEvent("toggle_theme", { theme: isLight ? "light" : "dark" });
+    };
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (typeof document.startViewTransition !== "function" || reducedMotion) {
+      applyThemeChange();
+      return;
+    }
+
+    const rect = themeBtn.getBoundingClientRect();
+    const x = e.clientX > 0 ? e.clientX : rect.left + rect.width / 2;
+    const y = e.clientY > 0 ? e.clientY : rect.top + rect.height / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
     );
-    trackEvent("toggle_theme", { theme: isLight ? "light" : "dark" });
+
+    document.documentElement.classList.add("is-theme-transitioning");
+    const transition = document.startViewTransition(applyThemeChange);
+
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 480,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          }
+        );
+      })
+      .catch(() => {});
+
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove("is-theme-transitioning");
+    });
   });
 }
 
@@ -306,6 +347,17 @@ let showAllProjects = false;
 function renderProjectsVisibility(animateTransition) {
   if (!filterBtns.length || !projectCards.length) return;
 
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const useFlip = Boolean(animateTransition && !reducedMotion);
+  const firstRects = new Map();
+  if (useFlip) {
+    projectCards.forEach((card) => {
+      if (!card.classList.contains("is-hidden")) {
+        firstRects.set(card, card.getBoundingClientRect().top);
+      }
+    });
+  }
+
   filterBtns.forEach((btn) => {
     const isMatch = btn.getAttribute("data-filter") === currentFilter;
     btn.classList.toggle("active", isMatch);
@@ -313,6 +365,9 @@ function renderProjectsVisibility(animateTransition) {
   });
 
   let visibleIndex = 0;
+  const newlyShown = [];
+  const stayedVisible = [];
+
   projectCards.forEach((card) => {
     const categories = (card.getAttribute("data-categories") || "").split(/\s+/);
     const isFeatured = card.getAttribute("data-featured") === "true";
@@ -324,18 +379,48 @@ function renderProjectsVisibility(animateTransition) {
       shouldShow = categories.includes(currentFilter);
     }
 
+    const wasVisible = firstRects.has(card);
     card.classList.toggle("is-hidden", !shouldShow);
 
-    if (shouldShow && animateTransition) {
+    if (shouldShow && useFlip) {
       card.classList.remove("reveal-item", "is-revealed", "reveal-done", "is-filter-enter");
-      void card.offsetWidth;
-      card.style.setProperty("--filter-delay", `${Math.min(visibleIndex * 45, 270)}ms`);
-      card.classList.add("is-filter-enter");
+      if (wasVisible) {
+        stayedVisible.push(card);
+      } else {
+        newlyShown.push({ card, index: visibleIndex });
+      }
       visibleIndex += 1;
     } else if (!shouldShow) {
       card.classList.remove("is-filter-enter");
     }
   });
+
+  if (useFlip) {
+    // FLIP Play for cards that remained visible and shifted position
+    stayedVisible.forEach((card) => {
+      const firstTop = firstRects.get(card);
+      const lastTop = card.getBoundingClientRect().top;
+      const dy = firstTop - lastTop;
+      if (Math.abs(dy) > 1) {
+        card.style.transition = "none";
+        card.style.transform = `translateY(${dy}px)`;
+        void card.offsetWidth;
+        card.style.transition = "transform 0.38s cubic-bezier(0.22, 1, 0.36, 1)";
+        card.style.transform = "translateY(0)";
+        setTimeout(() => {
+          card.style.transition = "";
+          card.style.transform = "";
+        }, 400);
+      }
+    });
+
+    // Smooth enter for newly revealed cards
+    newlyShown.forEach(({ card, index }) => {
+      void card.offsetWidth;
+      card.style.setProperty("--filter-delay", `${Math.min(index * 45, 270)}ms`);
+      card.classList.add("is-filter-enter");
+    });
+  }
 
   if (toggleProjectsWrap && toggleProjectsBtn) {
     if (currentFilter === "all") {
@@ -872,9 +957,18 @@ let updateScrollProgress = function () {};
     ".detail-card .project-actions a",
     ".case-nav-dir",
     ".case-nav-title",
+    ".not-found-badge",
     ".not-found-desc",
     "table th",
     "table td",
+    ".sim-eyebrow",
+    ".sim-controls button",
+    ".sim-node span",
+    ".lineage-hint",
+    ".lineage-col-label",
+    ".lineage-node--gold span",
+    ".compare-badge",
+    ".compare-list li",
   ];
 
   const _tmpl = document.createElement("template");
@@ -1015,6 +1109,9 @@ let updateScrollProgress = function () {};
     }
     if (typeof window.__refreshCaseStudyMeta === "function") {
       window.__refreshCaseStudyMeta();
+    }
+    if (typeof window.__refreshAwsWidgets === "function") {
+      window.__refreshAwsWidgets();
     }
     if (typeof updateScrollProgress === "function") updateScrollProgress();
     if (isUserAction) {
@@ -1591,5 +1688,559 @@ let updateScrollProgress = function () {};
     renderReadTime();
     buildOrRefreshToc();
     updateActiveToc();
+  };
+})();
+
+// --- 17. AWS V5.0.1 SIMULATOR, DBT LINEAGE & BEFORE/AFTER SLIDER ---
+(function initAwsInteractiveWidgets() {
+  const isVi = () => document.documentElement.lang === "vi";
+
+  // 17a. Interactive V5.0.1 CloudOps Pipeline Simulator
+  let refreshSimLang = null;
+  (function initAwsPipelineSimulator() {
+    const root = document.getElementById("awsPipelineSimulator");
+    if (!root) return;
+
+    const dlqBadge = document.getElementById("simDlqBadge");
+    const cwBadge = document.getElementById("simCwBadge");
+    const costBadge = document.getElementById("simCostBadge");
+    const btnValid = document.getElementById("simBtnValid");
+    const btnCorrupt = document.getElementById("simBtnCorrupt");
+    const btnRedrive = document.getElementById("simBtnRedrive");
+    const consoleEl = document.getElementById("simConsole");
+    if (!dlqBadge || !cwBadge || !costBadge || !btnValid || !btnCorrupt || !btnRedrive || !consoleEl) return;
+
+    let timers = [];
+    let dlqCount = 0;
+    let inAlarm = false;
+    let hasExecuted = false;
+
+    function clearTimers() {
+      timers.forEach((id) => clearTimeout(id));
+      timers = [];
+    }
+
+    function scheduleStep(delay, fn) {
+      const id = setTimeout(fn, delay);
+      timers.push(id);
+    }
+
+    function clearVisuals() {
+      root.querySelectorAll("[data-sim-node]").forEach((el) => {
+        el.classList.remove("is-active", "is-success", "is-fault");
+      });
+      root.querySelectorAll("[data-sim-edge]").forEach((el) => {
+        el.classList.remove("is-active", "is-fault");
+      });
+    }
+
+    function setNodeState(key, state) {
+      const el = root.querySelector(`[data-sim-node="${key}"]`);
+      if (!el) return;
+      el.classList.remove("is-active", "is-success", "is-fault");
+      if (state) el.classList.add(state);
+    }
+
+    function setEdgeState(key, state) {
+      const el = root.querySelector(`[data-sim-edge="${key}"]`);
+      if (!el) return;
+      el.classList.remove("is-active", "is-fault");
+      if (state) el.classList.add(state);
+    }
+
+    function updateBadges() {
+      dlqBadge.textContent = `SQS DLQ: ${dlqCount}`;
+      dlqBadge.classList.toggle("sim-pill--alarm", dlqCount > 0);
+      dlqBadge.classList.toggle("sim-pill--ok", dlqCount === 0 && hasExecuted);
+
+      cwBadge.textContent = `CloudWatch: ${inAlarm ? "ALARM" : "OK"}`;
+      cwBadge.classList.toggle("sim-pill--alarm", inAlarm);
+      cwBadge.classList.toggle("sim-pill--ok", !inAlarm);
+
+      costBadge.textContent = isVi() ? "Compute nhàn rỗi: $0.00" : "Idle Compute: $0.00";
+      btnRedrive.disabled = dlqCount === 0;
+      btnRedrive.classList.toggle("is-ready", dlqCount > 0);
+    }
+
+    function appendLog(text, tone) {
+      const line = document.createElement("div");
+      line.className = `sim-log-line${tone ? ` sim-log-${tone}` : ""}`;
+      line.textContent = text;
+      consoleEl.appendChild(line);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function renderIdlePrompt() {
+      consoleEl.innerHTML = "";
+      appendLog(
+        isVi()
+          ? '[sẵn sàng] Bấm "Chạy lô Olist hợp lệ" hoặc "Bơm file lỗi (Test DLQ)" để mô phỏng luồng chạy V5.0.1.'
+          : '[ready] Click "Push Valid Olist Batch" or "Inject Corrupt File" to simulate V5.0.1 runtime behavior.',
+        "muted"
+      );
+    }
+
+    btnValid.addEventListener("click", () => {
+      hasExecuted = true;
+      clearTimers();
+      clearVisuals();
+      consoleEl.innerHTML = "";
+      const vi = isVi();
+
+      scheduleStep(0, () => {
+        setNodeState("s3", "is-active");
+        appendLog(
+          vi
+            ? "[00ms] S3 PutObject: olist/raw/2026_batch/ (99.441 đơn) -> s3:ObjectCreated:*"
+            : "[00ms] S3 PutObject: olist/raw/2026_batch/ (99,441 orders) -> s3:ObjectCreated:*"
+        );
+      });
+      scheduleStep(280, () => {
+        setNodeState("s3", "is-success");
+        setEdgeState("s3-sqs", "is-active");
+        setNodeState("sqs", "is-active");
+        appendLog(
+          vi
+            ? "[280ms] SQS Main Queue: AssetWatcher 20s Long Poll nhận 1 batch (VisibilityTimeout=900s)."
+            : "[280ms] SQS Main Queue: AssetWatcher 20s Long Poll dequeued 1 batch message (VisibilityTimeout=900s)."
+        );
+      });
+      scheduleStep(580, () => {
+        setNodeState("sqs", "is-success");
+        setEdgeState("sqs-airflow", "is-active");
+        setNodeState("airflow", "is-active");
+        appendLog(
+          vi
+            ? "[580ms] Airflow 3 AssetWatcher: TriggeringAssetEventsAccessor (Mapping) kích hoạt DAG; 0 lượt cron rỗng."
+            : "[580ms] Airflow 3 AssetWatcher: TriggeringAssetEventsAccessor (Mapping) triggered DAG run; 0 empty cron runs."
+        );
+      });
+      scheduleStep(900, () => {
+        setNodeState("airflow", "is-success");
+        setEdgeState("airflow-redshift", "is-active");
+        setNodeState("redshift", "is-active");
+        appendLog(
+          vi
+            ? "[900ms] Redshift Hoán đổi 2 Pha: Đã kiểm tra header CSV & TEMP TABLE (>0 dòng) -> COMMIT (DELETE + INSERT) -> SWAPPED."
+            : "[900ms] Redshift Two-Phase Swap: Validated CSV headers + non-empty TEMP TABLEs -> COMMIT (DELETE + INSERT) -> SWAPPED."
+        );
+      });
+      scheduleStep(1240, () => {
+        setNodeState("redshift", "is-success");
+        setEdgeState("redshift-dbt", "is-active");
+        setNodeState("dbt", "is-success");
+        updateBadges();
+        appendLog(
+          vi
+            ? "[1240ms] dbt Core & Safe ACK: 11 dbt schema tests ĐẠT -> ops.pipeline_ingestion_audit = COMPLETED -> SQS DeleteMessage ACK."
+            : "[1240ms] dbt Core & Safe ACK: 11 dbt schema tests OK -> ops.pipeline_ingestion_audit = COMPLETED -> SQS DeleteMessage ACK."
+        );
+      });
+      scheduleStep(1520, () => {
+        appendLog(
+          vi
+            ? "[hoàn tất] 17/17 tasks đạt (200 OK) | Redshift tạm nghỉ -> Compute nhàn rỗi: $0.00"
+            : "[done] 17/17 tasks passed (200 OK) | Redshift paused -> Idle Compute: $0.00",
+          "ok"
+        );
+      });
+
+      trackEvent("simulator_run", { mode: "valid_batch", page: "aws-data-pipeline" });
+    });
+
+    btnCorrupt.addEventListener("click", () => {
+      hasExecuted = true;
+      clearTimers();
+      clearVisuals();
+      consoleEl.innerHTML = "";
+      const vi = isVi();
+
+      scheduleStep(0, () => {
+        setNodeState("s3", "is-active");
+        appendLog(
+          vi
+            ? "[00ms] S3 PutObject: olist/raw/poison_empty_orders.csv (0 dòng dữ liệu)."
+            : "[00ms] S3 PutObject: olist/raw/poison_empty_orders.csv (0 data rows)."
+        );
+      });
+      scheduleStep(260, () => {
+        setNodeState("s3", "is-success");
+        setEdgeState("s3-sqs", "is-active");
+        setNodeState("sqs", "is-active");
+        appendLog(
+          vi
+            ? "[260ms] SQS -> Airflow: Nhận message, chạy Task 1 CSV Header & Empty-Stage Guard."
+            : "[260ms] SQS -> Airflow: Dequeued message, running Task 1 CSV Header & Empty-Stage Guard."
+        );
+      });
+      scheduleStep(560, () => {
+        setEdgeState("s3-sqs", null);
+        setNodeState("sqs", "is-fault");
+        setNodeState("airflow", "is-fault");
+        appendLog(
+          vi
+            ? "[560ms] [LỖI] ensure_non_empty_stage() báo ValueError (0 dòng)! Đã rollback Redshift; bảng đích nguyên vẹn."
+            : "[560ms] [ERROR] ensure_non_empty_stage() raised ValueError (0 rows)! Redshift rolled back; target tables untouched.",
+          "err"
+        );
+      });
+      scheduleStep(900, () => {
+        setEdgeState("sqs-airflow", "is-fault");
+        appendLog(
+          vi
+            ? "[900ms] SQS Redelivery: Giữ nguyên ACK -> thử lại 3/3 lần (maxReceiveCount=3) -> chuyển file lỗi sang SQS DLQ."
+            : "[900ms] SQS Redelivery: ACK withheld -> retried 3/3 times (maxReceiveCount=3) -> routing poison batch to SQS DLQ.",
+          "warn"
+        );
+      });
+      scheduleStep(1220, () => {
+        dlqCount += 1;
+        inAlarm = true;
+        setNodeState("dlq", "is-fault");
+        updateBadges();
+        appendLog(
+          vi
+            ? `[1220ms] SQS DLQ: Đã cô lập batch lỗi an toàn (Số tin trong DLQ = ${dlqCount}).`
+            : `[1220ms] SQS DLQ: Poison batch isolated safely (DLQ depth = ${dlqCount}).`,
+          "err"
+        );
+      });
+      scheduleStep(1520, () => {
+        setEdgeState("dlq-cw", "is-fault");
+        setNodeState("cw", "is-fault");
+        appendLog(
+          vi
+            ? "[1520ms] CloudWatch Alarm: ApproximateNumberOfMessagesVisible >= 1 -> Chuyển trạng thái OK -> ALARM."
+            : "[1520ms] CloudWatch Alarm: ApproximateNumberOfMessagesVisible >= 1 -> State changed OK -> ALARM.",
+          "err"
+        );
+      });
+      scheduleStep(1820, () => {
+        setEdgeState("cw-sns", "is-fault");
+        setNodeState("sns", "is-fault");
+        appendLog(
+          vi
+            ? '[1820ms] SNS Topic: Đã gửi email cảnh báo sự cố tới Gmail. Bấm "Khôi phục DLQ" để chạy lại.'
+            : '[1820ms] SNS Topic: Dispatched real-time incident email alert. Click "Redrive DLQ" to recover.',
+          "warn"
+        );
+      });
+
+      trackEvent("simulator_run", { mode: "inject_corrupt", page: "aws-data-pipeline" });
+    });
+
+    btnRedrive.addEventListener("click", () => {
+      if (dlqCount === 0) return;
+      hasExecuted = true;
+      clearTimers();
+      clearVisuals();
+      consoleEl.innerHTML = "";
+      const vi = isVi();
+
+      scheduleStep(0, () => {
+        setNodeState("dlq", "is-active");
+        appendLog(
+          vi
+            ? "[00ms] Thao tác vận hành: Đã thay file CSV chuẩn lên S3; kích hoạt SQS DLQ Redrive -> Main Queue."
+            : "[00ms] Operator Action: Replaced bad CSV on S3; initiated SQS DLQ Redrive -> Main Queue.",
+          "warn"
+        );
+      });
+      scheduleStep(350, () => {
+        dlqCount = 0;
+        updateBadges();
+        setNodeState("dlq", "is-success");
+        setNodeState("sqs", "is-active");
+        appendLog(
+          vi
+            ? "[350ms] SQS Main Queue: Nạp lại message khôi phục và ánh xạ idempotent vào cùng audit_id."
+            : "[350ms] SQS Main Queue: Re-ingested recovered message deterministically mapped to original audit_id."
+        );
+      });
+      scheduleStep(700, () => {
+        setNodeState("sqs", "is-success");
+        setEdgeState("sqs-airflow", "is-active");
+        setNodeState("airflow", "is-active");
+        appendLog(
+          vi
+            ? "[700ms] Airflow 3: Task 1 + verify_safe_to_ack_when_raw_missing() vượt qua kiểm tra an toàn."
+            : "[700ms] Airflow 3: Task 1 + verify_safe_to_ack_when_raw_missing() safety gate passed."
+        );
+      });
+      scheduleStep(1050, () => {
+        setNodeState("airflow", "is-success");
+        setEdgeState("airflow-redshift", "is-active");
+        setNodeState("redshift", "is-success");
+        appendLog(
+          vi
+            ? "[1050ms] Redshift & Sổ Audit: Trạng thái chuyển FAILED -> SWAPPED -> ARCHIVED -> COMPLETED."
+            : "[1050ms] Redshift & Audit Ledger: State transitioned FAILED -> SWAPPED -> ARCHIVED -> COMPLETED.",
+          "ok"
+        );
+      });
+      scheduleStep(1380, () => {
+        inAlarm = false;
+        setEdgeState("redshift-dbt", "is-active");
+        setNodeState("dbt", "is-success");
+        setNodeState("cw", "is-success");
+        updateBadges();
+        appendLog(
+          vi
+            ? "[1380ms] Khôi phục hoàn tất: CloudWatch về OK | DLQ = 0 | Compute nhàn rỗi: $0.00."
+            : "[1380ms] Recovery Complete: CloudWatch Alarms back to OK | DLQ = 0 | Idle Compute: $0.00.",
+          "ok"
+        );
+      });
+
+      trackEvent("simulator_run", { mode: "redrive_dlq", page: "aws-data-pipeline" });
+    });
+
+    updateBadges();
+    refreshSimLang = () => {
+      updateBadges();
+      if (!hasExecuted) renderIdlePrompt();
+    };
+  })();
+
+  // 17b. Interactive dbt-Style Data Lineage Explorer
+  let refreshLineage = null;
+  (function initDbtLineageExplorer() {
+    const root = document.getElementById("dbtLineageExplorer");
+    const stageEl = document.getElementById("lineageStage");
+    const colsEl = stageEl ? stageEl.querySelector(".lineage-cols") : null;
+    const svgEl = document.getElementById("lineageSvg");
+    const infoEl = document.getElementById("lineageInfo");
+    if (!root || !stageEl || !colsEl || !svgEl || !infoEl) return;
+
+    const EDGES = [
+      ["raw_orders", "stg_orders"],
+      ["raw_items", "stg_items"],
+      ["raw_payments", "stg_payments"],
+      ["raw_reviews", "stg_reviews"],
+      ["raw_customers", "stg_customers"],
+      ["stg_orders", "fct_orders"],
+      ["stg_items", "fct_orders"],
+      ["stg_payments", "fct_orders"],
+      ["stg_reviews", "fct_orders"],
+      ["stg_customers", "dim_customers"],
+      ["stg_orders", "dim_customers"],
+      ["stg_items", "mart_products"],
+    ];
+
+    const NODE_INFO = {
+      raw_orders: {
+        en: "<strong>Bronze <code>raw_orders</code></strong> &rarr; Order timestamps & status &rarr; feeds <code>fct_orders</code> & <code>dim_customers</code>.",
+        vi: "<strong>Bronze <code>raw_orders</code></strong> &rarr; Mốc thời gian & trạng thái đơn &rarr; cấp dữ liệu cho <code>fct_orders</code> & <code>dim_customers</code>.",
+      },
+      raw_items: {
+        en: "<strong>Bronze <code>raw_order_items</code></strong> &rarr; Line-item price & freight &rarr; feeds <code>fct_orders</code> & <code>mart_product_sales</code>.",
+        vi: "<strong>Bronze <code>raw_order_items</code></strong> &rarr; Giá sản phẩm & phí vận chuyển từng dòng &rarr; nuôi <code>fct_orders</code> & <code>mart_product_sales</code>.",
+      },
+      raw_payments: {
+        en: "<strong>Bronze <code>raw_payments</code></strong> &rarr; Multi-installment payment value &rarr; reconciled into <code>fct_orders</code>.",
+        vi: "<strong>Bronze <code>raw_payments</code></strong> &rarr; Giá trị thanh toán nhiều kỳ &rarr; đối soát vào <code>fct_orders</code>.",
+      },
+      raw_reviews: {
+        en: "<strong>Bronze <code>raw_reviews</code></strong> &rarr; Customer 1–5 review scores &rarr; linked to delivery SLA in <code>fct_orders</code>.",
+        vi: "<strong>Bronze <code>raw_reviews</code></strong> &rarr; Điểm đánh giá 1–5 sao &rarr; gắn với SLA giao hàng tại <code>fct_orders</code>.",
+      },
+      raw_customers: {
+        en: "<strong>Bronze <code>raw_customers</code></strong> &rarr; Zip/state geo & surrogate IDs &rarr; feeds <code>dim_customers</code>.",
+        vi: "<strong>Bronze <code>raw_customers</code></strong> &rarr; Mã vùng & ID thay thế &rarr; cấp dữ liệu cho <code>dim_customers</code>.",
+      },
+      stg_orders: {
+        en: "<strong>Silver <code>stg_orders</code></strong> &rarr; Cleaned status & delivery SLA timestamps &rarr; used by <code>fct_orders</code> & <code>dim_customers</code>.",
+        vi: "<strong>Silver <code>stg_orders</code></strong> &rarr; Chuẩn hóa trạng thái & mốc giao hàng &rarr; dùng bởi <code>fct_orders</code> & <code>dim_customers</code>.",
+      },
+      stg_items: {
+        en: "<strong>Silver <code>stg_order_items</code></strong> &rarr; Order-level GMV & unit aggregates &rarr; shared by <code>fct_orders</code> & <code>mart_product_sales</code>.",
+        vi: "<strong>Silver <code>stg_order_items</code></strong> &rarr; Tổng hợp GMV & số lượng theo đơn &rarr; dùng chung cho <code>fct_orders</code> & <code>mart_product_sales</code>.",
+      },
+      stg_payments: {
+        en: "<strong>Silver <code>stg_payments</code></strong> &rarr; Summed installments per <code>order_id</code> &rarr; <code>fct_orders</code>.",
+        vi: "<strong>Silver <code>stg_payments</code></strong> &rarr; Cộng gộp các kỳ thanh toán theo <code>order_id</code> &rarr; <code>fct_orders</code>.",
+      },
+      stg_reviews: {
+        en: "<strong>Silver <code>stg_reviews</code></strong> &rarr; Deduplicated latest score per order &rarr; <code>fct_orders</code>.",
+        vi: "<strong>Silver <code>stg_reviews</code></strong> &rarr; Lọc trùng lấy điểm đánh giá mới nhất mỗi đơn &rarr; <code>fct_orders</code>.",
+      },
+      stg_customers: {
+        en: "<strong>Silver <code>stg_customers</code></strong> &rarr; Preserves <code>customer_id</code> + maps true <code>customer_unique_id</code> &rarr; <code>dim_customers</code>.",
+        vi: "<strong>Silver <code>stg_customers</code></strong> &rarr; Giữ <code>customer_id</code> & ánh xạ <code>customer_unique_id</code> &rarr; <code>dim_customers</code>.",
+      },
+      fct_orders: {
+        en: "<strong>Gold <code>fct_orders</code></strong> (<code>delete+insert</code>) &larr; Traces <code>affected_order_ids</code> across all 4 upstream tables to capture late order updates (&gt;3 days).",
+        vi: "<strong>Gold <code>fct_orders</code></strong> (<code>delete+insert</code>) &larr; Quét <code>affected_order_ids</code> trên cả 4 bảng nguồn để bắt kịp cập nhật đơn muộn (&gt;3 ngày).",
+      },
+      dim_customers: {
+        en: "<strong>Gold <code>dim_customers</code></strong> (99,441 rows) &larr; Keeps 1:1 <code>customer_id</code> Star Schema join while window-aggregating cohort LTV by <code>customer_unique_id</code>.",
+        vi: "<strong>Gold <code>dim_customers</code></strong> (99.441 dòng) &larr; Giữ join Star Schema 1:1 theo <code>customer_id</code> và cộng dồn LTV theo <code>customer_unique_id</code>.",
+      },
+      mart_products: {
+        en: "<strong>Gold <code>mart_product_sales</code></strong> &larr; Downstream category, SKU velocity & order item revenue mix built from <code>stg_order_items</code>.",
+        vi: "<strong>Gold <code>mart_product_sales</code></strong> &larr; Bảng mart danh mục, tốc độ bán SKU và cơ cấu doanh thu sản phẩm từ <code>stg_order_items</code>.",
+      },
+    };
+
+    const upAdj = new Map();
+    const downAdj = new Map();
+    EDGES.forEach(([u, v]) => {
+      if (!downAdj.has(u)) downAdj.set(u, []);
+      if (!upAdj.has(v)) upAdj.set(v, []);
+      downAdj.get(u).push(v);
+      upAdj.get(v).push(u);
+    });
+
+    function collectReachable(startId) {
+      const nodes = new Set([startId]);
+      const upQ = [startId];
+      while (upQ.length) {
+        const cur = upQ.shift();
+        (upAdj.get(cur) || []).forEach((prev) => {
+          if (!nodes.has(prev)) {
+            nodes.add(prev);
+            upQ.push(prev);
+          }
+        });
+      }
+      const downQ = [startId];
+      while (downQ.length) {
+        const cur = downQ.shift();
+        (downAdj.get(cur) || []).forEach((next) => {
+          if (!nodes.has(next)) {
+            nodes.add(next);
+            downQ.push(next);
+          }
+        });
+      }
+      return nodes;
+    }
+
+    const nodeEls = Array.from(root.querySelectorAll("[data-lineage-id]"));
+    let pinnedId = null;
+    let activeId = null;
+
+    function drawEdges() {
+      const colsRect = colsEl.getBoundingClientRect();
+      if (!colsRect.width || !colsRect.height) return;
+
+      svgEl.style.left = `${colsEl.offsetLeft}px`;
+      svgEl.style.top = `${colsEl.offsetTop}px`;
+      svgEl.style.width = `${colsRect.width}px`;
+      svgEl.style.height = `${colsRect.height}px`;
+      svgEl.setAttribute("viewBox", `0 0 ${colsRect.width} ${colsRect.height}`);
+      svgEl.innerHTML = "";
+
+      const ns = "http://www.w3.org/2000/svg";
+      EDGES.forEach(([fromId, toId]) => {
+        const fromEl = root.querySelector(`[data-lineage-id="${fromId}"]`);
+        const toEl = root.querySelector(`[data-lineage-id="${toId}"]`);
+        if (!fromEl || !toEl) return;
+
+        const r1 = fromEl.getBoundingClientRect();
+        const r2 = toEl.getBoundingClientRect();
+        const x1 = r1.right - colsRect.left;
+        const y1 = r1.top - colsRect.top + r1.height / 2;
+        const x2 = r2.left - colsRect.left;
+        const y2 = r2.top - colsRect.top + r2.height / 2;
+        const dx = Math.max(24, (x2 - x1) * 0.5);
+
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("class", "lineage-path");
+        path.setAttribute("data-from", fromId);
+        path.setAttribute("data-to", toId);
+        path.setAttribute("d", `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+        svgEl.appendChild(path);
+      });
+
+      if (activeId) applyHighlight(activeId);
+    }
+
+    function updateInfoBar(id) {
+      const vi = isVi();
+      if (!id || !NODE_INFO[id]) {
+        infoEl.innerHTML = vi
+          ? "Chọn hoặc rê chuột vào bảng Gold (ví dụ: <code>fct_orders</code>) để truy vết đầy đủ từ Bronze &rarr; Silver."
+          : "Select or hover a Gold mart (e.g. <code>fct_orders</code>) to trace its exact Bronze &rarr; Silver lineage.";
+        return;
+      }
+      infoEl.innerHTML = vi ? NODE_INFO[id].vi : NODE_INFO[id].en;
+    }
+
+    function applyHighlight(id) {
+      activeId = id;
+      const paths = svgEl.querySelectorAll(".lineage-path");
+      if (!id) {
+        nodeEls.forEach((n) => n.classList.remove("is-highlighted", "is-dimmed"));
+        paths.forEach((p) => p.classList.remove("is-highlighted", "is-dimmed"));
+        updateInfoBar(null);
+        return;
+      }
+
+      const reachable = collectReachable(id);
+      nodeEls.forEach((el) => {
+        const nid = el.getAttribute("data-lineage-id");
+        const on = reachable.has(nid);
+        el.classList.toggle("is-highlighted", on);
+        el.classList.toggle("is-dimmed", !on);
+      });
+
+      paths.forEach((p) => {
+        const u = p.getAttribute("data-from");
+        const v = p.getAttribute("data-to");
+        const on = reachable.has(u) && reachable.has(v);
+        p.classList.toggle("is-highlighted", on);
+        p.classList.toggle("is-dimmed", !on);
+      });
+
+      updateInfoBar(id);
+    }
+
+    nodeEls.forEach((el) => {
+      const id = el.getAttribute("data-lineage-id");
+      el.addEventListener("mouseenter", () => applyHighlight(id));
+      el.addEventListener("focus", () => applyHighlight(id));
+      el.addEventListener("click", () => {
+        pinnedId = pinnedId === id ? null : id;
+        applyHighlight(pinnedId);
+        trackEvent("lineage_explore", { node: id, page: "aws-data-pipeline" });
+      });
+    });
+
+    stageEl.addEventListener("mouseleave", () => {
+      applyHighlight(pinnedId);
+    });
+
+    drawEdges();
+    window.addEventListener("resize", drawEdges);
+    window.addEventListener("load", drawEdges);
+    refreshLineage = () => {
+      requestAnimationFrame(() => {
+        drawEdges();
+        updateInfoBar(activeId);
+      });
+    };
+  })();
+
+  // 17c. Before / After Comparison Slider
+  (function initBeforeAfterSlider() {
+    const stage = document.getElementById("compareStage");
+    const range = document.getElementById("compareRange");
+    const pctLabel = document.getElementById("comparePctLabel");
+    if (!stage || !range || !pctLabel) return;
+
+    function syncSplit(val) {
+      const n = Math.min(92, Math.max(8, Number(val) || 50));
+      stage.style.setProperty("--split", `${n}%`);
+      pctLabel.textContent = `${n}% / ${100 - n}%`;
+    }
+
+    range.addEventListener("input", () => syncSplit(range.value));
+    syncSplit(range.value);
+  })();
+
+  window.__refreshAwsWidgets = function () {
+    if (typeof refreshSimLang === "function") refreshSimLang();
+    if (typeof refreshLineage === "function") refreshLineage();
   };
 })();

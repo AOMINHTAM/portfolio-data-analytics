@@ -180,6 +180,52 @@
             <figcaption>End-to-End V5.0.1 Architecture: CloudFormation IaC, S3 Versioning, SQS + DLQ, 4 CloudWatch Alarms + SNS, Airflow 3 AssetWatcher, and Redshift Serverless. (Click image to open full resolution)</figcaption>
           </figure>
 
+          <!-- Interactive V5.0.1 CloudOps Simulator -->
+          <div class="sim-card" id="awsPipelineSimulator" aria-label="Interactive AWS V5.0.1 Event-Driven Pipeline Simulator">
+            <div class="sim-header">
+              <div>
+                <span class="sim-eyebrow">INTERACTIVE SIMULATOR &bull; TEST V5.0.1 FAULT ISOLATION</span>
+                <h3 class="sim-title">Break &amp; Recover the Pipeline</h3>
+              </div>
+              <div class="sim-badges">
+                <span class="sim-pill" id="simDlqBadge">SQS DLQ: 0</span>
+                <span class="sim-pill sim-pill--ok" id="simCwBadge">CloudWatch: OK</span>
+                <span class="sim-pill" id="simCostBadge">Idle Compute: $0.00</span>
+              </div>
+            </div>
+
+            <div class="sim-controls">
+              <button type="button" class="btn btn-amber btn-sm" id="simBtnValid">&#9654; Push Valid Olist Batch</button>
+              <button type="button" class="btn btn-outline btn-sm sim-btn-fault" id="simBtnCorrupt">&#128165; Inject Corrupt File (Test DLQ)</button>
+              <button type="button" class="btn btn-outline btn-sm sim-btn-redrive" id="simBtnRedrive" disabled>&#8635; Redrive DLQ</button>
+            </div>
+
+            <div class="sim-flow">
+              <div class="sim-main-row">
+                <div class="sim-node" data-sim-node="s3"><span>INGEST</span><strong>S3 <code>raw/</code></strong></div>
+                <div class="sim-arrow" data-sim-edge="s3-sqs">&rarr;</div>
+                <div class="sim-node" data-sim-node="sqs"><span>QUEUE</span><strong>SQS (20s Poll)</strong></div>
+                <div class="sim-arrow" data-sim-edge="sqs-airflow">&rarr;</div>
+                <div class="sim-node" data-sim-node="airflow"><span>TRIGGER</span><strong>Airflow 3</strong></div>
+                <div class="sim-arrow" data-sim-edge="airflow-redshift">&rarr;</div>
+                <div class="sim-node" data-sim-node="redshift"><span>ATOMIC SWAP</span><strong>Redshift</strong></div>
+                <div class="sim-arrow" data-sim-edge="redshift-dbt">&rarr;</div>
+                <div class="sim-node" data-sim-node="dbt"><span>MARTS &amp; ACK</span><strong>dbt + Safe ACK</strong></div>
+              </div>
+              <div class="sim-fault-row">
+                <div class="sim-node sim-node--fault" data-sim-node="dlq"><span>MAX RETRIES = 3</span><strong>SQS Dead-Letter Queue</strong></div>
+                <div class="sim-arrow" data-sim-edge="dlq-cw">&rarr;</div>
+                <div class="sim-node sim-node--fault" data-sim-node="cw"><span>METRIC BREACH</span><strong>CloudWatch ALARM</strong></div>
+                <div class="sim-arrow" data-sim-edge="cw-sns">&rarr;</div>
+                <div class="sim-node sim-node--fault" data-sim-node="sns"><span>INCIDENT</span><strong>SNS Email Alert</strong></div>
+              </div>
+            </div>
+
+            <div class="sim-console" id="simConsole" role="log" aria-live="polite">
+              <div class="sim-log-line sim-log-muted">[ready] Click "Push Valid Olist Batch" or "Inject Corrupt File" to simulate V5.0.1 runtime behavior.</div>
+            </div>
+          </div>
+
           <div class="table-scroll">
             <table class="data-table">
               <thead>
@@ -247,6 +293,97 @@
             </a>
             <figcaption>dbt Data Lineage: 9 <code>raw_data</code> Bronze sources &rarr; 7 <code>public_staging</code> Silver views &rarr; 3 <code>public_marts</code> Gold Star Schema tables.</figcaption>
           </figure>
+
+          <!-- Interactive dbt Data Lineage Explorer -->
+          <div class="lineage-card" id="dbtLineageExplorer" aria-label="Interactive dbt Data Lineage Explorer">
+            <div class="lineage-header">
+              <div>
+                <span class="sim-eyebrow">INTERACTIVE LINEAGE &bull; DBT DOCS STYLE</span>
+                <h3 class="sim-title">Trace Upstream Sources &amp; Downstream Business KPIs</h3>
+              </div>
+              <span class="lineage-hint">Hover or click any node</span>
+            </div>
+
+            <div class="lineage-stage" id="lineageStage">
+              <svg class="lineage-svg" id="lineageSvg" aria-hidden="true"></svg>
+              <div class="lineage-cols">
+                <div class="lineage-col">
+                  <div class="lineage-col-label">BRONZE (<code>raw_data</code>)</div>
+                  <button type="button" class="lineage-node" data-lineage-id="raw_orders">raw_orders</button>
+                  <button type="button" class="lineage-node" data-lineage-id="raw_items">raw_order_items</button>
+                  <button type="button" class="lineage-node" data-lineage-id="raw_payments">raw_payments</button>
+                  <button type="button" class="lineage-node" data-lineage-id="raw_reviews">raw_reviews</button>
+                  <button type="button" class="lineage-node" data-lineage-id="raw_customers">raw_customers</button>
+                </div>
+                <div class="lineage-col">
+                  <div class="lineage-col-label">SILVER (<code>public_staging</code>)</div>
+                  <button type="button" class="lineage-node" data-lineage-id="stg_orders">stg_orders</button>
+                  <button type="button" class="lineage-node" data-lineage-id="stg_items">stg_order_items</button>
+                  <button type="button" class="lineage-node" data-lineage-id="stg_payments">stg_payments</button>
+                  <button type="button" class="lineage-node" data-lineage-id="stg_reviews">stg_reviews</button>
+                  <button type="button" class="lineage-node" data-lineage-id="stg_customers">stg_customers</button>
+                </div>
+                <div class="lineage-col">
+                  <div class="lineage-col-label">GOLD MARTS &amp; KPIs</div>
+                  <button type="button" class="lineage-node lineage-node--gold" data-lineage-id="fct_orders">
+                    <strong>fct_orders</strong>
+                    <span>Net Revenue &amp; Delivery SLA</span>
+                  </button>
+                  <button type="button" class="lineage-node lineage-node--gold" data-lineage-id="dim_customers">
+                    <strong>dim_customers</strong>
+                    <span>Cohort LTV (<code>customer_unique_id</code>)</span>
+                  </button>
+                  <button type="button" class="lineage-node lineage-node--gold" data-lineage-id="mart_products">
+                    <strong>mart_product_sales</strong>
+                    <span>Category &amp; Order Item Mix</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="lineage-info" id="lineageInfo">
+              Select or hover a Gold mart (e.g. <code>fct_orders</code>) to trace its exact Bronze &rarr; Silver lineage.
+            </div>
+          </div>
+
+          <!-- Before / After Comparison Slider -->
+          <div class="compare-card" id="beforeAfterSlider" aria-label="Before and After Pipeline Comparison Slider">
+            <div class="compare-header">
+              <div>
+                <span class="sim-eyebrow">BEFORE / AFTER &bull; DRAG SLIDER TO COMPARE</span>
+                <h3 class="sim-title">Raw Olist CSVs &amp; Cron vs. V5.0.1 Star Schema</h3>
+              </div>
+              <span class="compare-pct" id="comparePctLabel">50% / 50%</span>
+            </div>
+
+            <div class="compare-stage" id="compareStage" style="--split: 50%;">
+              <!-- After layer (base full width) -->
+              <div class="compare-pane compare-pane--after">
+                <div class="compare-badge compare-badge--after">AFTER &bull; V5.0.1 GOLD STAR SCHEMA</div>
+                <ul class="compare-list">
+                  <li><strong>Unified Star Schema:</strong> <code>3</code> Gold marts &amp; <code>4</code> BI CSVs (~56 MB) ready for instant BI.</li>
+                  <li><strong>True Repeat-Buyer LTV:</strong> Windowed <code>total_orders</code> &amp; <code>lifetime_spend</code> by <code>customer_unique_id</code>.</li>
+                  <li><strong>Atomic Data Safety:</strong> Two-Phase <code>TEMP TABLE</code> swap + header &amp; 0-row guards.</li>
+                  <li><strong>Event-Driven FinOps:</strong> S3 &rarr; SQS &rarr; Airflow 3 <code>AssetWatcher</code> (<strong>$0</strong> idle compute).</li>
+                  <li><strong>Fault Isolation:</strong> SQS DLQ + <code>4</code> CloudWatch Alarms + SNS + <strong>11 dbt tests</strong>.</li>
+                </ul>
+              </div>
+              <!-- Before layer (clipped by --split) -->
+              <div class="compare-pane compare-pane--before">
+                <div class="compare-badge compare-badge--before">BEFORE &bull; RAW CSVs &amp; BATCH CRON</div>
+                <ul class="compare-list">
+                  <li><strong>Fragmented Schema:</strong> <code>9</code> raw CSVs (~120 MB) requiring heavy manual joins per report.</li>
+                  <li><strong>Broken Retention KPI:</strong> Olist resets <code>customer_id</code> per order, hiding repeat buyers.</li>
+                  <li><strong>Partial-Load Risk:</strong> Unguarded <code>TRUNCATE</code> + <code>COPY</code> wipes tables if load fails mid-batch.</li>
+                  <li><strong>Idle Compute Waste:</strong> Fixed <code>*/5</code> cron polling burns warehouse credits on empty runs.</li>
+                  <li><strong>Silent Failures:</strong> Poison 0-row feeds fail silently without DLQ or email alerts.</li>
+                </ul>
+              </div>
+              <div class="compare-divider" aria-hidden="true">
+                <span class="compare-handle">&harr;</span>
+              </div>
+              <input type="range" class="compare-range" id="compareRange" min="8" max="92" value="50" aria-label="Drag to compare Before and After states" />
+            </div>
+          </div>
           <ul>
             <li><strong>Multi-Source Incremental Modeling &amp; Customer Grain Trade-off:</strong> <code>fct_orders</code> (<code>delete+insert</code>) uses an <code>affected_order_ids</code> CTE across all 4 upstream tables (<code>stg_orders</code>, <code>stg_order_items</code>, <code>stg_payments</code>, <code>stg_reviews</code>) so late updates on older orders (&gt;3 days) are captured. In Olist, every order assigns a new surrogate <code>customer_id</code> even when the same buyer returns (<code>customer_unique_id</code>). <code>dim_customers</code> deliberately keeps <code>customer_id</code> grain (99,441 rows) so downstream BI Star Schema joins with <code>fct_orders</code> remain strictly 1:1 without fan-out, while lifetime metrics (<code>total_orders</code>, <code>lifetime_spend</code>) are window-aggregated by <code>customer_unique_id</code>.</li>
             <li><strong>Scope of Automated Testing &amp; CI (Separated by Execution Layer):</strong>
